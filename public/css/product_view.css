@@ -1,0 +1,22 @@
+.product_view_main{}
+
+.product_view_main .desc-box{
+    padding:10px;font-size: 15px;
+}
+.product_view_main .desc-box .price .final-price{
+    color: green;
+    font-size: 15px;
+}
+.product_view_main .desc-box .price .label{
+    color: red;
+    font-size: 15px;
+    padding:0px;
+}
+
+.product_view_main .desc-box .name{
+    font-size: 20px;
+}
+.actions span {
+    padding: 10px;
+}
+

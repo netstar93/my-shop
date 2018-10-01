@@ -14,3 +14,4 @@ public_/
 resource_/
 .idea
 .env
+config/

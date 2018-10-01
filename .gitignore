@@ -6,7 +6,6 @@
 Homestead.json
 Homestead.yaml
 .env
-
 vendor/
 temporary assets/
 app_/
@@ -16,3 +15,5 @@ routes_/
 .idea
 .env
 config/
+storage/
+artisan

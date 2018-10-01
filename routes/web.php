@@ -27,7 +27,7 @@ Route::get('/customer/dashboard', 'CustomerController@index')->middleware('valid
 Route::get('cart', 'Checkout\CartController@index');
 Route::get('/cart/checkout', 'Checkout\CartController@checkout');
 Route::post('/cart/checkout', 'Checkout\CartController@checkout');
-Route::get('/cart/order/save', 'Checkout\OrderController@save');
+Route::post('/cart/order/save', 'Checkout\OrderController@save');
 
 Route::get('catalog/category/view/{id}', 'Catalog\CategoryController@view');
 Route::post('catalog/product/addtocart', 'Catalog\ProductController@addtocart');

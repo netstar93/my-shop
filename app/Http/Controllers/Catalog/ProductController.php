@@ -38,19 +38,12 @@ class ProductController extends Controller
         $quoteModel = new Quote(); 
 
         $data  = $productModel ->load($id)->first();
-        
         // $quoteModel ->getQuote();
-        
         //$request->session()->forget('cart');
-        if(!$request->session()->has('cart')){
-           //session('cart', array('items'=>array()));
-        }
-        else{
-             $cart =  session('cart');
-             $cart_items = $cart['items']; //_log(session('carts'));
-        }             
+        $cart =  session('cart');
+        $cart_items = $cart['items'];
 
-        $cart_items[ $data ->id ] = $data;
+        $cart_items[ $data ->product_id ] = $data;
 
         foreach ($cart_items as $item) {
             $grand_total += ($item->base_price + 30);

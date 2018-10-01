@@ -109,6 +109,7 @@ class Quote extends Model
        DB::table('sales_quote_item')->where('quote_id',$this ->getCustomerQuoteId()) ->delete();
       //DELETE QUOTE
       $this ->find($this ->getCustomerQuoteId()) ->delete();
+        session()->forget('cart');
     }
 
    public function removeQuoteItem() {

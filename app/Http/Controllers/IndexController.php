@@ -18,7 +18,7 @@ class IndexController extends Controller
 
     public function __construct()
     {
-      //  $this->middleware('bootstrap');
+        $this->middleware('bootstrap');
     }
 
     public function index  (){
@@ -27,6 +27,6 @@ class IndexController extends Controller
 
     public function test(){
        $model =  new Quote();
-        $model ->getCartData();
+        dd(session('cart'));
     }
 }

@@ -26,7 +26,7 @@ class CartController extends Controller
         $cart_data = array();
         
         //GET LOGGED IN CUSTOMER CART DATA
-        if(session('customer') && session('cart')){  dd(session('cart'));
+        if(session('customer') && session('cart')){
             $model =  new Quote();
             return $model ->getCartItems();
         }

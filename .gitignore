@@ -11,7 +11,8 @@ vendor/
 temporary assets/
 app_/
 public_/
-resource_/
+resources_/
+routes_/
 .idea
 .env
 config/

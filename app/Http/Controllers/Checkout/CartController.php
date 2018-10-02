@@ -11,32 +11,24 @@ use  App\Model\Quote;
 class CartController extends Controller
 {
     public function index() {
-        $cart_items =  array();
-        $cart_data  = $this ->getCartItems();
+        $model =  new Quote();
+        $cart_data  = $model ->getQuoteItems();
         return view('checkout/cart', ['items' => $cart_data]);
     }
 
     public function checkout() {
-        $cart_data  = $this ->getCartItems();
+        $model =  new Quote();
+        $cart_data  = $model ->getQuoteItems();
         return view('checkout/checkout',['items' => $cart_data]);
     }
 
-    public  function getCartItems()
-    {
-        $cart_data = array();
-        
-        //GET LOGGED IN CUSTOMER CART DATA
-        if(session('customer') && session('cart')){
-            $model =  new Quote();
-            return $model ->getCartItems();
+    public function delete(Request $request)  {
+        $product_id = $request ->get('product_id');
+        $quoteModel =  new Quote();
+        $result = $quoteModel ->removeItem($product_id);
+        if($result){
+            return json_encode(array('success' => true));
         }
-
-        //GET VISITOR CART DATA
-        if (session('cart')) {
-            $cart = session('cart');
-            return $cart['items'];
-        }
-        return $cart_data;
     }
 
     public function getProductAttributes($id){

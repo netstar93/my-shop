@@ -27,10 +27,7 @@ endif;
                       <span>Color: <b>{{ucfirst($color)}}</b></span>
                   @endif
           </div>
-
-
-
-          <span class="remove">Remove</span>
+          <span class="cart-item-remove" value="{{$item ->product_id}}">Remove</span>
       </div>
   </td>
       <td> Delivered By 10 th September 2018</td>

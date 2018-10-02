@@ -18,10 +18,11 @@ class Quote extends Model
 
 	public function __construct(){
         $customer = session('customer');
-        $this->customer_id  = session() ->getId();
-        
-        if($customer) {
+        if(isset($customer)) {
             $this->customer_id = $customer['id'];
+        }
+        else{
+            $this->customer_id  = session() ->getId();
         }
 	}
 
@@ -68,11 +69,8 @@ class Quote extends Model
         $quote_id = 0;
         $cart_items  = $cart['items'];
 
-        if(count($cart_items) > 0) {
-
             //SAVE QUOTE
             $newQuote = Quote::where('cust_id', $this->customer_id) ->first();        
-
             if(isset($newQuote ->id)) {
                 $quote_id = $newQuote ->id;
             }else{
@@ -83,37 +81,53 @@ class Quote extends Model
                 $quote_id = $newQuote ->id;
             }
 
-            // $newQuote = Quote::firstOrCreate(
-            //     ['customer_id' => $this->customer_id]
-            // );
+           if(count($cart_items) > 0) {
             //RENEW CUSTOMER SESSION WITH QUOTE ID
-            $customer = session('customer');
-            $customer['quote_id'] = $quote_id;
-            session('customer' , $customer);
-            // $this ->loaded_quote = $newQuote;
-
+             $customer = session('customer');
             //SAVE QUOTE ITEMS
             foreach ($cart_items as $item) {
                 $item_id = DB::table('sales_quote_item')->insertGetId([
                     'quote_id' => $quote_id,
                     'product_id' => $item->product_id,
                     'amount' => $item->base_price,
-                    'options' => $item->diff_attr_values
+                    'options' => $item->diff_attr_values,
+                    'status' => 'pending'
                 ]);
             }
         }
     }
 
-    public function clearQuote() {      
-      //DELETE QUOTE ITEM
-       DB::table('sales_quote_item')->where('quote_id',$this ->getCustomerQuoteId()) ->delete();
+    public function clearQuote() {
+        //DELETE QUOTE ITEM
+	    $this ->removeAlItem();
       //DELETE QUOTE
       $this ->find($this ->getCustomerQuoteId()) ->delete();
         session()->forget('cart');
     }
 
-   public function removeQuoteItem() {
+   public function removeAlItem() {
+       DB::table('sales_quote_item')->where('quote_id',$this ->getCustomerQuoteId()) ->delete();
+    }
 
+    public function removeItem($product_id) {
+        $grand_total = 0;
+	    if($this ->isLoggedIn()) {
+            return DB::table('sales_quote_item')->where('quote_id', $this->getCustomerQuoteId())->where('product_id', $product_id)->delete();
+        }
+        $cart = session('cart');
+        $cart_items =  $cart['items'];
+        unset($cart_items[$product_id]);
+
+        foreach ($cart_items as $item) {
+            $grand_total += ($item->base_price + 30);
+        }
+
+        session(['cart' => [
+            'items' => $cart_items,
+            'grand_total' => $grand_total
+            ]]);
+        return true;
+//        $this ->updateTotals();
     }
 
     public function getCartData($customer_id = null) {
@@ -121,13 +135,62 @@ class Quote extends Model
         return $data;
     }
 
+    /*
+     * GET LOGGED IN CUSTOMER ITEMS
+     */
     public function getCartItems() {
-        $data = DB::table('sales_quote_item')->where('quote_id',$this ->getCustomerQuoteId()) ->get();
+        $data = $this ->getCart() ->get();
+        return $data;
+    }
+
+    public  function getQuoteItems()  {
+        $cart_data = array();
+        //GET LOGGED IN CUSTOMER CART DATA
+        if(session('customer')) {   // && session('cart')
+            $model =  new Quote();
+            return $model ->getCartItems();
+        }
+
+        //GET VISITOR CART DATA
+        if (session('cart')) {
+            $cart = session('cart');
+            if(isset( $cart['items']))
+            return $cart['items'];
+        }
+        return $cart_data;
+    }
+
+    public function getCart() {
+        $data = DB::table('sales_quote_item')->where('quote_id',$this ->getCustomerQuoteId());
         return $data;
     }
 
     public function getCustomerQuoteId() { 
-        $quote_id = Quote::where('cust_id' , '=', $this->customer_id) ->first()->id;
-        return $quote_id;
+        $quote = Quote::where('cust_id' , '=', $this->customer_id) ;
+        if($quote ->count() > 0 ) {
+          return  $quote->first()->id;
+        }
+        return false;
+    }
+
+    public function updateTotals() {
+        $grand_total = 0;
+        if (session('cart')) {
+            $cart = session('cart');
+            foreach ($cart['items'] as $item) {
+                $grand_total += ($item->base_price + 30);
+            }
+
+            session(['cart' => [
+                'grand_total' => $grand_total
+            ]]);
+        }
+    }
+    public function isLoggedIn(){
+        $customer = session('customer');
+        if(isset($customer)) {
+             return true;
+        }
+        return false;
     }
 }

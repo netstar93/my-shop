@@ -25,7 +25,8 @@ class IndexController extends Controller
         return view('index');
     }
 
-    public function test(){
+    public function test(Request $request){
+        $request ->session()->forget('cart'); die;
        $model =  new Quote();
         dd(session('cart'));
     }

@@ -5,6 +5,7 @@
 @section('title', 'My Cart')
 @section('middle_content')
     <link href="{{asset('css/product_view.css')}}" rel="stylesheet" type="text/css"/>
+    <script src="{{  asset('/js/cart.js') }}"></script>
     <div class="checkout_cart_index container-fluid">
         @php 
         use App\Model\Product;

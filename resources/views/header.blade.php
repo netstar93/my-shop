@@ -1,4 +1,11 @@
 @php
+use App\Model\Quote;
+$item_count = 0;
+$quoteModel = new Quote();
+$items  = $quoteModel ->getQuoteItems();
+if(count($items)) {
+$item_count = count($items);
+}
 $customer = session('customer');
 $is_logged_in =  $customer['logged_in'];
 $name =  $customer['name'];
@@ -23,7 +30,7 @@ $name =  $customer['name'];
         </span>
             <span class="top-menu col-sm-4">
             <nav class="top-links ">
-               <li> <a href="/cart"><i class="fa fa-shopping-cart fa-2x"></i><span class="cart badge">4</span> </a></li>
+               <li> <a href="/cart"><i class="fa fa-shopping-cart fa-2x"></i><span class="cart badge">{{$item_count }}</span></a></li>
                 @if(isset($is_logged_in))
                     <li>
                     <div class="dropdown">

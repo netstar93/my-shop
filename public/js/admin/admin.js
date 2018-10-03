@@ -1,20 +1,20 @@
 $(document).ready( function() {
 
-	$(".iframe").fancybox({
-        type: 'iframe'
-    });
+		$(".iframe").fancybox({
+	        type: 'iframe'
+	    });
 
-    $(window).keydown(function(event){
+	    $(window).keydown(function(event){
 
-        if(event.keyCode == 13) {
+	        if(event.keyCode == 13) {
 
-            event.preventDefault();
+	            event.preventDefault();
 
-            return false;
+	            return false;
 
-        }
-
-    });
+	        }
+	        
+	    });
 
 		$("#category_save").click(function(){
 

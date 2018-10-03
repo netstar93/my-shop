@@ -1,8 +1,8 @@
 
 <div class="form-group form-inline">                        
     <label for="uname1">Choose attribute(s) for new products  </label>
-    <input type="checkbox" class="form-control form-control-lg" name="diff_attr" required=""> Color
-    <input type="checkbox" class="form-control form-control-lg" name="diff_attr" required=""> Size
+    <input type="checkbox" class="form-control form-control-lg" name="diff_attr" > Color
+    <input type="checkbox" class="form-control form-control-lg" name="diff_attr" > Size
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 <div class="form-group">

@@ -1,9 +1,28 @@
 @section('title', 'New Product')
 @extends('admin.layout')
 @section('content')
+@php
+
+$data = array();
+$edit_mode = false;
+if(isset($formData ->id)) {
+    $data = $formData;
+    $edit_mode = true;
+}
+
+$product_data = ['data' => $data];
+
+@endphp
+
 <div class="right-side product-add-form">
     <div class="page-header">        
-       <h3>New Product</h3>        
+            
+       @if($edit_mode) 
+        <h3>Editing {{ucfirst($formData ->name)}}</h3>      
+       @else
+       <h3>New Product</h3>
+       @endif
+    
     </div>
     <div class="actions">
     	<span class="breadcrump col-lg-8" style="display: inline-block;float:left">Admin/Catalog/Product</span>
@@ -34,10 +53,10 @@
 				<form class="form" role="form" action="/admin/product/save" autocomplete="on" id="product-form" novalidate="" method="POST" enctype="multipart/form-data">
 					<div class="tab-content">			 
 					  <div class="tab-pane active" id="basic" role="tabpanel">
-					  	@include('admin.catalog.product.productform_basic')
+					  	@include('admin.catalog.product.productform_basic',$product_data)
 					  </div>
 					  <div class="tab-pane" id="prices" role="tabpanel">
-					  	@include('admin.catalog.product.productform_price')
+					  	@include('admin.catalog.product.productform_price',$product_data)
 					  </div>
 					  <div class="tab-pane" id="images" role="tabpanel">
 					  	@include('admin.catalog.product.productform_image')

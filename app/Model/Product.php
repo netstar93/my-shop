@@ -34,7 +34,6 @@ class Product extends Model
     /*
      * RETURN ALL PRODUCT WITH CHILD PRODUCTS
      */
-
 	public function getCollectionData(){
         $collection = DB::table('catalog_product_main')
                         ->join('catalog_product_data','catalog_product_main.id' ,'=','catalog_product_data.main_id')
@@ -42,6 +41,9 @@ class Product extends Model
         return $collection;
     }
 
+    /*
+     *  load by product_id
+     */
     public function load($id = null){
         if(!$id) return false;
         $data = self::getCollectionData()->filter(function ($value, $key) use ($id) {
@@ -58,10 +60,16 @@ class Product extends Model
         return $data;
     }
 
-    public function updateProduct($data) {
-        $params = $data ->all();
-
-        $id_main  = DB::table('catalog_product_main') ->insertGetId([
+    public function updateProduct($params) {
+        $data = $params ->all();
+        $data['seller_id']  = 1;
+        $diff_att = '';
+        $id_data_diff = [];
+        $id = $data['id'];
+        $child_item = $params ->child_item;
+        $filename = '';
+        $id_main  = DB::table('catalog_product_main') ->where('id', $id)  ->limit(1)
+            ->update([
             'name'=> $data['name'],
             'desc'=> $data['description'],
             'short_desc'=> $data['short_description'],
@@ -72,6 +80,23 @@ class Product extends Model
             'seller_id'=> $data['seller_id'],
             'status'=> $data['status']
         ]);
+
+        if($id_main > 0) {
+            if (count($child_item) > 0) {
+                foreach ($child_item as $id => $item) {
+                    $diff_att = json_encode($item);
+                    $id_diff = DB::table('catalog_product_data')->where('product_id',$data['product_id'])->update([
+                        'brand' => '1clickpick',
+                        'base_price' => $data['base_price'],
+                        'image' => $filename,
+                        'sku' => $data['sku'],
+                        'diff_attr_values' => $diff_att
+                    ]);
+                }
+            }
+        }
+
+        if($id_main > 0) return true;
         
     }
 }

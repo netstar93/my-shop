@@ -16,6 +16,7 @@ if($data){
 
 @if($id > 0)
     <input type="hidden" name="id" value = "{{$id}}" class="" />
+    <input type="hidden" name="product_id" value = "{{$product_id}}" class="" />
 @endif
 <input type="hidden" name="status" value = "1" class="checkbox" />
 

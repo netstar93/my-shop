@@ -55,8 +55,7 @@ class ProductController extends Controller
                     $newQuote ->save();
                     $quote_id = $newQuote ->id;
                 }
-            $cart_items[$data->product_id] = $data;
-//_log($cart_items);
+               $cart_items[$data->product_id] = $data;
                     //AVOID DUPLICACY
                     $item_exist= $cart->where('product_id', $data->product_id)->get()->first();
                     if (!isset($item_exist->id)) {

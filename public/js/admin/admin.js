@@ -88,8 +88,22 @@ $(document).ready( function() {
 				location.reload();
 			  }
 			});
-			
 		});
+
+    $('button#deleteItem').click(function(e){
+        var item_id = $(this).attr('item_id');
+        var entity = $(this).attr('entity');
+        var request = $.ajax({
+            url: "/admin/"+entity+"/delete",
+            type: "GET",
+            data: {id : item_id},
+            dataType: "json",
+            success: function(data){
+                if(!data.error)
+                    location.reload();
+            }
+        });
+    });
 
 		$('form').submit(function(event){
 			var form = $("form");

@@ -17,7 +17,7 @@
     </div>
 	<div class="wrapper">
 		<table class="table table-bordered">
-			<tr><th>#</th><th>id</th><th>Name</th><th>Base Price</th> <th>Attribute Set</th> <th>Special Info</th><th>Category</th><th>Seller ID</th><th>Status</th><th>Action</th></tr>
+			<tr><th>#</th><th>Product ID</th><th>Name</th><th>Base Price</th> <th>Attribute Set</th> <th>Special Info</th><th>Category</th><th>Seller ID</th><th>Status</th><th>Action</th></tr>
 
 			@foreach($collection as $product )
 			 @php
@@ -29,7 +29,7 @@
 			 @endphp
 				<tr>
 					<td><input type="checkbox" name="productEdit"></td>
-					<td>{{$product ->id}}</td>
+					<td>{{$product ->product_id}}</td>
 					<td>{{$product ->name}}</td>
 					<td> Rs.{{$product ->base_price}}</td>
 					<td>{{$product ->attribute_set_id}}</td>
@@ -38,8 +38,8 @@
 					<td>{{$product ->seller_id}}</td>
 					<td>{{$product ->status}}</td>
 					<td>
-						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/product/edit/{{$product ->id}}" href="javascript:;" >Edit </button>	
-						<button class="btn btn-error" id="deleteRow" item_id ={{$product ->id}}>Delete</button>	
+						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/product/edit/{{$product ->product_id}}" href="javascript:;" >Edit </button>
+						<button class="btn btn-error" id="deleteItem" entity="product" item_id ={{$product ->product_id}}>Delete</button>
 					</td>
 				</tr>
 			@endforeach

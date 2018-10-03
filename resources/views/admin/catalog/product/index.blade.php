@@ -37,7 +37,10 @@
 					<td>{{$product ->category_id}}</td>
 					<td>{{$product ->seller_id}}</td>
 					<td>{{$product ->status}}</td>
-					<td><button class="btn btn-success">Edit </button></td>
+					<td>
+						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/product/edit/{{$product ->id}}" href="javascript:;" >Edit </button>	
+						<button class="btn btn-error" id="deleteRow" item_id ={{$product ->id}}>Delete</button>	
+					</td>
 				</tr>
 			@endforeach
 

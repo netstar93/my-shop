@@ -1,21 +1,39 @@
-<input type="hidden" name="status" value = "1" class="checkbox" />
+@php 
+$name = $id = $desc = $short_desc= $sku = null;
+if($data){
+    $id = $data ->id;
+    $product_id = $data ->product_id;
+    $name = $data ->name;
+    $desc = $data ->desc;
+    $short_desc = $data ->short_desc;
+    $sku = $data ->sku;
+    $status = $data ->status;
+    $base_price = $data ->base_price;
+    $diff_attr_values = $data ->diff_attr_values;
+    $diff_attr_values = $data ->diff_attr_values;
+}
+@endphp
 
+@if($id > 0)
+    <input type="hidden" name="id" value = "{{$id}}" class="" />
+@endif
+<input type="hidden" name="status" value = "1" class="checkbox" />
 
 <div class="form-group form-inline">                        
     <label for="name">Name</label>
-    <input type="text" class="form-control form-control-lg" name="name" required="">
+    <input type="text" class="form-control form-control-lg" value = "{{ $name}}" name="name" required="">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="description">Description</label>
-    <input type="text" class="form-control form-control-lg" name="description" required="">
+    <input type="text" class="form-control form-control-lg" name="description" value = "{{ $desc}}" required="">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="description">Short Description</label>
-    <input type="text" class="form-control form-control-lg" name="short_description" required="">
+    <input type="text" class="form-control form-control-lg" name="short_description" value="{{$short_desc}}" required="">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
@@ -44,6 +62,6 @@
 
 <div class="form-group form-inline">                        
     <label for="name">Sku</label>
-    <input type="text" class="form-control form-control-lg" name="sku" required="">
+    <input type="text" class="form-control form-control-lg" name="sku" value = "{{$sku}}"required="">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>

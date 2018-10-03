@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Model\Product as ProductModel;
+use App\Model\Product;
 
 class productController extends Controller
 {
-	public function _construct(){
+    protected $model;
 
+	public function __construct(){
+        $this ->model = new Product();
 	}
 
 	public function index($type =null,$type_value=null){
-		$productModel = new ProductModel();
-		$collection  = $productModel ->getCollectionData();
-		//echo "<pre>"; print_r($collection ->all()); die;    	
+		$collection  = $this ->model ->getCollectionData();   	
     	return view('admin.catalog.product.index') ->with('collection',$collection );
     }
     
@@ -23,12 +23,22 @@ class productController extends Controller
     	return view('admin.catalog.product.new');
     }
 
+    public function edit(Request $request){
+      $id = $request ->id;
+      $collection =  $this ->model ->load($id)->first();
+      return view('admin.catalog.product.new',['formData' => $collection]);
+    }
+
     public function save(Request $request){
     	$id_data = $id_main = '';
     	$id_data_diff = [];
     	$data = $request ->all();
+        if(isset($request ->id)){
+           $id_data  = $this ->model ->updateProduct($request);
+        }
+        else{
     	$child_item = $request ->child_item;
-    	//echo "<pre>"; print_r($child_item); die;
+
     	$data['seller_id'] = 1;
 		$filename = '';
 		$diff_att = '';
@@ -84,6 +94,7 @@ class productController extends Controller
         	]);
         	}
         }
+    }
 
        if($id_data > 0 || count($child_item) == count($id_data_diff)) {
        	return redirect('admin/product/index')->with('success','product succcessfully saved');
@@ -92,4 +103,5 @@ class productController extends Controller
        	return redirect('admin/product/index')->with('error','product not succcessfully saved');
        }
     }
+
 }

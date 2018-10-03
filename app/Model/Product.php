@@ -57,4 +57,21 @@ class Product extends Model
         });
         return $data;
     }
+
+    public function updateProduct($data) {
+        $params = $data ->all();
+
+        $id_main  = DB::table('catalog_product_main') ->insertGetId([
+            'name'=> $data['name'],
+            'desc'=> $data['description'],
+            'short_desc'=> $data['short_description'],
+            'attribute_set_id'=> $data['attributeset'],
+            'category_id'=> $data['category'], 
+            'child_ids'=> "na",   
+            'attribute_values'=> "na",      
+            'seller_id'=> $data['seller_id'],
+            'status'=> $data['status']
+        ]);
+        
+    }
 }

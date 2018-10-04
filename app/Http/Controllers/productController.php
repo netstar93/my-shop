@@ -30,6 +30,9 @@ class productController extends Controller
     }
 
     public function save(Request $request){
+
+       _log($request ->all());
+
     	$id_data = $id_main = '';
     	$id_data_diff = [];
     	$data = $request ->all();
@@ -38,12 +41,15 @@ class productController extends Controller
             return redirect('admin/product/index')->with('success','Product succcessfully saved');
         }
         else {
-            $child_item = $request->child_item;
+            $child_item = array();//$request->child_item;
 
             $data['seller_id'] = 1;
             $filename = '';
             $diff_att = '';
-
+            $custom_attr = '';
+            if(isset($data['custom']) && count($data['custom']) > 0){
+                $custom_attr  = json_encode($data['custom']);
+            }
             //IMAGE SAVE LOGIC
             $destination = 'media/product';
             $image = $request->file('base_image');
@@ -60,7 +66,7 @@ class productController extends Controller
                 'attribute_set_id' => $data['attributeset'],
                 'category_id' => $data['category'],
                 'child_ids' => "na",
-                'attribute_values' => "na",
+                'attribute_values' => $custom_attr,
                 'seller_id' => $data['seller_id'],
                 'status' => $data['status']
             ]);
@@ -70,7 +76,7 @@ class productController extends Controller
                 if (count($child_item) > 0) {
 
                     foreach ($child_item as $id => $item) {
-                        $diff_att = json_encode($item);
+                        $diff_att = @json_encode($item);
                         $id_diff = DB::table('catalog_product_data')->insertGetId([
                             'main_id' => $id_main,
                             'brand' => '1clickpick',
@@ -105,11 +111,20 @@ class productController extends Controller
     public function delete(Request $request){
         $data = $request ->all();
         if(isset($data['id'])){
-            $model = DB::table('catalog_product_data') ->where('product_id',$data['id']) ->delete();
-            if($model)
-                return json_encode(array('error' => false));
-        }
-        return json_encode(array('error' => true));
-    }
+            $model = DB::table('catalog_product_data') ->where('product_id',$data['id']);
+            $main_id = $model->get() ->first() ->main_id;
+            $model->delete();
 
+            $data_model = DB::table('catalog_product_data') ->where('main_id',$main_id);
+            if($data_model ->get()->count() ==  0){
+                $main_model = DB::table('catalog_product_main') ->where('id',$main_id);
+                $main_model ->delete();
+            }
+
+            if($model) {       
+                return json_encode(array('error' => false));
+                }       
+            }
+            return json_encode(array('error' => true));
+        }
 }

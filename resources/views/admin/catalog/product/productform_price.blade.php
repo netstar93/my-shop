@@ -13,7 +13,7 @@ if($data){
 </div>
 <div class="form-group form-inline">                        
     <label for="uname1">Special Price</label>
-    <input type="text" class="form-control form-control-lg" value="{{$special_price}}"  name="special_price" required="">
+    <input type="text" class="form-control form-control-lg" value="{{$special_price}}"  name="special_price">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
                     

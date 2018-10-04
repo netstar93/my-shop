@@ -1,6 +1,5 @@
 @php
 $item = $productModel -> load($item ->product_id) ->first();
-_log()
 $img = $item ->image;
 $image_path  = url("media/product/$img");
 $attr_values =  json_decode($item ->attribute_values, true);

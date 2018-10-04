@@ -19,7 +19,7 @@ class Category extends Model
 	}
 
 	public function getCollection(){
-        $collection = App/Model/Category::all();
+        $collection = Category::all();
         return $collection;
     }
 

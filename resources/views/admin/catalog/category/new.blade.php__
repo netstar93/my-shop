@@ -26,17 +26,19 @@
 			</ul>
 			</div>
 			<div class="category-form-content">
-				@if(isset($user))
-				    {{ Form::model($user, ['route' => ['updateroute', $user->id], 'method' => 'patch']) }}
-				@else
-				    {{ Form::open(['route' => 'createroute']) }}
-				@endif
+				<form class="form" role="form" action="/admin/category/save" autocomplete="on" id="category-form" novalidate="" method="POST" enctype="multipart/form-data">
+					<div class="tab-content">			 
+					  <div class="tab-pane active" id="basic" role="tabpanel">
+					  	@include('admin.catalog.category.categoryform_basic')
+					  </div>
 
-				    {{ Form::text('fieldname1', Input::old('fieldname1')) }}
-				    {{ Form::text('fieldname2', Input::old('fieldname2')) }}
-				    {{-- More fields... --}}
-				    {{ Form::submit('Save', ['name' => 'submit']) }}
-				{{ Form::close() }}
+					  <div class="tab-pane" id="cat_others" role="tabpanel">
+					  	@include('admin.catalog.category.categoryform_other')
+					  </div>
+					  			  						 
+			    	</div>
+                    <input type="submit" name="submit_cate_form" id="category_form_button" style="display:none;"/>
+		    	</form>
 	    	<div>
 	</div>
 </div>

@@ -22,8 +22,8 @@
 			@foreach($collection as $product )
 			 @php
                     $special_attributes = "";
-                    $diff_attr = json_decode($product->diff_attr_values,true);
-                    if(count($diff_attr)){
+                    $diff_attr = json_decode($product->attribute_values,true);
+                    if(is_array($diff_attr) && count($diff_attr)){
                        $special_attributes = implode(",",$diff_attr);
                     }
 			 @endphp

@@ -50,9 +50,10 @@ Route::get('admin/product/delete/{id?}', 'productController@delete');
 
 // ADMIN CATEGORY ROUTES
 Route::get('admin/category/index', 'categoryController@index');
-Route::get('admin/category/add', 'categoryController@add');
+Route::get('admin/category/new', 'categoryController@add');
 Route::post('admin/category/save', 'categoryController@save');
-Route::get('admin/category/edit', 'categoryController@edit');
+Route::get('admin/category/edit/{id?}', 'categoryController@edit');
+Route::get('admin/category/delete/{id?}', 'categoryController@delete');
 
 // ADMIN ATTRIBUTE ROUTES
 Route::get('admin/attributeset/index', 'attributesetController@index');

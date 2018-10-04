@@ -28,7 +28,7 @@ $product_data = ['data' => $data];
     	<span class="breadcrump col-lg-8" style="display: inline-block;float:left">Admin/Catalog/Product</span>
     	<span class="action-buttons col-lg-4">
 	    	<span class="action-btn"><button class="btn btn-success" id="save" >Save</button></span>
-	    	<span class="action-btn"><button class="btn btn-error" id="savecontinue" >Save And Continue</button></span>
+	    	<!-- <span class="action-btn"><button class="btn btn-error" id="savecontinue" >Save And Continue</button></span> -->
 	    	<span class="action-btn"><button class="btn btn-primary" id="cancel" >Cancel</button></span>
     	</span>
 	</div>
@@ -45,8 +45,14 @@ $product_data = ['data' => $data];
 			    <a class="nav-link" data-toggle="tab" href="#images" role="tab" aria-controls="profile">Images</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" data-toggle="tab" href="#other" role="tab" aria-controls="profile">Other Attributes</a>
+			    <a class="nav-link" data-toggle="tab" href="#other" role="tab" aria-controls="profile">Additional Attributes</a>
 			  </li>
+
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#subproduct" role="tab" aria-controls="profile">Add Subproducts</a>
+              </li>
+
+
 			</ul>
 			</div>
 			<div class="product-form-content">
@@ -61,8 +67,11 @@ $product_data = ['data' => $data];
 					  <div class="tab-pane" id="images" role="tabpanel">
 					  	@include('admin.catalog.product.productform_image')
 					  </div>
-					  <div class="tab-pane" id="other" role="tabpanel">
-					  	@include('admin.catalog.product.productform_other')
+                      <div class="tab-pane" id="other" role="tabpanel">
+                        @include('admin.catalog.product.productform_other')
+                      </div>
+					  <div class="tab-pane" id="subproduct" role="tabpanel">
+					  	@include('admin.catalog.product.productform_childform')
 					  </div>			  						 
 			    	</div>
 		    	</form>

@@ -4,8 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Category;
+use DB;
+
 class categoryController extends Controller
 {
+   protected $model;
+
+  public function __construct(){
+        $this ->model = new Category();
+  }
     public function index(){
     	$collection = Category::all();
     	return view('admin.catalog.category.index',['collection' => $collection]);
@@ -13,6 +20,12 @@ class categoryController extends Controller
 
     public function add(){
     	return view('admin.catalog.category.new');
+    }
+
+    public function edit(Request $request){
+      $id = $request ->id;
+      $collection =  $this ->model ->load($id)->first();
+      return view('admin.catalog.category.new',['formData' => $collection]);
     }
 
     public function save(Request $request){
@@ -25,4 +38,14 @@ class categoryController extends Controller
        	return redirect('admin/category/index')->with('error','Category not succcessfully saved');
        }
     }
+
+    public function delete(Request $request){
+        $data = $request ->all();
+        if(isset($data['id'])){
+            $model = DB::table('catalog_category_data') ->where('cat_id',$data['id']);
+            $model->delete();
+            return json_encode(array('error' => false));
+        }
+        return json_encode(array('error' => true));
+      }
 }

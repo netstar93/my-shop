@@ -64,9 +64,13 @@ class Product extends Model
         $data = $params ->all();
         $data['seller_id']  = 1;
         $diff_att = '';
+        $custom_attr = '';
+            if(isset($data['custom']) && count($data['custom']) > 0){
+                $custom_attr  = json_encode($data['custom']);
+            }
         $id_data_diff = [];
         $id = $data['id'];
-        $child_item = $params ->child_item;
+        $child_item = array();
         $filename = '';
         $id_main  = DB::table('catalog_product_main') ->where('id', $id)  ->limit(1)
             ->update([
@@ -76,7 +80,7 @@ class Product extends Model
             'attribute_set_id'=> $data['attributeset'],
             'category_id'=> $data['category'], 
             'child_ids'=> "na",   
-            'attribute_values'=> "na",      
+            'attribute_values' => $custom_attr,     
             'seller_id'=> $data['seller_id'],
             'status'=> $data['status']
         ]);
@@ -88,7 +92,7 @@ class Product extends Model
                     $id_diff = DB::table('catalog_product_data')->where('product_id',$data['product_id'])->update([
                         'brand' => '1clickpick',
                         'base_price' => $data['base_price'],
-                        'image' => $filename,
+                        // 'image' => $filename,
                         'sku' => $data['sku'],
                         'diff_attr_values' => $diff_att
                     ]);

@@ -5,6 +5,16 @@
     <div class="page-header">        
         <h3>Category Page </h3>
     </div>
+    <div class="action-bar">
+            <span class="mass-action float-left col-lg-8">
+                <select class="dropdown">
+                    <option value="-">---SELECT---</option>
+                    <option value="delete">Delete</option>
+                    <option value="delete">Disable</option>
+                </select>
+            </span>
+            <span class="action-new float-right col-lg-4"> <a href="/admin/category/new"><button class="btn btn-success">Add Category</button></a></span>
+    </div>
 	<div class="wrapper">
 		<table class="table table-bordered">
 			<tr><th>#</th><th>ID</th><th>Name</th><th>Parent Category</th><th>Visibility</th><th>Status</th><th>Action</th></tr>
@@ -17,7 +27,10 @@
 					<td>{{ucfirst($category ->parent_category_id)}}</td>
 					<td>{{$category ->visibility}}</td>
 					<td>{{$category ->status}}</td>					
-					<td><button class="btn btn-success">Edit </button></td>
+					<td>
+						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/category/edit/{{$category ->cat_id}}" href="javascript:;" >Edit </button>
+						<button class="btn btn-error" id="deleteItem" entity="category" item_id ={{$category ->cat_id}}>Delete</button>
+					</td>
 				</tr>
 			@endforeach
 

@@ -59,8 +59,14 @@ $(document).ready( function() {
 
 
 		//FORM FUNCTIONS		
-		$('button#cancel').click(function(event){ 			
+		$('button#cancel').click(function(event){ 	
+		   var pageURL = $(location). attr("href");	
+		   if(pageURL.indexOf('new') != -1){
+		   	var referrer =  document.referrer;
+			window.location.href = referrer; 
+		   }else{	
 			parent.jQuery.fancybox.getInstance().close();			
+		   }
 		});
 
 		$('button#save').click(function(event){ 			

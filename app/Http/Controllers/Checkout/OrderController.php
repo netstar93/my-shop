@@ -21,7 +21,7 @@ class OrderController extends Controller
         $payment_method = $request ->payment_type;
         $orderModel = new Order();
         $customer = session('customer');
-        $quote = Quote::find($customer['id']);
+        $quote = Quote::where('cust_id',$customer['id']) ->get() ->first();
         $quote_id = $quoteModel -> getCustomerQuoteId();
         $cart_items = $quoteModel -> getCartItems();
         $orderModel ->customer_id = $customer['id'];

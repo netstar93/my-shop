@@ -30,8 +30,13 @@ class categoryController extends Controller
 
     public function save(Request $request){
     	$data = $request->all();
-    	$id = Category :: create($data) ->id;  
-    	if($id > 0 ) {
+        if (isset($request->cat_id)) {
+            $id_data = Category:: findOrFail($request->cat_id)->update($data);
+            return redirect('admin/category/index')->with('success', 'Category succcessfully updated');
+        }
+
+        $id = Category:: create($data)->cat_id;
+        if ($id > 0) {
        	return redirect('admin/category/index')->with('success','Category succcessfully saved');
        }
        else{

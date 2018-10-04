@@ -31,7 +31,7 @@ class productController extends Controller
 
     public function save(Request $request){
 
-       _log($request ->all());
+//       _log($request ->all());
 
     	$id_data = $id_main = '';
     	$id_data_diff = [];

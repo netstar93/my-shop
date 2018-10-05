@@ -59,6 +59,8 @@ Route::get('admin/category/delete/{id?}', 'categoryController@delete');
 Route::get('admin/attributeset/index', 'attributesetController@index');
 Route::get('admin/attributeset/new', 'attributesetController@new');
 Route::post('admin/attributeset/save', 'attributesetController@save');
+Route::get('admin/attributeset/edit/{id?}', 'attributesetController@edit');
+Route::get('admin/attributeset/delete/{id?}', 'attributesetController@delete');
 
 Route::get('admin/attribute/index', 'attributeController@index');
 Route::get('admin/attribute/new', 'attributeController@new');

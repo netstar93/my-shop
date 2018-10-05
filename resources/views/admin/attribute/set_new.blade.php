@@ -41,7 +41,7 @@
                     @foreach($attribute_col as $key =>$attr)
                     <li><input type ="checkbox" name="attributes[{{$key}}]" value="{{$attr ->id}}"> {{ucfirst($attr ->name)}}
                     </li>
-                    @endforeach;
+                    @endforeach
                 </ul>
                 </div>		  						 
 		    	</div>

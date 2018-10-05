@@ -1,6 +1,3 @@
-@section('title', 'New Product')
-@extends('admin.layout')
-@section('content')
 @php
 
 $data = array();
@@ -9,10 +6,12 @@ if(isset($formData ->id)) {
     $data = $formData;
     $edit_mode = true;
 }
-
 $product_data = ['data' => $data];
-
 @endphp
+
+@section('title', 'New Product')
+@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.layout' ))
+@section('content')
 
 <div class="right-side product-add-form">
     <div class="page-header">        

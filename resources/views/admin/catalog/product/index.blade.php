@@ -38,13 +38,14 @@
 					<td>{{$product ->seller_id}}</td>
 					<td>{{$product ->status}}</td>
 					<td>
-						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/product/edit/{{$product ->product_id}}" href="javascript:;" >Edit </button>
+						<button class="btn btn-success iframe"  data-src="/admin/product/edit/{{$product ->product_id}}" href="javascript:;" >Edit </button>
 						<button class="btn btn-error" id="deleteItem" entity="product" item_id ={{$product ->product_id}}>Delete</button>
 					</td>
 				</tr>
 			@endforeach
 
 		</table>
+
 	</div>
 
 </div>

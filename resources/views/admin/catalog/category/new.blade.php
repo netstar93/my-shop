@@ -9,7 +9,7 @@
     $data = ['data' => $data];
 @endphp
 @section('title', 'New Category')
-@extends('admin.layout')
+@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.layout' ))
 @section('content')
 <div class="right-side category-add-form">
     <div class="page-header">

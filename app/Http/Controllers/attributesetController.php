@@ -18,6 +18,23 @@ class attributesetController extends Controller
     	return view('admin.attribute.set_new',['collection' => $collection , 'attribute_col' => $attributeColl ]);
     }
 
+    public function edit(Request $request){
+      $id = $request ->id;
+      $collection = Attributeset::find($id);
+      $attributeColl = Attribute::get();
+      return view('admin.attribute.set_new',['formData' => $collection , 'attribute_col' => $attributeColl]);
+    }
+
+    public function delete(Request $request){     
+      $data = $request ->all();
+       if(isset($data['id'])){        
+        $model = Attributeset::find($data['id']) ->delete();
+        if($model)
+          return json_encode(array('error' => false));
+       }
+       return json_encode(array('error' => true));
+   }
+
     public function save(Request $request){
     	//echo "<pre>"; print_r($request ->all()); die;
     	$attributes = implode(",",$request->get('attributes'));

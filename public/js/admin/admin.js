@@ -1,19 +1,16 @@
 $(document).ready( function() {
 
 		$(".iframe").fancybox({
-	        type: 'iframe'
+	        type: 'iframe',
+	        autoscale : false
 	    });
 
+
 	    $(window).keydown(function(event){
-
 	        if(event.keyCode == 13) {
-
 	            event.preventDefault();
-
 	            return false;
-
-	        }
-	        
+	        }	        
 	    });
 
 		$("#category_save").click(function(){
@@ -69,17 +66,22 @@ $(document).ready( function() {
 		   }
 		});
 
-		$('button#save').click(function(event){ 			
-			$('form').submit();			
+		$('button#save').click(function(event){ 	
+			$('form').submit();	
+			parent.location.reload();
 		});
 
-		$('button#editSave').click(function(event){ 			
-			var form  = $('form');
-			form.submit();
-			if (form[0].checkValidity()){	
-		 	   parent.jQuery.fancybox.getInstance().close();	
-		 	   parent.location.reload();
-			 }			
+		$('form').submit(function(event){ 
+			var form = $("form");
+		    if (form[0].checkValidity() === false) {
+		      event.preventDefault();
+		      event.stopPropagation();		      
+		    }else{ 
+		    	parent.jQuery.fancybox.close();
+				parent.parent.jQuery.fancybox.close();
+						    		
+		    }			    
+		    form.addClass('was-validated');	
 		});
 
 		$('button#deleteRow').click(function(e){
@@ -97,6 +99,8 @@ $(document).ready( function() {
 		});
 
     $('button#deleteItem').click(function(e){
+    	var userselection = confirm("Are you sure you want to delete?");
+    	if(userselection) {
         var item_id = $(this).attr('item_id');
         var entity = $(this).attr('entity');
         var request = $.ajax({
@@ -109,22 +113,42 @@ $(document).ready( function() {
                     location.reload();
             }
         });
+      }
     });
 
-		$('form').submit(function(event){
-			var form = $("form");
-		    if (form[0].checkValidity() === false) {
-		      event.preventDefault()
-		      event.stopPropagation()
-		    }		   
-		    form.addClass('was-validated');	
-		  
-		});
+	$('#attributeset').change(function(){
+	var attributeset_id = $.trim($(this).val());
+	$.ajax(function(){
+	});
 
-		$('#attributeset').change(function(){
-		var attributeset_id = $.trim($(this).val());
-		$.ajax(function(){
-		});
+	});
 
-		});
+
+    var select_count = 1; 
+    var select_label = select_count+1;
+
+    $('#addOption').click(function(e){
+        e.preventDefault();
+        var edit_total = $('#selectOptions').attr('total');
+        if(edit_total && edit_total > 0)
+        {
+        	select_count = parseInt(edit_total); 
+            select_label = select_count+1
+        }
+        var html = '<div class="content"> <span>Value '+select_label +'</span><input name="select_option['+select_count+']" type="text"> <span><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></span></div>';
+        $('#selectOptions').append(html);
+        select_count++;
+        select_label++;
+    });
+
+    $('#attr_type').change(function(e){
+		var type = $(this).val();
+		var selectEntity = $('.selectContent');
+		type == 'select' ? selectEntity.show() : selectEntity.hide();
+		if(type == 'select'){
+
+		}
+
+    })
+
 	});

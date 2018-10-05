@@ -18,22 +18,30 @@ class attributeController extends Controller
     public function edit(Request $request){
       $id = $request ->id;
       $collection = Attribute::find($id);
-      return view('admin.attribute.item_edit',['formData' => $collection]);
+      return view('admin.attribute.item_new',['formData' => $collection]);
     }
 
     public function save(Request $request){    	
     	$data = $request ->all();
+      $data['options'] =  json_encode($data['select_option']);
+
+      if($data['type'] != 'select') {
+       $data['options'] = null;
+      }
+
+
      if(isset($data['id'])){
-      $data['type'] =  json_encode($data['type']);
+    
       $model = Attribute::find($data['id']) ->update($data);
-         return "1";
+         return redirect('admin/attribute/index')->with('success','Succcessfully saved');
      }
 
     	$attribute =  new attribute();
     	$attribute ->name = $data['name'];
       $attribute ->type = $data['type'];
-    	$attribute ->options = json_encode($data['type']);
-    	$attribute ->save();
+      $attribute ->is_configurable = 0;
+    	$attribute ->options = $data['options'];
+      $attribute ->save();
 
        if($attribute ->id > 0) {
        	return redirect('admin/attribute/index')->with('success','Succcessfully saved');

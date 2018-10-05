@@ -20,4 +20,5 @@
 <link  href="{{asset('lib/jquery.fancybox.min.css')}}" rel="stylesheet">
 <script src="{{asset('lib/jquery.fancybox.min.js') }}"></script>
 <script src="{!! asset('/js/admin/admin.js') !!}"></script>
-
+<script src="{!! asset('/js/admin/fancy-custom.js') !!}"></script>
+ 

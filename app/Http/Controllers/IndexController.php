@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Model\Quote;
+use Image;
 class IndexController extends Controller
 {
     /**
@@ -26,8 +27,9 @@ class IndexController extends Controller
     }
 
     public function test(Request $request){
-        $request ->session()->forget('cart'); die;
-       $model =  new Quote();
-        dd(session('cart'));
+
+            $img = Image::make('303270_0_1.jpg')->resize(50, 100);
+
+            $img->save('assssa.jpg');
     }
 }

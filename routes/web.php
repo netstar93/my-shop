@@ -68,3 +68,11 @@ Route::post('admin/attribute/save', 'attributeController@save');
 Route::get('admin/attribute/edit/{id?}', 'attributeController@edit');
 Route::get('admin/attribute/delete/{id?}', 'attributeController@delete');
 
+//ADMIN BANNER
+Route::post('admin/banner/save', 'bannerController@save');
+Route::get('admin/banner/new', 'bannerController@new');
+Route::get('admin/banner/delete', 'bannerController@delete');
+Route::resource('admin/banner', 'bannerController',['names' => [
+    'destroy' => 'delete'
+]]);
+

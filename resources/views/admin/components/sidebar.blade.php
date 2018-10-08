@@ -68,6 +68,22 @@
             </div>
         </div>
 
+        <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseFive">
+                        <i class="material-icons text-success leftsize">shopping_basket</i> Home Manager
+                    </a>
+                </div>
+                <div id="collapseFive" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            <li><a href="/admin/home/banner">Manage Banners</a> </li>
+                            <li><a href="/admin/category/index">Manage Others</a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
 </section>
 </div>

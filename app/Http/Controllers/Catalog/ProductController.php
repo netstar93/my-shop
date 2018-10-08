@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function __construct(Request $request)
     {
-        $id = $request->route()->parameter('id');
+        $id = $request->get('id');
         $this->id = $id;
         $this->product = Product::find($this->id);
     }

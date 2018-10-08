@@ -17,3 +17,4 @@ routes_/
 config/
 storage/
 artisan
+public/media

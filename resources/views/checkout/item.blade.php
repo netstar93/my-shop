@@ -1,15 +1,19 @@
 @php
-$item = $productModel -> load($item ->product_id) ->first();
-$img = $item ->image;
-$image_path  = url("media/product/$img");
-$attr_values =  json_decode($item ->attribute_values, true);
-$diff_attr =  json_decode($item ->diff_attr_values , true);
-if(isset($diff_attr["'color'"])):
-    $color = $diff_attr["'color'"];
-endif;
-if(isset($diff_attr["'size'"])):
-    $size = $diff_attr["'size'"];
-endif;
+    $img ='';      //_log($item );
+    $item = $productModel -> load($item ->product_id) ->first();
+
+    if(isset($item ->image))
+    $img = $item ->image;
+
+    $image_path  = url("media/product/$img");
+    $attr_values =  json_decode($item ->attribute_values, true);
+    $diff_attr =  json_decode($item ->diff_attr_values , true);
+    if(isset($diff_attr["'color'"])):
+        $color = $diff_attr["'color'"];
+    endif;
+    if(isset($diff_attr["'size'"])):
+        $size = $diff_attr["'size'"];
+    endif;
 
 @endphp
 <div class="cart-item row">

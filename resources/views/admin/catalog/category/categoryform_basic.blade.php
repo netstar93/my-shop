@@ -1,37 +1,44 @@
 @php
-    $name = $cat_id = $status = $desc= $visibility = null;
-    if($data){
+    $name =  $cat_id = $status = $desc= $visibility = $parent_id= null;
+    if($formData) {
+    $data = $formData;
         $cat_id = $data ->cat_id;
         $name = $data ->name;
         $status = $data ->status;
         $visibility = $data ->visibility;
         $desc = $data ->description;
+        $parent_id = $data ->parent_cat_id;
     }
 @endphp
 <input type="hidden" name="cat_id" value="{{$cat_id}}" class="text"/>
 
 <div class="form-group form-inline">                        
     <label for="name">Enable</label>
-    <input type="checkbox" class="form-control form-control-lg" name="status" required>
+    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    Yes
+    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    No
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="name">Name</label>
-    <input type="text" class="form-control form-control-lg" name="name" value="{{$name}}" required>
+    {{ Form::text('name', $name, array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="name">Show on FrontEnd</label>
-    <input type="radio" class="form-control form-control-lg" value ="1" name="visibility" required="true"> Yes
-    <input type="radio" class="form-control form-control-lg" value ="0" name="visibility" required="true"> No
+    {{ Form::radio('visibility', '1',  $visibility ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    Yes
+    {{ Form::radio('visibility', '0', $visibility ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    No
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="description">Description</label>
-    <input type="text" class="form-control form-control-lg" name="description" value="{{$desc}}" required="">
+    {{ Form::text('description', $desc, array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
@@ -41,9 +48,17 @@
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
-<div class="form-group form-inline">                        
-    <label for="name">Parent Category</label>
-    <input type ="radio" name="parent_cat_id" id="parent_cat_id" value="1"> Men
-    <input type ="radio" name="parent_cat_id" id="parent_cat_id" value="2"> Women
-    <input type ="radio" name="parent_cat_id" id="parent_cat_id" value="3"> Electronics
+<div class="form-group form-inline">
+    <label for="name">Category</label>
+    <ul style="list-style:none">
+        @foreach($cat_coll as $category )
+            @php
+                $checked = false;
+                if($category ->id == $parent_id) {
+                    $checked = true;
+                }
+            @endphp
+            <li> {{ Form::radio('parent_cat_id',  $category ->id , $checked , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }} {{$category ->name}}</li>
+        @endforeach
+    </ul>
 </div>

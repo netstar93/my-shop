@@ -1,5 +1,5 @@
 @section('title', 'New Banner')
-@extends('admin.layout')
+@extends('admin.modal_layout')
 @section('content')
 
 <div class="right-side product-add-form">
@@ -27,16 +27,17 @@
 		
         <div class="product-form-content">	
             @if(isset($banner))
-                {{ Form::model($banner, array('url' => '/admin/banner/save' , 'id' => 'banner-form','method' => 'post','files' =>true , 'class'=> 'form'), $banner->id) }}
+                {{--{{ Form::model($banner, array('url' => '/admin/banner/update' , 'id' => 'banner-form','method' => 'put','files' =>true , 'class'=> 'form'), $banner->id) }}--}}
 
+                {{ Form::model($banner, ['route' => ['banner.update', $banner->id]  , 'method' => 'post' ]) }}
+                {{--<input type="hidden" name="_method" value="PUT">--}}
+                {{ method_field('PATCH') }}
             @else
-
-            {{ Form::open(array('url' => '/admin/banner/save' , 'id' => 'banner-form','method' => 'put','files' =>true , 'class'=> 'form') ) }}
+                {{ Form::open(array('url' => '/admin/banner/save' , 'id' => 'banner-form','method' => 'post','files' =>true , 'class'=> 'form') ) }}
             @endif    
 
-				<div class="tab-content">			 
-				<input type="hidden" name="_method" value="PUT">
-                <div class="form-group form-inline">                        
+				<div class="tab-content">
+                    <div class="form-group form-inline">
                     {{ Form ::label('Enable') }}
                     {{ Form ::radio('status',1 , array('class' => '', 'required' => true)) }} Yes
                     {{ Form ::radio('status',0) }} No
@@ -51,10 +52,9 @@
 
                 <div class="form-group form-inline">                        
                    {{ Form ::label('Upload Image') }}
-                   {{ Form ::file('image') }}                    
+                    {{ Form ::file('image' , null ) }}
                 </div>
-                {{ Form ::submit('SAVE') }}
-	    	</form>
+                    {!!Form::close()!!}
     	<div>
 	</div>
 </div>

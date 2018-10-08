@@ -1,64 +1,9 @@
 $(document).ready( function() {
-
-		$(".iframe").fancybox({
-	        type: 'iframe',
-	        autoscale : false
-	    });
-
-
-	    $(window).keydown(function(event){
-	        if(event.keyCode == 13) {
-	            event.preventDefault();
-	            return false;
-	        }	        
-	    });
-
-		$("#category_save").click(function(){
-
-		$('#category_form_button').trigger('click');
-
-		});
-
-
-    	$(document).on('change', '.btn-file :file', function() {
-		var input = $(this),
-			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-		input.trigger('fileselect', [label]);
-		});
-
-		$('.btn-file :file').on('fileselect', function(event, label) {
-		    
-		    var input = $(this).parents('.input-group').find(':text'),
-		        log = label;
-		    
-		    if( input.length ) {
-		        input.val(log);
-		    } else {
-		        if( log ) alert(log);
-		    }
-	    
-		});
-		function readURL(input) {
-		    if (input.files && input.files[0]) {
-		        var reader = new FileReader();
-		        
-		        reader.onload = function (e) {
-		            $('#img-upload').attr('src', e.target.result);
-		        }
-		        
-		        reader.readAsDataURL(input.files[0]);
-		    }
-		}
-
-		$("#imgInp").change(function(){
-		    readURL(this);
-		}); 
-
-
+    var formSubmitted = false;
 		//FORM FUNCTIONS		
 		$('button#cancel').click(function(event){ 	
-		   var pageURL = $(location). attr("href");	
-		   if(pageURL.indexOf('new') != -1){
+		   var pageURL = $(location). attr("href");
+            if (pageURL.indexOf('neddw') != -1) {
 		   	var referrer =  document.referrer;
 			window.location.href = referrer; 
 		   }else{	
@@ -66,22 +11,25 @@ $(document).ready( function() {
 		   }
 		});
 
-		$('button#save').click(function(event){ 	
-			$('form').submit();	
-			parent.location.reload();
+    $('button#save').click(function (event) {
+
+        if ($('form').submit() && formSubmitted) {
+            parent.location.reload();
+        }
 		});
 
 		$('form').submit(function(event){ 
 			var form = $("form");
 		    if (form[0].checkValidity() === false) {
 		      event.preventDefault();
-		      event.stopPropagation();		      
-		    }else{ 
+		      event.stopPropagation();
+            } else {
+                formSubmitted = true;
 		    	parent.jQuery.fancybox.close();
 				parent.parent.jQuery.fancybox.close();
-						    		
-		    }			    
-		    form.addClass('was-validated');	
+            }
+            form.addClass('was-validated');
+            return formSubmitted;
 		});
 
 		$('button#deleteRow').click(function(e){

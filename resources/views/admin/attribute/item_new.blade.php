@@ -17,7 +17,7 @@ if(isset($formData ->id)) {
 
 @section('title', 'New Attribute')
 
-@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.layout' ))
+@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.modal_layout' ))
 
 @section('content')
 <div class="right-side product-add-form">
@@ -46,7 +46,8 @@ if(isset($formData ->id)) {
         @endif
                 <div class="form-group form-inline">                        
                     <label for="name">Enable</label>
-                    <input type="checkbox" checked data-style="ios" class="form-control required" value ="1" name="status" required="true">
+                    {{ Form :: radio ( 'status' ,  1)  }} Yes
+                    {{ Form :: radio ( 'status' ,  0)  }} No
                     <div class="invalid-feedback">Oops, you missed this one.</div>
                 </div>
 

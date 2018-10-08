@@ -1,17 +1,26 @@
-@php 
-$name = $id = $desc = $short_desc= $sku = null;
-if($data){
-    $id = $data ->id;
-    $product_id = $data ->product_id;
-    $name = $data ->name;
-    $desc = $data ->desc;
-    $short_desc = $data ->short_desc;
-    $sku = $data ->sku;
-    $status = $data ->status;
-    $base_price = $data ->base_price;
-    $diff_attr_values = $data ->diff_attr_values;
-    $diff_attr_values = $data ->diff_attr_values;
-}
+@php
+    $name = $id = $desc = $short_desc= $sku = $attributeset = null;
+    $attributeset_data_coll = array('' => 'Select Attribute Set');
+    $category_ids = array();
+    if($data){
+        $id = $data ->id;
+        $product_id = $data ->product_id;
+        $name = $data ->name;
+        $desc = $data ->desc;
+        $short_desc = $data ->short_desc;
+        $sku = $data ->sku;
+        $status = $data ->status;
+        $base_price = $data ->base_price;
+        $attributeset = $data ->attribute_set_id;
+        $category_ids = json_decode($data ->category_id, true);
+        $diff_attr_values = $data ->diff_attr_values;
+    }
+
+    $attributesetArr = $attributeset_coll ->toarray();
+        if(count($attributesetArr) > 0 ){
+        foreach($attributesetArr as $attr)
+            $attributeset_data_coll[$attr['id']] = ucfirst($attr['name']);
+        }
 @endphp
 
 @if($id > 0)
@@ -40,24 +49,35 @@ if($data){
 
 <div class="form-group form-inline">                        
     <label for="description">Product Attribute Set</label>
-    <select class="form-control form-control-lg" id="attributeset" name="attributeset" required>
-        <option value="1">Clothes</option>        
-        <option value="2">Electronics</option>        
-    </select>
+    {{Form :: select( 'attributeset' , $attributeset_data_coll , $attributeset , array('id' => 'attributeset'  , 'class' => 'form-control form-control-lg' , 'required' => 'true')) }}
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="description">Product Category</label>
-    <input type="checkbox" name="category" value = "1" class="checkbox" > Men
-    <input type="checkbox" name="category" value = "2" class="checkbox" required> Women
-    <div class="invalid-feedback">Oops, you missed this one.</div>
+    <ul style="list-style:none">
+        @if(count($cat_coll) > 0)
+            @foreach($cat_coll as $category )
+                @php
+                    $checked = false;
+                    if(count($category_ids) > 0){
+                        if(in_array($category ->cat_id , $category_ids)) {
+                            $checked = true;
+                        }
+                }
+                @endphp
+                <li> {{ Form::checkbox('category_id[]',  $category ->cat_id , $checked , array('class' => 'form-control form-control-lg' )) }} {{ucfirst($category ->name)}}</li>
+            @endforeach
+            <div class="invalid-feedback">Oops, you missed this one.</div>
+        @endif
+    </ul>
+
 </div>
 
 <div class="form-group form-inline">                        
     <label for="description">Brand</label>
     <input type="checkbox" name="category" value = "1" class="checkbox" > Trends
-    <input type="checkbox" name="category" value = "2" class="checkbox" required> Hunk
+    <input type="checkbox" name="category" value="2" class="checkbox"> Hunk
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 

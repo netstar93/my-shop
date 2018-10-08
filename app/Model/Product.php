@@ -4,6 +4,8 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Model\Attribute;
+use App\Model\Attributeset;
 
 class Product extends Model
 {
@@ -60,14 +62,12 @@ class Product extends Model
         return $data;
     }
 
-    public function updateProduct($params) {
-        $data = $params ->all();
+    public function updateProduct($data)
+    {
+//        $data = $params ->all();
         $data['seller_id']  = 1;
         $diff_att = '';
-        $custom_attr = '';
-            if(isset($data['custom']) && count($data['custom']) > 0){
-                $custom_attr  = json_encode($data['custom']);
-            }
+
         $id_data_diff = [];
         $id = $data['id'];
         $child_item = array();
@@ -79,8 +79,8 @@ class Product extends Model
             'short_desc'=> $data['short_description'],
             'attribute_set_id'=> $data['attributeset'],
             'category_id'=> $data['category'], 
-            'child_ids'=> "na",   
-            'attribute_values' => $custom_attr,     
+            'child_ids'=> "na",
+                'attribute_values' => $data['custom_attr'],
             'seller_id'=> $data['seller_id'],
             'status'=> $data['status']
         ]);
@@ -99,8 +99,25 @@ class Product extends Model
                 }
             }
         }
-
         if($id_main > 0) return true;
-        
+    }
+
+    /*
+     * GET ALL OTHER ATTRIBUTES OF A ATTRIBUTE SET
+     */
+
+    public function getOtherAttributes($set_id)
+    {
+        $data = array();
+        $set_data = Attributeset:: findOrFail($set_id);
+        $attributes_arr = explode(',', $set_data->attribute_ids);
+        try {
+            foreach ($attributes_arr as $attr) {
+                $at = Attribute::find($attr);
+                if (isset($at->status) && $at->status == 1) $data[] = $at;
+            }
+        } catch (ErrorException $e) {
+        }
+        return $data;
     }
 }

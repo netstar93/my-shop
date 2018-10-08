@@ -88,7 +88,7 @@ class CustomerController extends Controller
             $error = $e->getMessage();
         }
         if($customer){
-            return response()->json(array('success' => true,'id'=> $customer->id));
+            return response()->json(array('success' => true, 'id' => $customer['id']));
         }
         else{
             return response()->json(array('success' => false,'message' => $error));

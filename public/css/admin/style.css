@@ -51,6 +51,15 @@ a{
     margin-bottom: 20px;
 }
 
+.page-message {
+    width: 30%;
+    position: fixed;
+    color: white;
+    background-color: lightseagreen;
+    /* border-color: #c3e6cb; */
+    font-weight: 600;
+}
+
 .cms-page{
 	
 }
@@ -64,16 +73,16 @@ max-width: 20%;
 .admin-modal-wrapper{
 
 }
-.admin-modal-wrapper .right-side , .fancybox-content{
+
+.admin-modal-wrapper .right-side {
 	min-height: auto!important;
-	max-width: 90%;
+    width: 100%;
 }
-.fancybox-slide--iframe .fancybox-content {
-    
-    max-width  : 90%;
-    min-height : 90%;
-    max-height : 90%;
-    margin: 0;
+
+.admin-main-wrapper + .fancybox-container .fancybox-content {
+    max-width: 90%;
+    max-height: 100%;
+    /*margin: 0;*/
 }
 
 /*

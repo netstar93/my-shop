@@ -13,7 +13,10 @@
                     <option value="delete">Disable</option>
                 </select>
             </span>
-            <span class="action-new float-right col-lg-4"> <a href="/admin/category/new"><button class="btn btn-success">Add Category</button></a></span>
+        {{--<span class="action-new float-right col-lg-4"> <a href="/admin/category/new"><button class="btn btn-success">Add Category</button></a></span>--}}
+        <button class="btn btn-success float-right col-lg-2" data-fancybox data-type="iframe"
+                data-src="/admin/category/new" href="javascript:;">Add Category
+        </button>
     </div>
 	<div class="wrapper">
 		<table class="table table-bordered">
@@ -23,8 +26,8 @@
 				<tr>
 					<td><input type="checkbox" name="categoryEdit"></td>
 					<td>{{$category ->cat_id}}</td>
-					<td>{{ucfirst($category ->name)}}</td>					
-					<td>{{ucfirst($category ->parent_category_id)}}</td>
+					<td>{{ucfirst($category ->name)}}</td>
+                    <td>{{ucfirst($category ->parent_cat_id)}}</td>
 					<td>{{$category ->visibility}}</td>
 					<td>{{$category ->status}}</td>					
 					<td>

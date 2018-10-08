@@ -13,7 +13,9 @@
                     <option value="delete">Disable</option>
                 </select>
             </span>
-            <span class="action-new float-right col-lg-4"> <a href="/admin/product/new"><button class="btn btn-success">Add Product</button></a></span>
+        <button class="btn btn-success float-right col-lg-2" data-fancybox data-type="iframe"
+                data-src="/admin/product/new" href="javascript:;">Add Product
+        </button>
     </div>
 	<div class="wrapper">
 		<table class="table table-bordered">

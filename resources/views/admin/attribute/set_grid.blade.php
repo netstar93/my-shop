@@ -14,7 +14,9 @@
                     <option value="delete">Disable</option>
                 </select>
             </span>
-            <span class="action-new float-right col-lg-4"> <a href="/admin/attributeset/new"><button class="btn btn-success">Add Attributeset</button></a></span>
+        <button class="btn btn-success float-right col-lg-2" data-fancybox data-type="iframe"
+                data-src="/admin/attributeset/new" href="javascript:;">Add Attribute Set
+        </button>
     </div>
 	<div class="wrapper">
 		<table class="table table-bordered">
@@ -27,8 +29,13 @@
 					<td>{{ucfirst($set ->name)}}</td>
 					
 					<td>
-						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/attributeset/edit/{{$set ->id}}" href="javascript:;" >Edit </button>	
-						<button class="btn btn-error" id="deleteItem" entity="attributeset" item_id ="{{$set ->id}}" disable>Remove</button>					
+                        {{--<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/attributeset/edit/{{$set ->id}}" href="javascript:;" >Edit </button>	--}}
+                        <a href="/admin/attributeset/edit/{{$set ->id}}">
+                            <button class="btn btn-success">Edit</button>
+                        </a>
+                        <button class="btn btn-error" id="deleteItem" entity="attributeset" item_id="{{$set ->id}}"
+                                disable>Remove
+                        </button>
 					</td>
 				</tr>
 			@endforeach

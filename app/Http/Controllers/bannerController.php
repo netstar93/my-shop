@@ -45,14 +45,14 @@ class bannerController extends Controller
 */
     public function save(Request $request)
     {
+        //  _log($request ->all());
         $this->validate($request, [
             'status' => 'required',
             'name' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-_log($request ->all());
+
         $status = $request ->status;
-        
         $image = $request->file('image');
         $image_name = time().'.'.$image->getClientOriginalExtension();
    
@@ -64,10 +64,11 @@ _log($request ->all());
         // }
 
         $img = Image::make($image->getRealPath());
-        $img->resize(self::WIDTH, 400, function ($constraint) {
+        $img->resize(1000, 400, function ($constraint) {
             $constraint->aspectRatio();
-        })->save($destinationPath.'/'.$image_name);
-
+        })
+//            ->resizeCanvas(1000, 350)
+            ->save($destinationPath . '/' . $image_name);
         $this -> model ->status = $status;
         $this -> model ->name = ucfirst($request ->name);
         $this -> model ->path = $image_name;
@@ -82,7 +83,7 @@ _log($request ->all());
 /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($aid)
     {
         //
     }

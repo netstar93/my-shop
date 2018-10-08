@@ -1,23 +1,60 @@
-@php 
-$base_price = $special_price = null;
-if($data){
-    $base_price = $data ->base_price;
-    $special_price = $data ->special_price;
-}
+@php
+    $product_custom_attr = array();
+    if(count($data) && isset($data -> attribute_values)) {
+        $product_custom_attr = json_decode($data -> attribute_values , true);
+    }
 @endphp
+<table>
+    @foreach($other_attributes as $attribute)
+        @php
+            $value = null;
+            if(isset($product_custom_attr[$attribute->id])) {
+              $value = $product_custom_attr[$attribute->id];
+            }
+        @endphp
+        <div class="form-group form-inline">
+            @if($attribute ->type == 'text')
+                @php
+                        @endphp
+                <tr>
+                    <td> {{  Form::label($attribute ->name) }} </td>
+                    <td> {{  Form::text("custom[$attribute->id]" , $value , array('class' => '') ) }}  </td>
+                </tr>
+                <div class="invalid-feedback">Oops, you missed this one.</div>
+            @endif
 
+            @if($attribute ->type == 'select')
+                @php
+                    $select_values = json_decode($attribute->options , true);
+                     array_unshift($select_values, '' );
+                @endphp
+                <tr>
+                    <td> {{  Form::label($attribute ->name) }} </td>
+                    <td>  {{ Form::select( "custom[$attribute->id]",  $select_values, $value  , ['required' =>true] )  }} </td>
+                </tr>
+                <div class="invalid-feedback">Oops, you missed this one.</div>
+            @endif
 
-<div class="form-group form-inline">                        
-    <label for="uname1">Material</label>
-    <input type="text"  attr_id = "3" class="form-control form-control-lg" value="" name="custom['material']" >
-    <div class="invalid-feedback">Oops, you missed this one.</div>
-</div>
-<div class="form-group form-inline">                        
-    <label for="uname1">Is Printed</label>
-    <select name="custom['is_printed']" attr_id = "4" class="form-control form-control-lg">
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-    </select>
-    <div class="invalid-feedback">Oops, you missed this one.</div>
-</div>
-      
+            @if($attribute ->type == 'radio')
+                @php
+                        @endphp
+                <tr>
+                    <td> {{  Form::label($attribute ->name) }} </td>
+                    <td>  {{ Form :: radio( "custom[$attribute->id]" , 1  , $value) }} Yes</td>
+                    <td>  {{ Form :: radio( "custom[$attribute->id]" , 0  , $value) }} No</td>
+                </tr>
+                <div class="invalid-feedback">Oops, you missed this one.</div>
+            @endif
+
+            @if($attribute ->type == 'boolean')
+                <tr>
+                    <td> {{  Form::label($attribute ->name) }} </td>
+                    <td>  {{ Form::select( "custom[$attribute->id]",  array(1 => 'Yes' , 0 => 'No'), $value  , [ ] )  }} </td>
+                </tr>
+                <div class="invalid-feedback">Oops, you missed this one.</div>
+            @endif
+
+        </div>
+
+    @endforeach
+</table>

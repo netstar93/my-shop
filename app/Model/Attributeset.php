@@ -8,6 +8,5 @@ class Attributeset extends Model
 {
     protected $table = "attribute_set";
     public $timestamps = false;
-    protected $fillable = ['name','attributes'];
-    
+    protected $fillable = ['name', 'attribute_ids'];
 }

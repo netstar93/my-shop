@@ -1,16 +1,15 @@
 @php
-
-$data = array();
-$edit_mode = false;
-if(isset($formData ->id)) {
-    $data = $formData;
-    $edit_mode = true;
-}
-$product_data = ['data' => $data];
+    $data = array();
+    $edit_mode = false;
+    if(isset($formData ->id)) {
+        $data = $formData;
+        $edit_mode = true;
+    }
+    $product_data = ['data' => $data];
 @endphp
 
 @section('title', 'New Product')
-@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.layout' ))
+@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.modal_layout' ))
 @section('content')
 
 <div class="right-side product-add-form">
@@ -58,7 +57,7 @@ $product_data = ['data' => $data];
 				<form class="form" role="form" action="/admin/product/save" autocomplete="on" id="product-form" novalidate="" method="POST" enctype="multipart/form-data">
 					<div class="tab-content">			 
 					  <div class="tab-pane active" id="basic" role="tabpanel">
-					  	@include('admin.catalog.product.productform_basic',$product_data)
+                          @include('admin.catalog.product.productform_basic',['attributeset_coll' =>$attributeset_coll])
 					  </div>
 					  <div class="tab-pane" id="prices" role="tabpanel">
 					  	@include('admin.catalog.product.productform_price',$product_data)
@@ -67,7 +66,7 @@ $product_data = ['data' => $data];
 					  	@include('admin.catalog.product.productform_image')
 					  </div>
                       <div class="tab-pane" id="other" role="tabpanel">
-                        @include('admin.catalog.product.productform_other')
+                          @include('admin.catalog.product.productform_other' )
                       </div>
 					  <div class="tab-pane" id="subproduct" role="tabpanel">
 					  	@include('admin.catalog.product.productform_childform')

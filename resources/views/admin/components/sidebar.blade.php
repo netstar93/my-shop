@@ -77,7 +77,7 @@
                 <div id="collapseFive" class="collapse" data-parent="#accordion">
                     <div class="card-body">
                         <ul>
-                            <li><a href="/admin/home/banner">Manage Banners</a> </li>
+                            <li><a href="/admin/banner">Manage Banners</a></li>
                             <li><a href="/admin/category/index">Manage Others</a> </li>
                         </ul>
                     </div>

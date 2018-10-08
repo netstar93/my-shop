@@ -21,7 +21,7 @@ class attributesetController extends Controller
     public function edit(Request $request){
       $id = $request ->id;
       $collection = Attributeset::find($id);
-      $attributeColl = Attribute::get();
+        $attributeColl = Attribute::get();
       return view('admin.attribute.set_new',['formData' => $collection , 'attribute_col' => $attributeColl]);
     }
 
@@ -36,11 +36,16 @@ class attributesetController extends Controller
    }
 
     public function save(Request $request){
-    	//echo "<pre>"; print_r($request ->all()); die;
-    	$attributes = implode(",",$request->get('attributes'));
+        $data = $request->all();
+        $attributes = implode(",", $request->get('attribute_ids'));
+        if (isset($data['id'])) {
+            $data['attribute_ids'] = $attributes;
+            Attributeset::find($data['id'])->update($data);
+            return redirect('admin/attributeset/index')->with('success', 'Succcessfully Updated');
+        }
     	$attributeset =  new attributeset();
     	$attributeset ->name = $request->get('name');
-    	$attributeset ->attributes = $attributes;
+        $attributeset->attribute_ids = $attributes;
     	$attributeset ->save();
 
        if($attributeset ->id > 0) {

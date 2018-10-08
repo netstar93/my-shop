@@ -19,13 +19,15 @@ class categoryController extends Controller
     }
 
     public function add(){
-    	return view('admin.catalog.category.new');
+        $cat_coll = DB::table('catalog_category_main')->get();
+        return view('admin.catalog.category.new', ['cat_coll' => $cat_coll, 'formData' => null]);
     }
 
     public function edit(Request $request){
-      $id = $request ->id;
-      $collection =  $this ->model ->load($id)->first();
-      return view('admin.catalog.category.new',['formData' => $collection]);
+        $id = $request->id;
+        $collection = $this->model->load($id)->first();
+        $cat_coll = DB::table('catalog_category_main')->get();
+        return view('admin.catalog.category.new', ['formData' => $collection, 'cat_coll' => $cat_coll]);
     }
 
     public function save(Request $request){

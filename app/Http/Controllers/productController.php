@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Model\Product;
+use App\Model\Category;
+use App\Model\Attributeset;
 
 class productController extends Controller
 {
@@ -15,41 +17,59 @@ class productController extends Controller
 	}
 
 	public function index($type =null,$type_value=null){
-		$collection  = $this ->model ->getCollectionData();   	
-    	return view('admin.catalog.product.index') ->with('collection',$collection );
+		$collection  = $this ->model ->getCollectionData();
+        return view('admin.catalog.product.index')->with([
+            'collection' => $collection
+        ]);
     }
     
     public function new(){
-    	return view('admin.catalog.product.new');
+        $set_id = 5;
+        $collection = $this->model->getCollectionData();
+        $attributeset_coll = Attributeset:: all();
+        $category_coll = Category::all()->where('status', 1);
+        $other_attributes = $this->model->getOtherAttributes($set_id);
+        return view('admin.catalog.product.new')->with([
+            'attributeset_coll' => $attributeset_coll,
+            'cat_coll' => $category_coll,
+            'other_attributes' => $other_attributes
+        ]);
     }
 
     public function edit(Request $request){
       $id = $request ->id; //product_id
-      $collection =  $this ->model ->load($id)->first();
-      return view('admin.catalog.product.new',['formData' => $collection]);
+        $collection = $this->model->load($id)->first();
+        $set_id = $collection->attribute_set_id;
+        $other_attributes = $this->model->getOtherAttributes($set_id);
+        $attributeset_coll = Attributeset:: all();
+        $category_coll = Category::all();
+        return view('admin.catalog.product.new')->with([
+            'formData' => $collection,
+            'attributeset_coll' => $attributeset_coll,
+            'cat_coll' => $category_coll,
+            'other_attributes' => $other_attributes
+        ]);
     }
 
     public function save(Request $request){
 
-//       _log($request ->all());
-
     	$id_data = $id_main = '';
     	$id_data_diff = [];
     	$data = $request ->all();
-        if(isset($request ->id)){
-           $id_data  = $this ->model ->updateProduct($request);
-            return redirect('admin/product/index')->with('success','Product succcessfully saved');
+        $data['category'] = json_encode($data['category_id']);
+        if (isset($data['custom']) && count($data['custom']) > 0) {
+            $data['custom_attr'] = json_encode($data['custom']);
+        }
+        if (isset($request->id)) {
+            $id_data = $this->model->updateProduct($data);
+            return redirect('admin/product/index')->with('success', 'Product Succcessfully Updated');
         }
         else {
-            $child_item = array();//$request->child_item;
-
+            $child_item = array();
             $data['seller_id'] = 1;
             $filename = '';
             $diff_att = '';
-            $custom_attr = '';
-            if(isset($data['custom']) && count($data['custom']) > 0){
-                $custom_attr  = json_encode($data['custom']);
-            }
+
             //IMAGE SAVE LOGIC
             $destination = 'media/product';
             $image = $request->file('base_image');
@@ -66,7 +86,7 @@ class productController extends Controller
                 'attribute_set_id' => $data['attributeset'],
                 'category_id' => $data['category'],
                 'child_ids' => "na",
-                'attribute_values' => $custom_attr,
+                'attribute_values' => $data['custom_attr'],
                 'seller_id' => $data['seller_id'],
                 'status' => $data['status']
             ]);
@@ -100,7 +120,8 @@ class productController extends Controller
                 }
             }
 
-            if ($id_data > 0 || count($child_item) == count($id_data_diff)) {
+//            if ($id_data > 0 || count($child_item) == count($id_data_diff)) {
+            if (true) {
                 return redirect('admin/product/index')->with('success', 'product succcessfully saved');
             } else {
                 return redirect('admin/product/index')->with('error', 'product not succcessfully saved');
@@ -127,4 +148,10 @@ class productController extends Controller
             }
             return json_encode(array('error' => true));
         }
+
+    public function attribute(Request $request)
+    {
+        $set_id = $request->get('set_id');
+        return $this->model->getOtherAttributes($set_id);
+    }
 }

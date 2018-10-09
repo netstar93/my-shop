@@ -30,8 +30,7 @@
                 {{--{{ Form::model($banner, array('url' => '/admin/banner/update' , 'id' => 'banner-form','method' => 'put','files' =>true , 'class'=> 'form'), $banner->id) }}--}}
 
                 {{ Form::model($banner, ['route' => ['banner.update', $banner->id]  , 'method' => 'post' ]) }}
-                {{--<input type="hidden" name="_method" value="PUT">--}}
-                {{ method_field('PATCH') }}
+                                {{ method_field('PATCH') }}
             @else
                 {{ Form::open(array('url' => '/admin/banner/save' , 'id' => 'banner-form','method' => 'post','files' =>true , 'class'=> 'form') ) }}
             @endif    
@@ -54,6 +53,7 @@
                    {{ Form ::label('Upload Image') }}
                     {{ Form ::file('image' , null ) }}
                 </div>
+                    {{ Form ::submit('Save', array('id' => 'saveForm','style' =>'dissplay:none')) }}
                     {!!Form::close()!!}
     	<div>
 	</div>

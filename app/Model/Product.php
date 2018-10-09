@@ -56,9 +56,11 @@ class Product extends Model
 
     public function getCategoryProductCollection($id = null){
         if(!$id) return false;
+
         $data = $this ->getCollectionData()->filter(function ($value, $key) use ($id) {
-            return $value->category_id == $id;
+          return $value->product_id == 28;
         });
+         _log( $data);
         return $data;
     }
 

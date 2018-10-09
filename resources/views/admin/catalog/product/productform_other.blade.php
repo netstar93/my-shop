@@ -1,6 +1,7 @@
 @php
     $product_custom_attr = array();
-    if(count($data) && isset($data -> attribute_values)) {
+    
+    if(count(array($data))  && isset($data -> attribute_values)) {
         $product_custom_attr = json_decode($data -> attribute_values , true);
     }
 @endphp

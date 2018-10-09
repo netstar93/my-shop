@@ -45,35 +45,38 @@ class bannerController extends Controller
 */
     public function save(Request $request)
     {
-        //  _log($request ->all());
+         // _log($request ->all());
         $this->validate($request, [
             'status' => 'required',
             'name' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $status = $request ->status;
         $image = $request->file('image');
-        $image_name = time().'.'.$image->getClientOriginalExtension();
-   
+        $image_name = time().'_banner.'.$image->getClientOriginalExtension();
+
         $destinationPath = public_path('media\banners');
         File::isDirectory($destinationPath) or File::makeDirectory($destinationPath, 0777, true, true);
-
-        // if(!Storage::disk('public')->has('media\banners')){
-        //     Storage::disk('public')->makeDirectory('media\banners');
-        // }
-
+        try{
         $img = Image::make($image->getRealPath());
         $img->resize(1000, 400, function ($constraint) {
             $constraint->aspectRatio();
         })
-//            ->resizeCanvas(1000, 350)
-            ->save($destinationPath . '/' . $image_name);
-        $this -> model ->status = $status;
-        $this -> model ->name = ucfirst($request ->name);
-        $this -> model ->path = $image_name;
-        $data = $this -> model->save();
-        if(isset($data)) {
+//      ->resizeCanvas(1000, 350)
+        ->save($destinationPath . '/' . $image_name);
+
+            $this -> model ->status = $status;
+            $this -> model ->name = ucfirst($request ->name);
+            $this -> model ->path = $image_name;
+            $id = $this -> model->save();
+        }
+        catch(Exception $e) {
+         //  return redirect('admin/banner') ->with('error',$e ->getMessage());
+         echo $e ->getMessage(); die;
+        }
+
+        if($id > 0) {
             return redirect('admin/banner') ->with('success','Banner Saved');
         }
         return redirect('admin/banner') ->with('error','Something Wrong !!!');

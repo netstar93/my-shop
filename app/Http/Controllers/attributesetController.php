@@ -37,6 +37,7 @@ class attributesetController extends Controller
 
     public function save(Request $request){
         $data = $request->all();
+        // _log( $data); die;
         $attributes = implode(",", $request->get('attribute_ids'));
         if (isset($data['id'])) {
             $data['attribute_ids'] = $attributes;
@@ -45,7 +46,7 @@ class attributesetController extends Controller
         }
     	$attributeset =  new attributeset();
     	$attributeset ->name = $request->get('name');
-        $attributeset->attribute_ids = $attributes;
+      $attributeset->attribute_ids = $attributes;
     	$attributeset ->save();
 
        if($attributeset ->id > 0) {

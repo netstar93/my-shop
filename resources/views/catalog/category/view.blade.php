@@ -5,7 +5,9 @@
     <div id="category_view_main">
 
         <div class="container">
-            <div class='title'> {{  ucwords($data ->name) }} </div>
+            @if(isset($data))
+                <div class='title'> {{  ucwords($data ->name) }} </div>
+            @endif
             <div class="right-filter col-lg-2 col-xs-2">
                 //FILTER
 

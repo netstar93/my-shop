@@ -24,7 +24,7 @@ class productController extends Controller
     }
     
     public function new(){
-        $set_id = 5;
+        $set_id = 1;
         $collection = $this->model->getCollectionData();
         $attributeset_coll = Attributeset:: all();
         $category_coll = Category::all()->where('status', 1);
@@ -37,7 +37,8 @@ class productController extends Controller
     }
 
     public function edit(Request $request){
-      $id = $request ->id; //product_id
+        $id = $request ->id;
+        $error = '';
         $collection = $this->model->load($id)->first();
         $set_id = $collection->attribute_set_id;
         $other_attributes = $this->model->getOtherAttributes($set_id);
@@ -78,7 +79,7 @@ class productController extends Controller
                 $image->move($destination, $filename);
                 $location = $destination . '/' . $filename;
             }
-
+try{
             $id_main = DB::table('catalog_product_main')->insertGetId([
                 'name' => $data['name'],
                 'desc' => $data['description'],
@@ -119,12 +120,15 @@ class productController extends Controller
                     ]);
                 }
             }
-
-//            if ($id_data > 0 || count($child_item) == count($id_data_diff)) {
-            if (true) {
+}
+catch(Exception $e){
+   
+    $error = $e->getMessage();
+}
+            if (isset($id_data) || isset($id_diff)) {
                 return redirect('admin/product/index')->with('success', 'product succcessfully saved');
             } else {
-                return redirect('admin/product/index')->with('error', 'product not succcessfully saved');
+                return json_encode(array('error' => $error));
             }
         }
     }

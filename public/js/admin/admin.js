@@ -13,23 +13,50 @@ $(document).ready( function() {
 
     $('button#save').click(function (event) {
 
-        if ($('form').submit() && formSubmitted) {
-            parent.location.reload();
+        if ($('form').submit()) {
+          parent.location.reload();
         }
 		});
 
-		$('form').submit(function(event){ 
+    $('button#dsave').click(function(e){
+    		//e.preventDefault();
 			var form = $("form");
+			form[0].checkValidity();
 		    if (form[0].checkValidity() === false) {
 		      event.preventDefault();
 		      event.stopPropagation();
-            } else {
-                formSubmitted = true;
-		    	parent.jQuery.fancybox.close();
-				parent.parent.jQuery.fancybox.close();
+			  return false;
             }
-            form.addClass('was-validated');
-            return formSubmitted;
+
+			var request = $.ajax({
+			  url: "/admin/product/save",
+			  type: "POST",
+			  data: form.serialize(),
+			  dataType: "json",
+			  success: function(data){
+			  	alert(data.error);
+			  	if(!data.error){}
+				//location.reload();
+			  }
+			});
+		});
+
+		$('form').submit(function(event){ 
+			event.preventDefault();
+			var form = $("form");
+		    if (form[0].checkValidity() === false) {
+		      event.preventDefault();
+		      event.stopPropagation(); 
+            } else {
+            	this.submit();
+            	setTimeout(function(){
+                formSubmitted = true;
+                parent.jQuery.fancybox.close();
+				jQuery.fancybox.close(true);
+                
+            	},2000);		    	
+            }
+           form.addClass('was-validated');
 		});
 
 		$('button#deleteRow').click(function(e){

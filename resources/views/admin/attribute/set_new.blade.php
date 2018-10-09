@@ -13,7 +13,7 @@
     }
 @endphp
 @section('title', 'New Attribute Set')
-@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.layout' ))
+@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.modal_layout' ))
 @section('content')
 
 <div class="right-side product-add-form">
@@ -32,7 +32,7 @@
     	</span>
 	</div>
     <div class="wrapper">
-	    
+	    <a href ="{{ URL::previous() }} ">  Back </a>
 		<div class="product-form-content">
             <form class="form" role="form" action="/admin/attributeset/save" id="attributeset-form" novalidate=""
                   method="POST" enctype="multipart/form-data">
@@ -65,7 +65,7 @@
                 </ul>
                 </div>		  						 
 		    	</div>
-                <input type="submit" value="submit"/>
+              <!--   <input type="submit" value="submit"/> -->
 	    	</form>
     	<div>
 	</div>

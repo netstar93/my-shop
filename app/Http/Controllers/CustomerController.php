@@ -46,10 +46,10 @@ class CustomerController extends Controller
         return redirect()->back()->withSuccess('You are successfully registered!');
     }
     public function checklogin(Request $request){
-//        $this->validate($request,[
-//            'email' => 'required|max:30',
-//            'password' => 'required'
-//        ]);
+       $this->validate($request,[
+           'email' => 'required|max:30',
+           'password' => 'required'
+       ]);
         $email_id =  $request->email;
         $pass =  $request->password;
         $ajax =  $request->ajax;

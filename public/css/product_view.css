@@ -16,6 +16,10 @@
 .product_view_main .desc-box .name{
     font-size: 20px;
 }
+
+.product_view_main .image-box .product-image-view{
+    max-width:300px;
+}
 .actions span {
     padding: 10px;
 }

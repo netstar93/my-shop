@@ -67,7 +67,7 @@ Route::get('admin/attribute/new', 'attributeController@new');
 Route::post('admin/attribute/save', 'attributeController@save');
 Route::get('admin/attribute/edit/{id?}', 'attributeController@edit');
 Route::get('admin/attribute/delete/{id?}', 'attributeController@delete');
-
+Route::get('admin/attribute/list', 'attributeController@list');
 //ADMIN BANNER
 Route::post('admin/banner/save', 'bannerController@save');
 Route::get('admin/banner/new', 'bannerController@new');

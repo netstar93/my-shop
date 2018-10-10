@@ -7,6 +7,7 @@ use DB;
 use App\Model\Product;
 use App\Model\Category;
 use App\Model\Attributeset;
+use App\Model\Attribute;
 
 class productController extends Controller
 {
@@ -23,12 +24,13 @@ class productController extends Controller
         ]);
     }
     
-    public function new(){
-        $set_id = 1;
+    public function new(){       
+        $attributeModel = new Attribute();
         $collection = $this->model->getCollectionData();
         $attributeset_coll = Attributeset:: all();
         $category_coll = Category::all()->where('status', 1);
-        $other_attributes = $this->model->getOtherAttributes($set_id);
+        $set_id = $attributeset_coll ->first() ->id;
+        $other_attributes = $attributeModel ->getOtherAttributes($set_id);
         return view('admin.catalog.product.new')->with([
             'attributeset_coll' => $attributeset_coll,
             'cat_coll' => $category_coll,
@@ -38,10 +40,11 @@ class productController extends Controller
 
     public function edit(Request $request){
         $id = $request ->id;
+        $attributeModel = new Attribute();
         $error = '';
         $collection = $this->model->load($id)->first();
         $set_id = $collection->attribute_set_id;
-        $other_attributes = $this->model->getOtherAttributes($set_id);
+        $other_attributes = $attributeModel->getOtherAttributes($set_id);
         $attributeset_coll = Attributeset:: all();
         $category_coll = Category::all();
         return view('admin.catalog.product.new')->with([
@@ -60,6 +63,9 @@ class productController extends Controller
         $data['category'] = json_encode($data['category_id']);
         if (isset($data['custom']) && count($data['custom']) > 0) {
             $data['custom_attr'] = json_encode($data['custom']);
+        }
+        else{
+            $data['custom_attr'] = '';
         }
         if (isset($request->id)) {
             $id_data = $this->model->updateProduct($data);
@@ -152,10 +158,4 @@ catch(Exception $e){
             }
             return json_encode(array('error' => true));
         }
-
-    public function attribute(Request $request)
-    {
-        $set_id = $request->get('set_id');
-        return $this->model->getOtherAttributes($set_id);
-    }
 }

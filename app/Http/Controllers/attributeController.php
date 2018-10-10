@@ -23,7 +23,7 @@ class attributeController extends Controller
     }
 
     public function save(Request $request){
-        $data = $request->all();
+        $data = $request->all();       
         $data['options'] =  json_encode($data['select_option']);
 
         if($data['type'] != 'select') {
@@ -37,6 +37,7 @@ class attributeController extends Controller
         $attribute = new attribute();
         $attribute->name = $data['name'];
         $attribute->type = $data['type'];
+        $attribute->status = $data['status'];
         $attribute->is_configurable = 0;
         $attribute->options = $data['options'];
         $attribute->save();
@@ -57,4 +58,14 @@ class attributeController extends Controller
         }
         return json_encode(array('error' => true));
     }
+
+     public function list(Request $request) {
+        $attribute_arr = array();
+        $html = '';
+        $set_id = $request ->set_id;
+        $attributeModel = new Attribute();
+        $attribute_arr  = $attributeModel ->getOtherAttributes($set_id);  
+        $html .= view('admin.catalog.product.productform_other') ->with(['other_attributes' =>  $attribute_arr,'data' => array() ])->render();
+        return json_encode(array('html' => $html));
+     }
 }

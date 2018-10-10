@@ -1,6 +1,7 @@
 @php
 $edit_mode = false;
 $id = $name = $wrapper_class =$type=  null;
+$status = true;
 $data = $options = array();
 $edit_mode = false;
 if(isset($formData ->id)) {
@@ -8,6 +9,7 @@ if(isset($formData ->id)) {
     $edit_mode = true;
     $id= $formData ->id;
     $name = $data  ->name;
+    $status = $data  ->status;
     $type = $data  ->type;
     if(!empty($data ->options)) {
         $options = json_decode($data ->options,true);
@@ -44,16 +46,17 @@ if(isset($formData ->id)) {
         @if($edit_mode)
         {{Form :: hidden('id',$id)}}
         @endif
-                <div class="form-group form-inline">                        
-                    <label for="name">Enable</label>
-                    {{ Form :: radio ( 'status' ,  1)  }} Yes
-                    {{ Form :: radio ( 'status' ,  0)  }} No
+                <div class="form-group form-inline">
+                    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+                    Yes
+                    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+                    No
                     <div class="invalid-feedback">Oops, you missed this one.</div>
                 </div>
 
                 <div class="form-group form-inline">                        
                     <label for="name">Name</label>
-                    <input type="text" class="form-control form-control-lg" value="{{$name}}"name="name" required="">
+                    <input type="text" class="form-control form-control-lg" value="{{$name}}"name="name" required>
                     <div class="invalid-feedback">Oops, you missed this one.</div>
                 </div>
 

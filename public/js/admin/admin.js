@@ -14,22 +14,26 @@ $(document).ready( function() {
     $('button#save').click(function (event) {
 
         if ($('form').submit()) {
-          parent.location.reload();
-        }
-		});
 
-    $('button#dsave').click(function(e){
+		setTimeout(function(){   alert(formSubmitted);
+					           
+			                parent.jQuery.fancybox.close();
+							parent.parent.jQuery.fancybox.close();
+			                //location.reload();
+			        		          		
+			        },4000);
+					}
+	});
+
+    $('button#saSSSve').click(function(e){ 
     		//e.preventDefault();
-			var form = $("form");
-			form[0].checkValidity();
-		    if (form[0].checkValidity() === false) {
+			var form = $("form");			
+		    if (form[0].checkValidity() === false) {		  
 		      event.preventDefault();
-		      event.stopPropagation();
-			  return false;
+		      event.stopPropagation();			 
             }
-
 			var request = $.ajax({
-			  url: "/admin/product/save",
+			  url: "/admin/attribute/save",
 			  type: "POST",
 			  data: form.serialize(),
 			  dataType: "json",
@@ -39,6 +43,7 @@ $(document).ready( function() {
 				//location.reload();
 			  }
 			});
+			
 		});
 
 		$('form').submit(function(event){ 
@@ -49,15 +54,11 @@ $(document).ready( function() {
 		      event.stopPropagation(); 
             } else {
             	this.submit();
-            	setTimeout(function(){
-                formSubmitted = true;
-                parent.jQuery.fancybox.close();
-				jQuery.fancybox.close(true);
-                
-            	},2000);		    	
+            	formSubmitted = true;            			    	
             }
            form.addClass('was-validated');
 		});
+			
 
 		$('button#deleteRow').click(function(e){
 			var item_id = $(this).attr('item_id');			
@@ -91,10 +92,23 @@ $(document).ready( function() {
       }
     });
 
+    /*
+    * DYNAMICALLY APPEND OTHER ATTRIBUTES HTML ON PRODUCT FORM
+    */
 	$('#attributeset').change(function(){
 	var attributeset_id = $.trim($(this).val());
-	$.ajax(function(){
-	});
+	var request = $.ajax({
+            url: "/admin/attribute/list",
+            type: "GET",
+            data: {set_id : attributeset_id},
+            dataType: "json",
+            success: function(data){
+                if(data.html)
+                    $('#other_attribute').html(data.html);
+                else
+                	alert('something wrong');
+            }
+        });
 
 	});
 
@@ -115,6 +129,7 @@ $(document).ready( function() {
         select_count++;
         select_label++;
     });
+
 
     $('#attr_type').change(function(e){
 		var type = $(this).val();

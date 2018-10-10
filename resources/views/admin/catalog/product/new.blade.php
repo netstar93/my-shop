@@ -43,7 +43,7 @@
 			    <a class="nav-link" data-toggle="tab" href="#images" role="tab" aria-controls="profile">Images</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" data-toggle="tab" href="#other" role="tab" aria-controls="profile">Additional Attributes</a>
+			    <a class="nav-link" data-toggle="tab" href="#other_attribute" role="tab" aria-controls="profile">Additional Attributes</a>
 			  </li>
 
               <li class="nav-item">
@@ -65,7 +65,7 @@
 					  <div class="tab-pane" id="images" role="tabpanel">
 					  	@include('admin.catalog.product.productform_image')
 					  </div>
-                      <div class="tab-pane" id="other" role="tabpanel">
+                      <div class="tab-pane" id="other_attribute" role="tabpanel">
                           @include('admin.catalog.product.productform_other' )
                       </div>
 					  <div class="tab-pane" id="subproduct" role="tabpanel">

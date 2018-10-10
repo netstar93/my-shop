@@ -55,12 +55,14 @@ class Product extends Model
     }
 
     public function getCategoryProductCollection($id = null){
-        if(!$id) return false;
+       if(!$id) return false;
+       $data = self::getCollectionData() ->where('status',1)
+            ->filter(function ($value, $key) use ($id) {
+                
+             $array = json_decode($value ->category_id , true);
+             return in_array($id, $array);
+            });
 
-        $data = $this ->getCollectionData()->filter(function ($value, $key) use ($id) {
-          return $value->product_id == 28;
-        });
-         _log( $data);
         return $data;
     }
 
@@ -82,7 +84,7 @@ class Product extends Model
             'attribute_set_id'=> $data['attributeset'],
             'category_id'=> $data['category'], 
             'child_ids'=> "na",
-                'attribute_values' => $data['custom_attr'],
+            'attribute_values' => $data['custom_attr'],
             'seller_id'=> $data['seller_id'],
             'status'=> $data['status']
         ]);
@@ -103,23 +105,5 @@ class Product extends Model
         }
         if($id_main > 0) return true;
     }
-
-    /*
-     * GET ALL OTHER ATTRIBUTES OF A ATTRIBUTE SET
-     */
-
-    public function getOtherAttributes($set_id)
-    {
-        $data = array();
-        $set_data = Attributeset:: findOrFail($set_id);
-        $attributes_arr = explode(',', $set_data->attribute_ids);
-        try {
-            foreach ($attributes_arr as $attr) {
-                $at = Attribute::find($attr);
-                if (isset($at->status) && $at->status == 1) $data[] = $at;
-            }
-        } catch (ErrorException $e) {
-        }
-        return $data;
-    }
+    
 }

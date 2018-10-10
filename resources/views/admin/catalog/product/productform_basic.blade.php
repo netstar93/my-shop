@@ -1,5 +1,6 @@
 @php
-    $name = $id = $desc = $short_desc= $sku = $attributeset = null;
+    $name = $id = $desc = $short_desc= $sku = $attributeset = $unclick =  null;
+    $status = true;
     $attributeset_data_coll = array('' => 'Select Attribute Set');
     $category_ids = array();
     if($data){
@@ -14,6 +15,7 @@
         $attributeset = $data ->attribute_set_id;
         $category_ids = json_decode($data ->category_id, true);
         $diff_attr_values = $data ->diff_attr_values;
+        $unclick = "pointer-events:none";
     }
 
     $attributesetArr = $attributeset_coll ->toarray();
@@ -23,11 +25,18 @@
         }
 @endphp
 
-@if($id > 0)
+@if($id > 0)    
     <input type="hidden" name="id" value = "{{$id}}" class="" />
-    <input type="hidden" name="product_id" value = "{{$product_id}}" class="" />
+    <input type="hidden" namae="product_id" value = "{{$product_id}}" class="" />
 @endif
-<input type="hidden" name="status" value = "1" class="checkbox" />
+
+<div class="form-group form-inline">
+    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    Yes
+    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    No
+    <div class="invalid-feedback">Oops, you missed this one.</div>
+</div>
 
 <div class="form-group form-inline">                        
     <label for="name">Name</label>
@@ -47,7 +56,7 @@
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
-<div class="form-group form-inline">                        
+<div class="form-group form-inline" style="{{$unclick}}">                        
     <label for="description">Product Attribute Set</label>
     {{Form :: select( 'attributeset' , $attributeset_data_coll , $attributeset , array('id' => 'attributeset'  , 'class' => 'form-control form-control-lg' , 'required' => 'true')) }}
     <div class="invalid-feedback">Oops, you missed this one.</div>

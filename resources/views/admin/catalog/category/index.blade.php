@@ -29,7 +29,7 @@
 					<td>{{ucfirst($category ->name)}}</td>
                     <td>{{ucfirst($category ->parent_cat_id)}}</td>
 					<td>{{$category ->visibility}}</td>
-					<td>{{$category ->status}}</td>					
+					<td>{{renderBoolean($category ->status)}}</td>					
 					<td>
 						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/category/edit/{{$category ->cat_id}}" href="javascript:;" >Edit </button>
 						<button class="btn btn-error" id="deleteItem" entity="category" item_id ={{$category ->cat_id}}>Delete</button>

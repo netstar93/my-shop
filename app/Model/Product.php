@@ -13,23 +13,13 @@ class Product extends Model
     public $timestamps = false;
 
 	public function _construct(){
-
 	}
 
-	public function getCollection(){
-        $main_collection = DB::table('catalog_product_main')
-                        // ->leftjoin('catalog_product_data','catalog_product_main.id' ,'=','catalog_product_data.main_id')
-                        // ->select('catalog_product_main.*' , 'catalog_product_data.product_id')
-                       ->get();
-
-       // $data_collection = $collection
-				   //      ->join('catalog_product_data','catalog_product_main.id' ,'=','catalog_product_data.main_id')
-				   //      ->select('catalog_product_data.product_id')
-				   //      ->get();
-	       $collection = $main_collection->map(function ($value, $key) {
-			    $value->child_product_ids = array(rand(1,10));
-			  	  return $value;
-		   });
+    public function getCollection()
+    {
+        $collection = DB::table('catalog_product_main')
+            ->join('catalog_product_data', 'catalog_product_main.id', '=', 'catalog_product_data.main_id');
+//                                       ->select('catalog_product_data.product_id');
         return $collection;
     }
 
@@ -42,7 +32,6 @@ class Product extends Model
                         ->get();
         return $collection;
     }
-
     /*
      *  load by product_id
      */
@@ -58,16 +47,39 @@ class Product extends Model
        if(!$id) return false;
        $data = self::getCollectionData() ->where('status',1)
             ->filter(function ($value, $key) use ($id) {
-
              $array = json_decode($value ->category_id , true);
              return in_array($id, $array);
             });
-
         return $data;
     }
 
-    public function getConfigurableData($product_id) {
-        $data = DB::table('catalog_configurable_data') ->where('product_id',$product_id)->get();
+    public function getConfigurableData($product_id)
+    {
+        $data = array();
+        $product_ids = $this->getConfigurableProductIds($product_id);
+        if (count($product_ids)) {
+            foreach ($product_ids as $product_id) {
+                $data[$product_id] = $this->getCollection()
+                    ->where('product_id', $product_id)
+                    ->get()->first();
+                $data[$product_id]->config_attributes = $this->getCustomAttribute($product_id);
+//                _log($data);
+            }
+        }
+        return $data;
+    }
+
+    public function getCustomAttribute($product_id)
+    {
+        $data = DB::table('product_configurable_data')->where('product_id', $product_id)->get();
+        if (isset($data->first()->config_attributes)) {
+            return json_decode($data->first()->config_attributes, true);
+        }
+    }
+
+    public function getConfigurableProductIds($product_id)
+    {
+        $data = DB::table('catalog_configurable_data')->where('product_id', $product_id)->get();
         if(isset($data)) {
             if(!empty($data->first() ->child_product_ids))
             {
@@ -154,7 +166,7 @@ class Product extends Model
                 if(isset($id_data) && $id_data > 0) {
                 
                         $id_config = DB::table('product_configurable_data')->insertGetId([
-                                'product_id' => $id_main,
+                            'product_id' => $id_data,
                                 'config_attributes' => json_encode($child_item)
                             ]);  
                     if($id_config){

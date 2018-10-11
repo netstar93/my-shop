@@ -49,7 +49,6 @@ class productController extends Controller
         $category_coll = Category::all();
 
         $config_product_data = $this->model->getConfigurableData($id);
-        // _log($config_product_data);
         return view('admin.catalog.product.new')->with([
             'formData' => $collection,
             'attributeset_coll' => $attributeset_coll,
@@ -129,7 +128,7 @@ class productController extends Controller
             }
 
             if (isset($id_data)) {
-                $this ->model ->saveChildProduct($data,$filename, $id_main);
+                $this->model->saveChildProduct($data, $filename, $id_data);
                 return redirect('admin/product/index')->with('success', 'product succcessfully saved');
             } else {
                 return json_encode(array('error' => $error));

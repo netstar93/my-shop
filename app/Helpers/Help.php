@@ -11,6 +11,11 @@ function _log($data, $exit=1){
     if($exit ==1) die;
 }
 
-function renderBoolean($val,$status = null) {
-	return $val == 1 ? 'Enable' : 'Disable';
+function renderBoolean($val,$type = null) {
+	switch($type){
+		case 'question' :
+			return $val == 1 ? 'Yes' : 'No';
+		default:	
+			return $val == 1 ? 'Enable' : 'Disable';
+	}
 }

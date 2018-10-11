@@ -18,8 +18,9 @@
         </button>
     </div>
 	<div class="wrapper">
+		<div style="overflow-y: scroll;max-height: 500px; width: 100%;">
 		<table class="table table-bordered">
-			<tr><th>#</th><th>Product ID</th><th>Name</th><th>Base Price</th> <th>Attribute Set</th> <th>Special Info</th><th>Category</th><th>Seller ID</th><th>Status</th><th>Action</th></tr>
+			<tr><th>#</th><th>Product ID</th><th>Name</th><th>Base Price</th> <th>Attribute Set</th> <th>Special Info</th><th>Category</th><th>Is Configurable</th><th>Status</th><th>Action</th></tr>
 
 			@foreach($collection as $product )
 			 @php
@@ -37,7 +38,7 @@
 					<td>{{$product ->attribute_set_id}}</td>
 					<td>{{$special_attributes}}</td>
 					<td>{{$product ->category_id}}</td>
-					<td>{{$product ->seller_id}}</td>
+					<td>{{renderBoolean($product ->is_configurable,'question')}}</td>
 					<td>{{renderBoolean($product ->status)}}</td>
 					<td>
 						<button class="btn btn-success iframe"  data-src="/admin/product/edit/{{$product ->product_id}}" href="javascript:;" >Edit </button>
@@ -45,9 +46,8 @@
 					</td>
 				</tr>
 			@endforeach
-
 		</table>
-
+	</div>
 	</div>
 
 </div>

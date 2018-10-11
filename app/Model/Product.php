@@ -58,7 +58,7 @@ class Product extends Model
        if(!$id) return false;
        $data = self::getCollectionData() ->where('status',1)
             ->filter(function ($value, $key) use ($id) {
-                
+
              $array = json_decode($value ->category_id , true);
              return in_array($id, $array);
             });
@@ -66,9 +66,19 @@ class Product extends Model
         return $data;
     }
 
+    public function getConfigurableData($product_id) {
+        $data = DB::table('catalog_configurable_data') ->where('product_id',$product_id)->get();
+        if(isset($data)) {
+            if(!empty($data->first() ->child_product_ids))
+            {
+                return explode(',',$data->first() ->child_product_ids);
+            }
+        }
+        return array();
+    }
+
     public function updateProduct($data)
     {
-//        $data = $params ->all();
         $data['seller_id']  = 1;
         $diff_att = '';
 
@@ -103,7 +113,62 @@ class Product extends Model
                 }
             }
         }
-        if($id_main > 0) return true;
+        if($id_main > 0) 
+            {               
+              return true;
+            }
     }
+
+    public function saveChildProduct($data = array(),$image_name ,$parent_product_id = null) {           
+            $saved_product_array = array();
+            if(count($data['child_item']) <= 0 ) {
+                return false;
+            }
+
+            foreach ($data['child_item'] as $key => $child_item) {
+
+                $id_main = DB::table('catalog_product_main')->insertGetId([
+                    'name' => $data['name'] ." - ".$child_item["'color'"],
+                    'desc' => $data['description'],
+                    'short_desc' => $data['short_description'],
+                    'attribute_set_id' => $data['attributeset'],
+                    'category_id' => $data['category'],
+                    'child_ids' => "na",
+                    'attribute_values' => $data['custom_attr'],
+                    'seller_id' => $data['seller_id'],
+                    'status' => $data['status']
+            ]);
+
+            if ($id_main > 0) {
+
+                $id_data = DB::table('catalog_product_data')->insertGetId([
+                        'main_id' => $id_main,
+                        'visibility' => 0,
+                        'brand' => '1clickpick',
+                        'base_price' => $child_item["'price'"],
+                        'image' => $image_name,
+                        'sku' => $data['sku']."-".$child_item["'color'"]
+                    ]); 
+                }
+
+                if(isset($id_data) && $id_data > 0) {
+                
+                        $id_config = DB::table('product_configurable_data')->insertGetId([
+                                'product_id' => $id_main,
+                                'config_attributes' => json_encode($child_item)
+                            ]);  
+                    if($id_config){
+                        $saved_product_array[] = $id_main;
+                    }
+                }
+          }
+
+        //SAVE ALL CHILD PRODUCT ID TO CONFIGURABLE PRODUCT
+        $id_config = DB::table('catalog_configurable_data')->insertGetId([
+            'product_id' => $parent_product_id,
+            'child_product_ids' => implode(',',$saved_product_array)
+        ]);  
+
+        }
     
 }

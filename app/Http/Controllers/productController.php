@@ -29,8 +29,8 @@ class productController extends Controller
         $collection = $this->model->getCollectionData();
         $attributeset_coll = Attributeset:: all();
         $category_coll = Category::all()->where('status', 1);
-        $set_id = $attributeset_coll ->first() ->id;
-        $other_attributes = $attributeModel ->getOtherAttributes($set_id);
+       // $set_id = $attributeset_coll ->first() ->id;
+        $other_attributes = array();//$attributeModel ->getOtherAttributes($set_id);
         return view('admin.catalog.product.new')->with([
             'attributeset_coll' => $attributeset_coll,
             'cat_coll' => $category_coll,
@@ -47,19 +47,28 @@ class productController extends Controller
         $other_attributes = $attributeModel->getOtherAttributes($set_id);
         $attributeset_coll = Attributeset:: all();
         $category_coll = Category::all();
+
+        $config_product_data = $this->model->getConfigurableData($id);
+        // _log($config_product_data);
         return view('admin.catalog.product.new')->with([
             'formData' => $collection,
             'attributeset_coll' => $attributeset_coll,
             'cat_coll' => $category_coll,
-            'other_attributes' => $other_attributes
+            'other_attributes' => $other_attributes,
+            'config_product_data' => $config_product_data
         ]);
     }
 
     public function save(Request $request){
 
     	$id_data = $id_main = '';
+        $is_configurable = 0;
     	$id_data_diff = [];
     	$data = $request ->all();
+        // _log($data);
+        $data['is_configurable']  = 0;
+        $data['seller_id'] = 1;
+
         $data['category'] = json_encode($data['category_id']);
         if (isset($data['custom']) && count($data['custom']) > 0) {
             $data['custom_attr'] = json_encode($data['custom']);
@@ -67,13 +76,17 @@ class productController extends Controller
         else{
             $data['custom_attr'] = '';
         }
+        if(isset($data['child_item']) && count($data['child_item']) > 0 ) {
+            $data['is_configurable']  = 1;
+         }
+
+ 
         if (isset($request->id)) {
             $id_data = $this->model->updateProduct($data);
             return redirect('admin/product/index')->with('success', 'Product Succcessfully Updated');
         }
         else {
-            $child_item = array();
-            $data['seller_id'] = 1;
+            $child_item = array();            
             $filename = '';
             $diff_att = '';
 
@@ -85,13 +98,15 @@ class productController extends Controller
                 $image->move($destination, $filename);
                 $location = $destination . '/' . $filename;
             }
-try{
+
+            try{
             $id_main = DB::table('catalog_product_main')->insertGetId([
                 'name' => $data['name'],
                 'desc' => $data['description'],
                 'short_desc' => $data['short_description'],
                 'attribute_set_id' => $data['attributeset'],
                 'category_id' => $data['category'],
+                'is_configurable' => $data['is_configurable'],
                 'child_ids' => "na",
                 'attribute_values' => $data['custom_attr'],
                 'seller_id' => $data['seller_id'],
@@ -100,38 +115,21 @@ try{
 
             if ($id_main > 0) {
 
-                if (count($child_item) > 0) {
-
-                    foreach ($child_item as $id => $item) {
-                        $diff_att = @json_encode($item);
-                        $id_diff = DB::table('catalog_product_data')->insertGetId([
-                            'main_id' => $id_main,
-                            'brand' => '1clickpick',
-                            'base_price' => $data['base_price'],
-                            'image' => $filename,
-                            'sku' => $data['sku'],
-                            'diff_attr_values' => $diff_att
-                        ]);
-                        if ($id_diff > 0) {
-                            $id_data_diff[] = $id_diff;
-                        }
-                    }
-                } else {
-                    $id_data = DB::table('catalog_product_data')->insertGetId([
+                $id_data = DB::table('catalog_product_data')->insertGetId([
                         'main_id' => $id_main,
                         'brand' => '1clickpick',
                         'base_price' => $data['base_price'],
                         'image' => $filename,
                         'sku' => $data['sku']
-                    ]);
-                }
+                    ]); 
+             }
             }
-}
-catch(Exception $e){
-   
-    $error = $e->getMessage();
-}
-            if (isset($id_data) || isset($id_diff)) {
+            catch(Exception $e){               
+                $error = $e->getMessage();
+            }
+
+            if (isset($id_data)) {
+                $this ->model ->saveChildProduct($data,$filename, $id_main);
                 return redirect('admin/product/index')->with('success', 'product succcessfully saved');
             } else {
                 return json_encode(array('error' => $error));
@@ -158,4 +156,33 @@ catch(Exception $e){
             }
             return json_encode(array('error' => true));
         }
+
+
+        public function getFormHtml(Request $request) {
+            $count = array();
+            $html = '';
+            $count = $request ->count;  
+            $html .= view('admin.catalog.product.childProductForm') ->with(['count' =>$count])->render();
+            return json_encode(array('html' => $html));
+        }       
+
+
+        public function saveGalleryImages($image) {
+
+            $image_name = time().'_banner.'.$image->getClientOriginalExtension();
+
+            $destinationPath = public_path('media\product');
+            File::isDirectory($destinationPath) or File::makeDirectory($destinationPath, 0777, true, true);
+            try{
+            $img = Image::make($image->getRealPath());
+            $img->resize(1000, 400, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+    //      ->resizeCanvas(1000, 350)
+            ->save($destinationPath . '/' . $image_name);
+            }
+            catch(Exception $e){
+
+            }
+         }
 }

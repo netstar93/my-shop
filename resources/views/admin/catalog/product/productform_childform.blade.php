@@ -1,35 +1,27 @@
 @php
-
+_log($config_product_data);
 @endphp
 
 <div class="form-group ">
-    <button id="addMore" class="btn">Add Subproduct </button><hr/>
+    <button id="addMoreProduct" class="btn">Add More Product </button><hr/>
 
-    <form class="subproductForm" method="post">
-        <table class="table-bordered subproduct_table">
-                <tr>
-                    <td><label for="uname1">Color</label> <input value="red" type="text" name="child_item[0]['color']"  /></td> 
-                </tr>
-                <tr>    
-                    <td><label for="uname1">Size</label><input value="M" type="text" name="child_item[0]['size']"  /></td>
-                 </tr>
-                 <tr>   
-                    <td><label for="uname1">Price</label><input value="299" type="text" name="child_item[0]['price']"  /></td>
-                 </tr>
-                 <tr>   
-                    <td><label for="uname1">Images</label><input type="file" name="child_item[0]['image']"  /></td>
-                </tr>
-                <tr>   
-                    <td><button class="btn btn-primary subproductForm-submit center">Save</button></td>
-                </tr>
-        </table>
-     </form>
+    @if(!isset($data ->is_configurable))
+    <div id="productForm" total="0">
+        @include('admin.catalog.product.childProductForm',['count' => 0])
+    </div>
+
+    @else
+    
+    <div class="product-list" id="product-list">
+        @if($data ->is_configurable)
+
+
+        @endif
+    </div>
+
+    @endif      
+
 </div>             
-
-<script type="text/javascript">
-
-
-</script>
 
 <style type="text/css">
     .subproduct_table label{

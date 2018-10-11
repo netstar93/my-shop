@@ -1,11 +1,13 @@
 @php
     $data = array();
-    $edit_mode = false;
+    $edit_mode = $is_configurable = false ;
     if(isset($formData ->id)) {
         $data = $formData;
         $edit_mode = true;
+        $is_configurable = $data ->is_configurable;
     }
     $product_data = ['data' => $data];
+
 @endphp
 
 @section('title', 'New Product')
@@ -45,11 +47,11 @@
 			  <li class="nav-item">
 			    <a class="nav-link" data-toggle="tab" href="#other_attribute" role="tab" aria-controls="profile">Additional Attributes</a>
 			  </li>
-
-              <li class="nav-item">
+            @if($is_configurable || !$edit_mode)
+              <li class="nav-item" id ="child_product_tab">
                 <a class="nav-link" data-toggle="tab" href="#subproduct" role="tab" aria-controls="profile">Add Subproducts</a>
               </li>
-
+            @endif
 
 			</ul>
 			</div>
@@ -68,9 +70,11 @@
                       <div class="tab-pane" id="other_attribute" role="tabpanel">
                           @include('admin.catalog.product.productform_other' )
                       </div>
+                      @if($is_configurable || !$edit_mode)
 					  <div class="tab-pane" id="subproduct" role="tabpanel">
 					  	@include('admin.catalog.product.productform_childform')
-					  </div>			  						 
+					  </div>			  		
+                      @endif				 
 			    	</div>
 		    	</form>
 	    	<div>

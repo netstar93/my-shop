@@ -14,15 +14,16 @@ $(document).ready( function() {
     $('button#save').click(function (event) {
 
         if ($('form').submit()) {
-
-		setTimeout(function(){   alert(formSubmitted);
-					           
-			                parent.jQuery.fancybox.close();
-							parent.parent.jQuery.fancybox.close();
-			                //location.reload();
-			        		          		
-			        },4000);
-					}
+		if(formSubmitted){
+			setTimeout(function(){		
+			        jQuery.fancybox.close();
+	                parent.jQuery.fancybox.close();
+					parent.parent.jQuery.fancybox.close();
+	                //location.reload();
+	        		          		
+	        },2000);
+		}
+		}
 	});
 
     $('button#saSSSve').click(function(e){ 
@@ -97,6 +98,13 @@ $(document).ready( function() {
     */
 	$('#attributeset').change(function(){
 	var attributeset_id = $.trim($(this).val());
+	var attributeset_text = $.trim($('#attributeset :selected').text());
+	var child_product_tab_entity = $('#child_product_tab');
+	
+	//HARD CODED ATTRIBUTE SET NAME
+	attributeset_text == 'Clothes' ? child_product_tab_entity. show() : child_product_tab_entity. hide();
+
+
 	var request = $.ajax({
             url: "/admin/attribute/list",
             type: "GET",
@@ -115,6 +123,9 @@ $(document).ready( function() {
 
     var select_count = 1; 
     var select_label = select_count+1;
+    var product_count = 1; 
+    var product_label = product_count+1;
+
 
     $('#addOption').click(function(e){
         e.preventDefault();
@@ -128,6 +139,34 @@ $(document).ready( function() {
         $('#selectOptions').append(html);
         select_count++;
         select_label++;
+    });
+
+    $('#addMoreProduct').click(function(e){
+        e.preventDefault();
+        var html = '';
+        var edit_total = $('#productForm').attr('total');
+        if(edit_total && edit_total > 0)
+        {
+        	product_count = parseInt(edit_total); 
+            product_label = product_count+1
+        }
+
+		var request = $.ajax({
+            url: "/admin/product/getFormhtml",
+            type: "GET",
+            data: {count : product_count},
+            dataType: "json",
+            success: function(data){
+                if(data.html)
+                   $('#productForm').append(data.html);
+                else
+                	alert('something wrong');
+            }
+        });
+
+              
+        product_count++;
+        product_label++;
     });
 
 

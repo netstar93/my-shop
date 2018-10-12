@@ -27,9 +27,9 @@
             @if($attribute ->type == 'select')
                 @php
                     $select_values = json_decode($attribute->options , true);
-                     array_unshift($select_values, '' );
+                     
                 @endphp
-                <tr>
+                <tr>                    
                     <td> {{  Form::label($attribute ->name) }} </td>
                     <td>  {{ Form::select( "custom[$attribute->id]",  $select_values, $value  , ['required' =>true] )  }} </td>
                 </tr>
@@ -37,8 +37,6 @@
             @endif
 
             @if($attribute ->type == 'radio')
-                @php
-                        @endphp
                 <tr>
                     <td> {{  Form::label($attribute ->name) }} </td>
                     <td>  {{ Form :: radio( "custom[$attribute->id]" , 1  , $value) }} Yes</td>

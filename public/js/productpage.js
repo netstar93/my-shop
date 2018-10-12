@@ -2,12 +2,27 @@
  * Created by Nitish on 08 Sep.
  */
 
+var selected_color = false;
+
 $(document).ready(function() {
+
+$('.selection li').click(function(e){
+    selected_color = true;
+});
+
     var product_id = parseInt($('#productId' +
         '').val());
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
     $('#addtocart').click(function(){
+        var is_configurable_product = $('#is_configurable').val();
+        console.log(is_configurable_product + "   " +selected_color);
+        if(is_configurable_product == 1) {
+            if(selected_color == false){
+              $('.no-selection-error').removeClass('hide');
+              return false;
+            }
+        }
+
         $.ajax({
             /* the route pointing to the post function */
             url: '/catalog/product/addtocart',
@@ -63,7 +78,7 @@ $(document).ready(function() {
          $('section.payment').addClass('active');  
         $('.orderBtn').removeClass('hidden');
     });
-
+ 
     $('#address-submit').click(function(e) {
         e.preventDefault();
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -113,7 +128,6 @@ $(document).ready(function() {
         $("#payment_type").val(payment_type);
         var payment_type = $('#payment_type').val();
         var address_id = $('#address_id').val();
-//alert(payment_type);return false; 
         if (payment_type && address_id) {
             form .submit();          
         }else{          

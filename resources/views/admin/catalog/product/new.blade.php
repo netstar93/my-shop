@@ -27,8 +27,10 @@
     <div class="actions">
     	<span class="breadcrump col-lg-8" style="display: inline-block;float:left">Admin/Catalog/Product</span>
     	<span class="action-buttons col-lg-4">
-	    	<span class="action-btn"><button class="btn btn-success" id="save" >Save</button></span>
-	    	<!-- <span class="action-btn"><button class="btn btn-error" id="savecontinue" >Save And Continue</button></span> -->
+            <span class="action-btn"><button class="btn btn-success" id="save" >Save</button></span> 
+            @if($edit_mode)            
+	    	  <span class="action-btn"><button class="btn btn-info" id="duplicate" >Duplicate</button></span>    
+            @endif
 	    	<span class="action-btn"><button class="btn btn-primary" id="cancel" >Cancel</button></span>
     	</span>
 	</div>

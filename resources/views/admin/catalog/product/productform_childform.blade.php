@@ -1,11 +1,8 @@
-@php
-    //_log($config_product_data);
-@endphp
 
-<div class="form-group ">
-    <button id="addMoreProduct" class="btn">Add More Product </button><hr/>
+<div class="form-group ">   
 
     @if(!isset($data ->is_configurable))
+    <button id="addMoreProduct" class="btn">Add More Product </button><hr/>
     <div id="productForm" total="0">
         @include('admin.catalog.product.childProductForm',['count' => 0])
     </div>
@@ -29,9 +26,11 @@
                     <tr>
                         <td>{{$pro_data ->id}}</td>
                         <td>{{$pro_data ->name}}</td>
-                        <td>$attr["'color'"]</td>
-                        <td>$attr["'size'"]</td>
-                        <td><a target="_blank" href="/admin/product/edit/{{$pro_data ->product_id}}"> EDIT</a></td>
+                        <td>{{$attr["'color'"]}}</td>
+                        <td>{{$attr["'size'"]}}</td>
+                        <td>
+                            <a class="btn-success iframe btn-sm"  data-src="/admin/product/edit/{{$pro_data ->product_id}}" href="javascript:;" >Edit </a>                      
+                        </td>
                     </tr>
                 @endforeach
             </table>

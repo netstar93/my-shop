@@ -13,17 +13,22 @@ class ProductController extends Controller
     protected $product;
     protected $id;
     protected $productCollection;
+    protected $model;
 
     public function __construct(Request $request)
     {
         $id = $request->id;
         $this->id = $id;
+        $this ->model = new Product();
         $this->product = Product::find($this->id);
     }
 
     public function view()
-    {
-        return view('catalog/product/product_view', ['data' => $this->getData()]);
+    {  
+        return view('catalog/product/product_view', [
+                    'data' => $this->getData(),
+                    'config_data' => $this ->model ->getConfigurableData($this->id),    
+                    'custom_attributes'=> $this ->model ->getCustomAttribute($this->id) ]);
     }
 
     /*

@@ -45,6 +45,7 @@ Route::get('admin/login', 'adminController@login');
 Route::get('admin/product/index', 'productController@index');
 Route::get('admin/product/new', 'productController@new');
 Route::post('admin/product/save', 'productController@save');
+Route::get('admin/product/duplicate/{product_id?}', 'productController@duplicate');
 Route::get('admin/product/edit/{id?}', 'productController@edit');
 Route::get('admin/product/delete/{id?}', 'productController@delete');
 Route::get('admin/product/getFormhtml/{id?}', 'productController@getFormhtml');

@@ -26,6 +26,21 @@ $(document).ready( function() {
 		}
 	});
 
+	$('button#duplicate').click(function(e){  
+		var product_id = $.trim($('#product_id').val());					
+		var request = $.ajax({
+		  url: "/admin/product/duplicate",
+		  type: "POST",
+		  data: {'product_id' : product_id},
+		  dataType: "json",
+		  success: function(data){
+		  	alert(data.error);
+		  	if(!data.error){}
+			 location.reload();
+		  }
+		});			
+	});
+
     $('button#saSSSve').click(function(e){ 
     		//e.preventDefault();
 			var form = $("form");			

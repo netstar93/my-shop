@@ -1,13 +1,22 @@
+@php
+use App\Model\Attribute;
+$attributeModel = new Attribute();
+if(count($custom_attributes)) {
+    $size = $custom_attributes["'size'"];
+    $price = $custom_attributes["'price'"];
+    $color = ucFirst($custom_attributes["'color'"]);
+}
+
+@endphp
 <!-- provide the csrf token -->
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
 @extends('layout')
-@section('title', 'Product Page')
+@section('title', $data->name)
 @section('middle_content')
     <link href="{{asset('css/product_view.css')}}" rel="stylesheet" type="text/css"/>
     <script src="{{ asset('/js/productpage.js') }}"></script>
     <div class="product_view_main">
         @php
-           // echo "<pre>"; print_r($data); die;
                 $status =  $data->status;
                 $image =  $data->image;
                 $name =  $data->name;
@@ -18,7 +27,9 @@
                 $diff_attr_info =  json_decode($data->diff_attr_values, true);
                 $image_path  = url("/media/product/$image");
                 $product_id =  $data->product_id;
+                $is_configurable =  $data->is_configurable;
         @endphp
+        <input type="hidden" id="is_configurable" value={{$is_configurable}} />
         <div class="top-wrapper">
             <div class="image-wrapper col-lg-4" style="display: inline-block;min-height: 50%">
                 <span class="left-image-bar"></span>
@@ -40,24 +51,55 @@
                 <p>{{$short_desc}} </p>
                </span>
 
-                {{--<div class="selection" style="display: inline-block;">--}}
-                    {{--<div class="color"> Color :--}}
-                        {{--<ul style="list-style: none">--}}
-                            {{--<li> <a href="#">Red</a>  </li>--}}
-                            {{--<li> <a href="#">Blue</a>  </li>--}}
-                            {{--<li> <a href="#">Pink</a>  </li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
-                    {{--<div class="color"> Size :--}}
-                        {{--<ul style="list-style: none">--}}
-                            {{--<li> <a href="#">S</a>  </li>--}}
-                            {{--<li> <a href="#">M</a>  </li>--}}
-                            {{--<li> <a href="#">L</a>  </li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
+                @if(count($config_data))                    
+                <div class="no-selection-error alert alert-danger hide">
+                    <strong>Please select color.</strong>
                 </div>
+                    <div class="selection" style="display: inline-block;">
+                        <div class="color"> Color :
+                            <ul style="list-style: none" id="color">
+                                @foreach($config_data as $data)
+                                @php
+                                    $tmp  = $data -> config_attributes;                            
+                                @endphp
 
-                <span class="actions">
+                                 <li style="background-color:{{ucfirst($tmp["'color'"])}} ;min-width: 30px;min-height: 30px;  text-align: center;"> 
+                                <a href="/catalog/product/view/{{$data ->id}}"> 
+                                    {{ucfirst($tmp["'color'"])}}
+                                </a>  
+                                </li>                                                    
+                                @endforeach
+                            </ul>
+                        </div>                        
+                    </div>
+                @endif
+                        
+            @if(count($attr_info) && !$is_configurable)
+             <div class="info">
+                <table class="table attribute-table">
+                @foreach( $attr_info as $attr_id => $attr_value)
+                @php
+                    $attribute = Attribute::where('id',$attr_id)->get()->first();
+                    $type = $attribute ->type;
+                    $name = $attribute ->name;
+                    $options = json_decode($attribute ->options,true);
+                    
+                    if($type == 'select'&& isset($options[$attr_value])) {
+                     $option_value = $options[$attr_value];
+                    }                    
+                    else{
+                    $option_value = $attr_value;
+                    }
+               
+                @endphp
+
+                <tr><td>{{$name}}  </td> <td>{{$option_value}}</td></tr>
+
+                @endforeach
+                </table>
+             </div>           
+@endif
+            <span class="actions">
             <span class="addtocart">
                 <button id="addtocart" class="btn btn-success">ADD TO CART</button>
             </span>
@@ -69,8 +111,10 @@
         </div>
 
         <div class="bottom-wrapper">
-            <div class="title">   Product Details   </div>
+            <div class="title">     </div>
         </div>
+
+
         <div class="modal" tabindex="-1" role="dialog" id="myModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

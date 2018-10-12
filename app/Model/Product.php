@@ -57,13 +57,16 @@ class Product extends Model
     {
         $data = array();
         $product_ids = $this->getConfigurableProductIds($product_id);
-        if (count($product_ids)) {
+        if (count($product_ids)) {  
             foreach ($product_ids as $product_id) {
-                $data[$product_id] = $this->getCollection()
+                $tmp_data = $this->getCollection()
                     ->where('product_id', $product_id)
+                    ->where('status', 1)
                     ->get()->first();
-                $data[$product_id]->config_attributes = $this->getCustomAttribute($product_id);
-//                _log($data);
+                if(isset($tmp_data)){ 
+                   $data[$product_id] = $tmp_data;
+                   $data[$product_id]->config_attributes = $this->getCustomAttribute($product_id);
+                }
             }
         }
         return $data;
@@ -75,6 +78,7 @@ class Product extends Model
         if (isset($data->first()->config_attributes)) {
             return json_decode($data->first()->config_attributes, true);
         }
+        return array();
     }
 
     public function getConfigurableProductIds($product_id)

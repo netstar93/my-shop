@@ -29,4 +29,10 @@ class Attribute extends Model
         return $data;
     }
 
+    public function load($id) {
+        return $at = Attribute::find($id);
+        
+        //if (isset($at->name)) return $at->name;
+    }
+
 }

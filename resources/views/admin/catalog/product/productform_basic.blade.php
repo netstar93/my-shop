@@ -27,7 +27,7 @@
 
 @if($id > 0)    
     <input type="hidden" name="id" value = "{{$id}}" class="" />
-    <input type="hidden" namae="product_id" value = "{{$product_id}}" class="" />
+    <input type="hidden" id="product_id" value = "{{$product_id}}" class="" />
 @endif
 
 <div class="form-group form-inline">

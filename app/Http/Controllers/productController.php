@@ -156,6 +156,21 @@ class productController extends Controller
             return json_encode(array('error' => true));
         }
 
+    public function duplicate(Request $request){
+        $data = $request ->all();
+        $product_id = $data['product_id'];
+        if(isset($product_id)) {
+            // $model = DB::table('catalog_product_data') ->where('product_id',$product_id)->get();
+            $model = Product ::find(47);
+            $copiedModel = $model ->replicate()->save();
+die;
+            if($model) {       
+                return json_encode(array('error' => false));
+                }       
+            }
+            return json_encode(array('error' => true));
+        }
+
 
         public function getFormHtml(Request $request) {
             $count = array();

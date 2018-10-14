@@ -26,10 +26,11 @@
                     <tr>
                         <td>{{$pro_data ->id}}</td>
                         <td>{{$pro_data ->name}}</td>
-                        <td>{{$attr["'color'"]}}</td>
-                        <td>{{$attr["'size'"]}}</td>
+                        <td></td>
+                        <td></td>
                         <td>
-                            <a class="btn-success iframe btn-sm"  data-src="/admin/product/edit/{{$pro_data ->product_id}}" href="javascript:;" >Edit </a>                      
+                            <a class="btn-success iframe btn-sm"
+                               data-src="/admin/product/edit/{{$pro_data ->product_id}}" href="javascript:;">Edit </a>
                         </td>
                     </tr>
                 @endforeach

@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Model\Attribute;
 use App\Model\Attributeset;
+use App\Model\ProductImage;
+use App\Helpers\Image;
 
 class Product extends Model
 {
     protected $table = "catalog_product_main";
     public $timestamps = false;
+    protected $image_model;
 
 	public function _construct(){
+        $this->image_model = new ProductImage();
 	}
 
     public function getCollection()
@@ -97,11 +101,11 @@ class Product extends Model
     {
         $data['seller_id']  = 1;
         $diff_att = '';
-
         $id_data_diff = [];
         $id = $data['id'];
         $child_item = array();
         $filename = '';
+//        _log($data);
         $id_main  = DB::table('catalog_product_main') ->where('id', $id)  ->limit(1)
             ->update([
             'name'=> $data['name'],
@@ -115,24 +119,18 @@ class Product extends Model
             'status'=> $data['status']
         ]);
 
-        if($id_main > 0) {
-            if (count($child_item) > 0) {
-                foreach ($child_item as $id => $item) {
-                    $diff_att = json_encode($item);
-                    $id_diff = DB::table('catalog_product_data')->where('product_id',$data['product_id'])->update([
-                        'brand' => '1clickpick',
-                        'base_price' => $data['base_price'],
-                        // 'image' => $filename,
-                        'sku' => $data['sku'],
-                        'diff_attr_values' => $diff_att
-                    ]);
-                }
-            }
-        }
-        if($id_main > 0) 
-            {               
-              return true;
-            }
+        $gallery = Image::saveGalleryImages($data);
+        $filename = isset($gallery[0]) ? $gallery[0] : null;
+        $id_data = DB::table('catalog_product_data')->where('product_id', $data['product_id'])->limit(1)
+            ->update([
+                'brand' => '1clickpick',
+                'base_price' => $data['base_price'],
+                'image' => $filename,
+                'sku' => $data['sku']
+            ]);
+        $imageModel = new ProductImage();
+        $imageModel->saveProductImages($id_data, $gallery);
+        return true;
     }
 
     public function saveChildProduct($data = array(),$image_name ,$parent_product_id = null) {           
@@ -140,17 +138,23 @@ class Product extends Model
             if(count($data['child_item']) <= 0 ) {
                 return false;
             }
+        $attributeModel = new Attribute();
+        $attribute_color = Attribute:: where('name', 'color')->get()->first();
+        $attribute_size = Attribute:: where('name', 'size')->get()->first();
+        $color_options = $attributeModel->getAttributeOptions('color');
 
             foreach ($data['child_item'] as $key => $child_item) {
+                $new_attribute_values = $child_item + $data['custom'];
+                $new_price = $child_item["'price'"];
 
                 $id_main = DB::table('catalog_product_main')->insertGetId([
-                    'name' => $data['name'] ." - ".$child_item["'color'"],
+                    'name' => $data['name'] . " - " . $color_options[$child_item[$attribute_color->id]],
                     'desc' => $data['description'],
                     'short_desc' => $data['short_description'],
                     'attribute_set_id' => $data['attributeset'],
                     'category_id' => $data['category'],
                     'child_ids' => "na",
-                    'attribute_values' => $data['custom_attr'],
+                    'attribute_values' => json_encode($new_attribute_values),
                     'seller_id' => $data['seller_id'],
                     'status' => $data['status']
             ]);
@@ -161,9 +165,9 @@ class Product extends Model
                         'main_id' => $id_main,
                         'visibility' => 0,
                         'brand' => '1clickpick',
-                        'base_price' => $child_item["'price'"],
+                    'base_price' => $new_price,
                         'image' => $image_name,
-                        'sku' => $data['sku']."-".$child_item["'color'"]
+                    'sku' => $data['sku'] . "-" . $color_options[$child_item[$attribute_color->id]]
                     ]); 
                 }
 
@@ -174,7 +178,7 @@ class Product extends Model
                                 'config_attributes' => json_encode($child_item)
                             ]);  
                     if($id_config){
-                        $saved_product_array[] = $id_main;
+                        $saved_product_array[] = $id_data;
                     }
                 }
           }

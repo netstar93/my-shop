@@ -5,7 +5,7 @@
     if(isset($item ->image))
     $img = $item ->image;
 
-    $image_path  = url("media/product/$img");
+    $image_path  = url("media/product/thumb/$img");
     $attr_values =  json_decode($item ->attribute_values, true);
     $diff_attr =  json_decode($item ->diff_attr_values , true);
     if(isset($diff_attr["'color'"])):

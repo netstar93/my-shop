@@ -29,7 +29,13 @@ class IndexController extends Controller
     }
 
     public function test(Request $request){
-            $img = Image::make('303270_0_1.jpg')->resize(50, 100);
-            $img->save('assssa.jpg');
+        echo $basePath = public_path('test.jpg');
+        die;
+
+        $savePath = public_path('gallery') . "\\" . "303270_0_1._edited.jpg";
+//         $path = 'C:\xampp182\htdocs\1clickpick\public\media\product\303270_0_1.jpg';
+//        $savePath = 'C:\xampp182\htdocs\1clickpick\public\media\product\303270_0_1._edited.jpg';
+        $img = Image::make($basePath)->resize(50, 100);
+        $img->save($savePath);
     }
 }

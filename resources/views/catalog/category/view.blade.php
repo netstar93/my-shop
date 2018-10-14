@@ -15,9 +15,9 @@
             <div class="row col-lg-10 col-xs-10">
                 @foreach($items as $item)
                     @php
-                    $image = url('/media/product/'.$item->image);
-                    //echo "<pre>"; print_r($item); die;
-                       // $data = json_decode($item ->attribute_values , true);
+                        $image = url('/media/product/thumb/'.$item->image);
+                        //echo "<pre>"; print_r($item); die;
+                           // $data = json_decode($item ->attribute_values , true);
                     @endphp
                     <div class="col-xs-6 col-sm-3 thumbnail">
                         <span class="img-box">

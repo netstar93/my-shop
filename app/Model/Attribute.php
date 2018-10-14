@@ -31,8 +31,15 @@ class Attribute extends Model
 
     public function load($id) {
         return $at = Attribute::find($id);
-        
-        //if (isset($at->name)) return $at->name;
+    }
+
+    public function getAttributeOptions($name = null)
+    {
+        $attr = Attribute:: where('name', $name)->get();
+        if (isset($attr)) {
+            return json_decode($attr->first()->options, true);
+        }
+        return array();
     }
 
 }

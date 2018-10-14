@@ -1,11 +1,9 @@
 @php
 use App\Model\Attribute;
 $attributeModel = new Attribute();
-if(count($custom_attributes)) {
-    $size = $custom_attributes["'size'"];
-    $price = $custom_attributes["'price'"];
-    $color = ucFirst($custom_attributes["'color'"]);
-}
+$attributeModel = new Attribute();
+$attribute_color = Attribute :: where('name', 'color') ->get()->first();
+$color_options = $attributeModel ->getAttributeOptions('color');
 
 @endphp
 <!-- provide the csrf token -->
@@ -19,13 +17,14 @@ if(count($custom_attributes)) {
         @php
                 $status =  $data->status;
                 $image =  $data->image;
-                $name =  $data->name;
+                $product_name =  $data->name;
                 $price =  $data->base_price;
                 $desc =  $data->desc;
                 $short_desc =  $data->short_desc;
                 $attr_info =  json_decode($data->attribute_values, true);
+                if(isset($attr_info["'price'"])) { unset($attr_info["'price'"]);  }
                 $diff_attr_info =  json_decode($data->diff_attr_values, true);
-                $image_path  = url("/media/product/$image");
+                $image_path  = "media/product/small/$image";
                 $product_id =  $data->product_id;
                 $is_configurable =  $data->is_configurable;
         @endphp
@@ -35,12 +34,12 @@ if(count($custom_attributes)) {
                 <span class="left-image-bar"></span>
                 <input type="hidden" id="productId" value="<?php echo $product_id ?>"/>
                 <span class="image-box col-md-6 col-sm-6">
-                <img src="{{asset($image_path)}}" class="product-image-view"/>
+                <img src="{{ asset($image_path) }}" class="product-image-view"/>
             </span>
             </div>
             <div class="content-wrapper col-lg-8">
                 <div class="desc-box">
-                    <div class='name'>{{$name}}</div>
+                    <div class='name'>{{$product_name}}</div>
                     <div class='review'>100 review</div>
                     <div class='price'>
                         <div class='label'>Special Price</div>
@@ -60,12 +59,13 @@ if(count($custom_attributes)) {
                             <ul style="list-style: none" id="color">
                                 @foreach($config_data as $data)
                                 @php
-                                    $tmp  = $data -> config_attributes;                            
+                                    $tmp  = $data -> config_attributes;
+                                    $color_name = $color_options [$tmp[$attribute_color ->id]];
                                 @endphp
 
-                                 <li style="background-color:{{ucfirst($tmp["'color'"])}} ;min-width: 30px;min-height: 30px;  text-align: center;"> 
-                                <a href="/catalog/product/view/{{$data ->id}}"> 
-                                    {{ucfirst($tmp["'color'"])}}
+                                    <li style="background-color:{{ucfirst($color_name )}} ;min-width: 30px;min-height: 30px;  text-align: center;">
+                                        <a href="/catalog/product/view/{{$data ->product_id}}">
+                                            {{ucfirst($color_name )}}
                                 </a>  
                                 </li>                                                    
                                 @endforeach
@@ -84,17 +84,14 @@ if(count($custom_attributes)) {
                     $name = $attribute ->name;
                     $options = json_decode($attribute ->options,true);
                     
-                    if($type == 'select'&& isset($options[$attr_value])) {
+                    if($type == 'select' && isset($options[$attr_value])) {
                      $option_value = $options[$attr_value];
                     }                    
                     else{
                     $option_value = $attr_value;
                     }
-               
                 @endphp
-
                 <tr><td>{{$name}}  </td> <td>{{$option_value}}</td></tr>
-
                 @endforeach
                 </table>
              </div>           
@@ -126,7 +123,7 @@ if(count($custom_attributes)) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="info well">{{$name}} Added successfully.</div>
+                        <div class="info well">{{$product_name}} Added successfully.</div>
                         <div class="actions">
                             <a href="/cart">
                                 <button class="btn btn-success"> Go To Cart</button>

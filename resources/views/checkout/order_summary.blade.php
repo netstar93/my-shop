@@ -12,7 +12,7 @@ $productModel = new Product;
                    $name = ucfirst($item ->name);
                    $price = $item ->base_price;
                    $seller_id = $item ->seller_id;
-                   $image_path  = url("media/product/$img");
+                   $image_path  = url("media/product/thumb/$img");
                    $attr_values =  json_decode($item ->attribute_values, true);
                    $diff_attr =  json_decode($item ->diff_attr_values , true);
                    if(isset($diff_attr["'color'"])):

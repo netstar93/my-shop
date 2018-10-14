@@ -68,7 +68,7 @@ class Quote extends Model
         $cart  = session('cart');
         $quote_id = 0;
         $cart_items  = $cart['items'];
-
+        if (count($cart_items) > 0) {
             //SAVE QUOTE
             $newQuote = Quote::where('cust_id', $this->customer_id) ->first();        
             if(isset($newQuote ->id)) {
@@ -80,8 +80,6 @@ class Quote extends Model
                 $newQuote ->save();
                 $quote_id = $newQuote ->id;
             }
-
-           if(count($cart_items) > 0) {
             //RENEW CUSTOMER SESSION WITH QUOTE ID
              $customer = session('customer');
             //SAVE QUOTE ITEMS

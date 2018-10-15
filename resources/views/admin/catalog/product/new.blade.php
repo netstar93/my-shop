@@ -25,17 +25,16 @@
     
     </div>
     <div class="actions">
-    	<span class="breadcrump col-lg-8" style="display: inline-block;float:left">Admin/Catalog/Product</span>
-    	<span class="action-buttons col-lg-4">
+    	<span class="action-buttons col-lg-4 float-right btn-group-lg">
             <span class="action-btn"><button class="btn btn-success" id="save" >Save</button></span> 
-            @if($edit_mode)            
-	    	  <span class="action-btn"><button class="btn btn-info" id="duplicate" >Duplicate</button></span>    
+            @if($edit_mode)
+                {{--<span class="action-btn"><button class="btn btn-info" id="duplicate" >Duplicate</button></span>--}}
             @endif
 	    	<span class="action-btn"><button class="btn btn-primary" id="cancel" >Cancel</button></span>
     	</span>
 	</div>
     <div class="wrapper">
-	    <div class="product-form-tabs">
+        <div class="product-form-tabs col-lg-4 col-xs-4">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li class="nav-item">
 			    <a class="nav-link active" data-toggle="tab" href="#basic" role="tab" aria-controls="home">Basic</a>
@@ -54,10 +53,9 @@
                 <a class="nav-link" data-toggle="tab" href="#subproduct" role="tab" aria-controls="profile">Add Subproducts</a>
               </li>
             @endif
-
 			</ul>
 			</div>
-			<div class="product-form-content">
+        <div class="product-form-content col-lg-8 col-xs-8">
 				<form class="form" role="form" action="/admin/product/save" autocomplete="on" id="product-form" novalidate="" method="POST" enctype="multipart/form-data">
 					<div class="tab-content">			 
 					  <div class="tab-pane active" id="basic" role="tabpanel">

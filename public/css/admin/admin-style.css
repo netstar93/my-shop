@@ -1,11 +1,4 @@
 
-ul.zerostyle a:hover {
-	text-decoration: none;
-	color: #fff;
-}
-ul.zerostyle a {
-	padding-left:50px;
-}
 .rounded{
 	border-radius: 10px;
     padding: 10px; 

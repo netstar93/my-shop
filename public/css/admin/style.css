@@ -1,13 +1,16 @@
-body{
+.admin-main-wrapper, header, footer {
 	background-color: #515763;
 	font-size: 15px;
   /*position: fixed;*/
 }
-
 a{
 	color:#fff;
 }
 
+a:hover {
+    color: #fff;
+    text-decoration: none;
+}
 /*tr:nth-child(even){background-color: #f2f2f2}*/
 
 .admin-main-wrapper{
@@ -15,9 +18,15 @@ a{
 	padding:10px;
 }
 .zerostyle{
-	padding:0px;
+    /*padding:0px;*/
 	list-style: none;
 }
+
+.zerostyle li.active {
+    background: lightseagreen;
+    text-align: center;
+}
+
 .horizontal-list{
 	padding:0px;
 	list-style: none;
@@ -45,6 +54,7 @@ a{
 	width: 82%;
 	min-height: 700px;
 }
+
 .page-header{
    /*padding: 10px;*/
 }
@@ -77,21 +87,38 @@ max-width: 20%;
 }
 
 /* ADMIN FORM MODAL */
+.admin-modal-wrapper {
+    width: 100%;
+}
 .admin-modal-wrapper .right-side {
-	min-height: auto!important;
+    max-width: 100%;
+    height: 100%;
     width: 100%;
 }
 
 .admin-main-wrapper + .fancybox-container .fancybox-content {
-    max-width: 97%;
-    max-height: 100%;
-    /*margin: 0;*/
+    max-width: 94%;
+    max-height: 95%;
 }
 
+.product-form-content label {
+    min-width: 20%;
+}
+
+/*:not([type=checkbox]):not([type=radio])*/
+.product-form-content input {
+    /*width: 60% !important;*/
+}
+
+.product-form-content input[type=radio] {
+    width: 5% !important;
+}
+
+.product-form-content input[type=checkbox] {
+    /*width: 5% !important;*/
+}
 /*
-
 Advanced example - Confirm dialog
-
 */
 
 

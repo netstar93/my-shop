@@ -25,3 +25,8 @@
 
 <script src="{!! asset('/lib/bootstrap-switch/js/bootstrap-switch.js') !!}"></script>
 <link rel="stylesheet" type="text/css" href="{{'/lib/bootstrap-switch/css/bootstrap-switch.css'}}">
+
+<link rel="stylesheet" type="text/css" href="/vendors/sweetalert/css/sweetalert.css"/>
+<script type="text/javascript" src="/vendors/sweetalert/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/vendors/sweetalert/js/sweetalert-dev.js"></script>
+<script type="text/javascript" src="/vendors/sweetalert/js/sweetalert.js"></script>

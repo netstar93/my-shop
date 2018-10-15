@@ -12,7 +12,6 @@ $(document).ready( function() {
 		});
 
     $('button#save').click(function (event) {
-
         if ($('form').submit()) {
 		if(formSubmitted){
 			setTimeout(function(){		
@@ -20,7 +19,6 @@ $(document).ready( function() {
 	                parent.jQuery.fancybox.close();
 					parent.parent.jQuery.fancybox.close();
 	                //location.reload();
-	        		          		
 	        },2000);
 		}
 		}

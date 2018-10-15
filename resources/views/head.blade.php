@@ -8,4 +8,6 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="/images/favicon.ico" />
+
+
 </head>

@@ -46,7 +46,11 @@
 					<td>{{renderBoolean($product ->status)}}</td>
 					<td>
 						<button class="btn btn-responsive btn-success iframe"  data-src="/admin/product/edit/{{$product ->product_id}}" href="javascript:;" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-						<button class="btn btn-responsive btn-danger" id="deleteItem" entity="product" item_id ={{$product ->product_id}}><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button class="btn btn-responsive btn-danger" id="deleteItem" entity="product"
+                                item_id={{$product ->product_id}}><i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        <div class="col-md-4">
+                        </div>
 					</td>
 				</tr>
 			@endforeach

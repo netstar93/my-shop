@@ -23,3 +23,5 @@
 <script src="{!! asset('/js/admin/fancy-custom.js') !!}"></script>
 <script src="{!! asset('/js/admin/global.js') !!}"></script>
 
+<script src="{!! asset('/lib/bootstrap-switch/js/bootstrap-switch.js') !!}"></script>
+<link rel="stylesheet" type="text/css" href="{{'/lib/bootstrap-switch/css/bootstrap-switch.css'}}">

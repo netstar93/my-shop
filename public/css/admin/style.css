@@ -32,6 +32,8 @@ a{
 
 .left-side{
 	float: left;
+  max-width: 20%;
+  width: 18%;
 }
 .left-side,.right-side{
 	display: inline-block;
@@ -39,7 +41,8 @@ a{
 .right-side{
 	background-color: lightgray;
 	color:#000;
-	width: 80%;
+  max-width: 85%;
+	width: 82%;
 	min-height: 700px;
 }
 .page-header{

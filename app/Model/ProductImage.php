@@ -19,6 +19,7 @@ class ProductImage extends Model
      */
     public function saveProductImages($product_id, $images)
     {
+        if(!$images) return false; 
         if (isset($images[0])) unset($images[0]);
 
         foreach ($images as $image_name) {

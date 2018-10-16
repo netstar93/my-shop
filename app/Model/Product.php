@@ -135,16 +135,20 @@ class Product extends Model
 
     public function saveChildProduct($data = array(),$image_name ,$parent_product_id = null) {           
             $saved_product_array = array();
-            if(count($data['child_item']) <= 0 ) {
-                return false;
-            }
+        if(empty($data['child_item'][0]['price']) ) {
+            return false;
+        }
+        $new_price =  0;
         $attributeModel = new Attribute();
         $attribute_color = Attribute:: where('name', 'color')->get()->first();
         $attribute_size = Attribute:: where('name', 'size')->get()->first();
         $color_options = $attributeModel->getAttributeOptions('color');
 
             foreach ($data['child_item'] as $key => $child_item) {
-                $new_attribute_values = $child_item + $data['custom'];
+                $new_attribute_values = $child_item;
+                if(isset($data['custom'])){
+                    $new_attribute_values = $child_item + $data['custom'];
+                }
                 $new_price = $child_item["'price'"];
 
                 $id_main = DB::table('catalog_product_main')->insertGetId([

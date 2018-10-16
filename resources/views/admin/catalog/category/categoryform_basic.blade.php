@@ -14,37 +14,37 @@
 
 <div class="form-group form-inline">                        
     <label for="name">Enable</label>
-    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control ' ,' required' => 'true')) }}
     Yes
-    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control' ,' required' => 'true')) }}
     No
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="name">Name</label>
-    {{ Form::text('name', $name, array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::text('name', $name, array('class' => 'form-control' ,' required' => 'true')) }}
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="name">Show on FrontEnd</label>
-    {{ Form::radio('visibility', '1',  $visibility ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::radio('visibility', '1',  $visibility ==1 ? true:'' , array('class' => 'form-control' ,' required' => 'true')) }}
     Yes
-    {{ Form::radio('visibility', '0', $visibility ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::radio('visibility', '0', $visibility ==0 ? true:'' ,array('class' => 'form-control' ,' required' => 'true')) }}
     No
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="description">Description</label>
-    {{ Form::text('description', $desc, array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::text('description', $desc, array('class' => 'form-control' ,' required' => 'true')) }}
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
     <label for="name">URL Key</label>
-    <input type="text" class="form-control form-control-lg" name="url_key">
+    <input type="text" class="form-control" name="url_key">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
@@ -58,7 +58,7 @@
                     $checked = true;
                 }
             @endphp
-            <li> {{ Form::radio('parent_cat_id',  $category ->id , $checked , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }} {{$category ->name}}</li>
+            <li> {{ Form::radio('parent_cat_id',  $category ->id , $checked , array('class' => 'form-control' ,' required' => 'true')) }} {{$category ->name}}</li>
         @endforeach
     </ul>
 </div>

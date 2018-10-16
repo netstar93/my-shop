@@ -32,6 +32,7 @@ class categoryController extends Controller
 
     public function save(Request $request){
     	$data = $request->all();
+      $data['level'] = 1;
         if (isset($request->cat_id)) {
             $id_data = Category:: findOrFail($request->cat_id)->update($data);
             return redirect('admin/category/index')->with('success', 'Category succcessfully updated');

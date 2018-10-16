@@ -6,6 +6,9 @@
 a{
 	color:#fff;
 }
+ul li{
+   text-transform: capitalize;
+}
 
 a:hover {
     color: #fff;
@@ -53,6 +56,11 @@ a:hover {
   max-width: 85%;
 	width: 82%;
 	min-height: 700px;
+  border-radius: 15px;
+  padding: 6px;
+-webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         3px 3px 5px 6px #ccc;
 }
 
 .page-header{
@@ -68,23 +76,31 @@ a:hover {
     margin-bottom: 20px;
 }
 
+.messages{
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+
 .page-message {
-    width: 30%;
+    width: 25%;
     position: fixed;
     color: white;
     background-color: lightseagreen;
-    /* border-color: #c3e6cb; */
+    /*border: 1px red solid;*/
     font-weight: 600;
+    padding: 4px;
+    text-transform: uppercase;
+
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         3px 3px 5px 6px #ccc;
 }
 
-.cms-page{
-	
-}
-
-.form-inline label ,.form-inline.invalid-feedback{
+/*.form-inline label ,.form-inline.invalid-feedback{
 min-width: 20%;
 max-width: 20%;
-}
+}*/
 
 /* ADMIN FORM MODAL */
 .admin-modal-wrapper {
@@ -104,69 +120,78 @@ max-width: 20%;
 .product-form-content label {
     min-width: 20%;
 }
-
-/*:not([type=checkbox]):not([type=radio])*/
-.product-form-content input {
-    /*width: 60% !important;*/
+.product-form-content .form-control{
+  width:50% !important;
 }
 
 .product-form-content input[type=radio] {
     width: 5% !important;
 }
-
-.product-form-content input[type=checkbox] {
-    /*width: 5% !important;*/
+.invalid-feedback{
+  text-align: center;
 }
-/*
-Advanced example - Confirm dialog
-*/
-
-
-.fc-container .fancybox-bg {
-  background: #eee;
+.subproduct_table{
+  width:60%;
 }
-
-.fancybox-is-open.fc-container .fancybox-bg {
-  opacity: 0.95;
+.subproduct_table tr td{
+  padding:5px;
+}
+ul.category_list_checkbox li{
+display: inline-block;
 }
 
-.fc-content {
-  margin: 20px;
-  max-width: 550px;
-  padding: 50px;
-  box-shadow: 10px 10px 60px -25px;
-  border-radius: 4px;
-}
-
-.fc-content h3 {
-  margin-top: 0;
-  font-size: 1.6em;
-  letter-spacing: normal;
-}
-
-.fc-content p {
-  color: #666;
-  line-height: 1.5;
-}
-
-.fc-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* Custom animation */
-.fancybox-fx-material.fancybox-slide--previous,
-.fancybox-fx-material.fancybox-slide--next {
-  transform: translateY(-60px) scale(1.1);
-  opacity: 0;
-}
-
-.fancybox-fx-material.fancybox-slide--current {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-/* PRODUCT ADMIN FORM*/
 .gallery-item ul li {
     display: inline-block;
     padding: 5px;
+}
+
+
+/*ADMIN ALL FORMS EXCEPT PRODUCT FORM*/
+.admin-form .content{
+    margin-top: 15px;
+    /*border-top: 2px green solid;*/
+    width: 100%
+}
+.status-radio {
+  float: left;
+  text-align: right;
+  /*margin-left: 15px;*/
+}
+
+.admin-form form label {
+  min-width: 20%;
+  float: left;
+  text-align: right;
+  margin-right: 15px;
+}
+.admin-form .form-control {
+  width:50% !important;
+}
+.admin-form  input[type=radio] ,.admin-form  input[type=checkbox]{
+    width: 30px !important;
+    height: 25px;
+    /*margin-top: 10px;*/
+}
+
+.admin-form .content ul{
+  padding:0px;
+}
+.admin-form .content ul li{
+  padding:3px;
+}
+
+
+.admin-form .selectContent{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-top: 26px;
+}
+.selectContent .value {
+      padding: 10px;
+}
+ul.attribute-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: scroll;
 }

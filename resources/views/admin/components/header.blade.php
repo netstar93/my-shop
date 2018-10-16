@@ -23,9 +23,12 @@
 		</div>
 	</nav>
 </header>
+
+<div class = "messages">
 @if(session('success'))
-    <div class="page-message alert alert-success">{{session('success')}}</div>
+    <div class="page-message alert alert-success alert-dismissable text-center"><i class="fa fa-check-square-o" style="font-size: 25px;"></i> {{session('success')}}</div>
 @endif
 @if(session('error'))
-    <div class="page-message alert alert-warning">{{session('error')}}</div>
+    <div class="page-message alert alert-warning alert-dismissable text-center"><i class="fa fa-close" style="color:red;font-size: 25px;"></i>{{session('error')}}</div>
 @endif
+</div>

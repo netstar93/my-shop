@@ -31,40 +31,40 @@
 @endif
 
 <div class="form-group form-inline">
-    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control' ,' required' => 'true')) }}
     Yes
-    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control' ,' required' => 'true')) }}
     No
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
-    <label for="name">Name</label>
-    <input type="text" class="form-control form-control-lg" value = "{{ $name}}" name="name" required="">
+    <label for="name" class="col-lg-4">Name</label>
+    <input type="text" class="form-control" value = "{{ $name}}" name="name" required="">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
-    <label for="description">Description</label>
-    <input type="text" class="form-control form-control-lg" name="description" value = "{{ $desc}}" required="">
+    <label for="description" class="col-lg-4">Description</label>
+    <input type="textarea" class="form-control" name="description" value = "{{ $desc}}" required="">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
-    <label for="description">Short Description</label>
-    <input type="text" class="form-control form-control-lg" name="short_description" value="{{$short_desc}}" required="">
+    <label for="description" class="col-lg-4">Short Description</label>
+    <input type="textarea" class="form-control" name="short_description" value="{{$short_desc}}" required="">
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline" style="{{$unclick}}">                        
-    <label for="description">Product Attribute Set</label>
-    {{Form :: select( 'attributeset' , $attributeset_data_coll , $attributeset , array('id' => 'attributeset'  , 'class' => 'form-control form-control-lg' , 'required' => 'true')) }}
+    <label for="description" class="col-lg-4">Product Attribute Set</label>
+    {{Form :: select( 'attributeset' , $attributeset_data_coll , $attributeset , array('id' => 'attributeset'  , 'class' => 'form-control' , 'required' => 'true')) }}
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>
 
 <div class="form-group form-inline">                        
-    <label for="description">Product Category</label>
-    <ul style="list-style:none">
+    <label class="col-lg-4" for="description">Product Category</label>
+    <ul style="list-style:none" class="form-control">
         @if(count($cat_coll) > 0)
             @foreach($cat_coll as $category )
                 @php
@@ -75,7 +75,7 @@
                         }
                 }
                 @endphp
-                <li> {{ Form::checkbox('category_id[]',  $category ->cat_id , $checked , array('class' => 'form-control form-control-lg' )) }} {{ucfirst($category ->name)}}</li>
+                <li class="col-lg-4" style="padding: 0px;"> {{ Form::checkbox('category_id[]',  $category ->cat_id , $checked , array('class' => 'form-control-checkbox' )) }} <span>{{ucfirst($category ->name)}}</span></li>
             @endforeach
             <div class="invalid-feedback">Oops, you missed this one.</div>
         @endif
@@ -84,7 +84,7 @@
 </div>
 
 <div class="form-group form-inline">                        
-    <label for="name">Sku</label>
-    <input type="text" class="form-control form-control-lg" name="sku" value = "{{$sku}}"required>
+    <label for="name" class="col-lg-4">Sku</label>
+    <input type="text" class="form-control" name="sku" value = "{{$sku}}"required>
     <div class="invalid-feedback">Oops, you missed this one.</div>
 </div>

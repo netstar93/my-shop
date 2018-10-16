@@ -14,7 +14,9 @@
                     <option value="delete">Disable</option>
                 </select>
             </span>
-            <button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/banner/new" href="javascript:;" >Add New banner </button>	
+            <span class="add-new">
+	       		<a href="/admin/banner/new"><button class="btn btn-success btn-responsive"><i class="fa fa-plus" aria-hidden="true"></i> Add</button></a>
+	        </span>	
     </div>
 	<div class="wrapper">
 		<table class="table table-bordered">
@@ -32,8 +34,14 @@
 					<td><img src="{{ $image_path }}" width="90px"/></td>
 					<td>{{$banner ->status}}</td>
 					<td>
-						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/banner/{{$banner ->id}}/edit" href="javascript:;" >Edit </button>	
-						<button class="btn btn-error" id="deleteItem" entity="banner" item_id ="{{$banner ->id}}">Remove</button>					
+						<a href="/admin/banner/{{$banner ->id}}/edit">
+							<button class="btn btn-success btn-responsive"> 
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+							</button>
+						</a>
+                        <button class="btn btn-responsive btn-danger" id="deleteItem" entity="banner"
+                                item_id={{$banner ->id}}><i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>					
 					</td>
 				</tr>
 			@endforeach

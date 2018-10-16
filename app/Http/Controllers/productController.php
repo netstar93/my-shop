@@ -94,6 +94,7 @@ class productController extends Controller
             $filename = array();
             $diff_att = '';
 
+// _log($data);
             //IMAGE SAVE LOGIC USING IMAGE HELPER CLASS
 //            Image::saveGalleryImages($request); die;
             try{

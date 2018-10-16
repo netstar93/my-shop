@@ -15,14 +15,16 @@ if(isset($formData ->id)) {
         $options = json_decode($data ->options,true);
     }
 }
+
+$is_disable = $edit_mode == true ? 'pointer-events:none' : '';
 @endphp
 
 @section('title', 'New Attribute')
 
-@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.modal_layout' ))
+@extends((( $edit_mode== true) ? 'admin.layout' : 'admin.layout' ))
 
 @section('content')
-<div class="right-side product-add-form">
+<div class="right-side admin-form">
     <div class="page-header">        
        @if($edit_mode)
             <h3>Editing {{ucfirst($formData ->name)}}</h3>
@@ -30,33 +32,33 @@ if(isset($formData ->id)) {
             <h3>New Attribute</h3>
         @endif        
     </div>
-    <div class="actions">
-    	<span class="breadcrump col-lg-8" style="display: inline-block;float:left">Admin/Attribute/New</span>
+    <div class="actions">    	
     	<span class="action-buttons col-lg-4">
 	    	<span class="action-btn"><button type="submit" class="btn btn-success" id="save" >Save</button></span>
-	    	<span class="action-btn"><button class="btn btn-primary" id="cancel" >Cancel</button></span>
-            <span class="action-btn"><button class="btn btn-warning" id= "addOption">Add Option</button></span>
+	    	<span class="action-btn">
+                <a href="{{ URL::previous() }}"><button class="btn btn-primary">Cancel</button></a>
+            </span>            
     	</span>
 	 </div>
-     
-    <div class="form-wrapper">
-	    <div class="container form-content ">
+     <hr>
+	    <div class="content ">
 			<form class="form" role="form" action="/admin/attribute/save" id="attribute-form" novalidate="" method="POST" enctype="multipart/form-data">
 				
         @if($edit_mode)
         {{Form :: hidden('id',$id)}}
         @endif
                 <div class="form-group form-inline">
-                    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+                     {{ Form ::label('Enable') }}
+                    {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control status-radio' ,' required' => 'true')) }}
                     Yes
-                    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control form-control-lg' ,' required' => 'true')) }}
+                    {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control status-radio' ,' required' => 'true')) }}
                     No
                     <div class="invalid-feedback">Oops, you missed this one.</div>
                 </div>
 
                 <div class="form-group form-inline">                        
                     <label for="name">Name</label>
-                    <input type="text" class="form-control form-control-lg" value="{{$name}}"name="name" required>
+                    <input type="text" class="form-control" value="{{$name}}"name="name" required>
                     <div class="invalid-feedback">Oops, you missed this one.</div>
                 </div>
 
@@ -64,13 +66,15 @@ if(isset($formData ->id)) {
                 <div class="form-group form-inline">                        
                    <label for="name">Type</label>
 
-                {{ Form::select('size', ['text' => 'TextBox', 'boolean' => 'Yes/No' , 'checkbox' => 'checkbox' ,'select' => 'Dropdown'], $type, ['name' => 'type' , 'id' => 'attr_type' ,'required' =>''] )  }}
+                {{ Form::select('size', ['text' => 'TextBox', 'boolean' => 'Yes/No' , 'checkbox' => 'checkbox' ,'select' => 'Dropdown'], $type, ['name' => 'type' , 'id' => 'attr_type' ,'required' =>'' , 'style' => $is_disable ] )  }}
 
                     <div class="invalid-feedback">Oops, you missed this one.</div>
                 </div>
-
-                <div class="form-group form-inline selectContent" style="display: ncone">   
-
+<hr>
+                <div class="form-group form-inline selectContent">   
+                    <span class="action-btn">
+                        <button class="btn btn-info btn-sm" id= "addOption">Add Option</button>
+                    </span> 
                     <div class="optionValues" id="selectOptions" total = {{count($options)}}>    
                      @if(count($options) > 0)                       
                         
@@ -87,17 +91,12 @@ if(isset($formData ->id)) {
                          <div class="value">
                             <span>Value 1</span>{{ Form::text('select_option[0]', null , array()) }} <span>
                                 <i class="fa fa-trash" aria-hidden="true" style="color:red"></i>
-                            </span></div>
+                            </span>
+                        </div>
                      @endif
                     </div>
-
-                </div>	
+                    </div>
 	    	</form>
-            </div>
-    	<div>
-	</div>
+          </div>
+    
 @endsection
-
-<script>
-
-</script>

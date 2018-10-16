@@ -12,16 +12,7 @@ $(document).ready( function() {
 		});
 
     $('button#save').click(function (event) {
-        if ($('form').submit()) {
-		if(formSubmitted){
-			setTimeout(function(){		
-			        jQuery.fancybox.close();
-	                parent.jQuery.fancybox.close();
-					parent.parent.jQuery.fancybox.close();
-	                //location.reload();
-	        },2000);
-		}
-		}
+        $('form').submit();
 	});
 
 	$('button#duplicate').click(function(e){  
@@ -148,7 +139,7 @@ $(document).ready( function() {
         	select_count = parseInt(edit_total); 
             select_label = select_count+1
         }
-        var html = '<div class="content"> <span>Value '+select_label +'</span><input name="select_option['+select_count+']" type="text"> <span><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></span></div>';
+        var html = '<div class="value"> <span>Value '+select_label +' </span><input name="select_option['+select_count+']" type="text"> <span><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></span></div>';
         $('#selectOptions').append(html);
         select_count++;
         select_label++;
@@ -182,15 +173,17 @@ $(document).ready( function() {
         product_label++;
     });
 
+var default_type = $('#attr_type').val();
+if(typeof default_type != 'undefind'){
+	var selectEntity = $('.selectContent');
+	default_type == 'select' ? selectEntity.show() : selectEntity.hide();
+}
 
-    $('#attr_type').change(function(e){
-		var type = $(this).val();
-		var selectEntity = $('.selectContent');
-		type == 'select' ? selectEntity.show() : selectEntity.hide();
-		if(type == 'select'){
+$('#attr_type').change(function(e){
+	var type = $(this).val();
+	var selectEntity = $('.selectContent');
+	type == 'select' ? selectEntity.show() : selectEntity.hide();
 
-		}
-
-    })
+})
 
 	});

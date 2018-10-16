@@ -13,12 +13,12 @@
                     <option value="delete">Disable</option>
                 </select>
             </span>
-
-				<!-- <input type="search" class="input-sm" placeholder="search" aria-controls="table"> -->
-			
-	        <button class="btn btn-success" data-fancybox data-type="iframe"
+	        <!-- <button class="btn btn-success" data-fancybox data-type="iframe"
 	                data-src="/admin/product/new" href="javascript:;"><i class="fa fa-plus" aria-hidden="true"></i> Add
-	        </button>
+	        </button> -->
+	        <span class="add-new">
+	       		<a href="/admin/product/new"><button class="btn btn-success btn-responsive"><i class="fa fa-plus" aria-hidden="true"></i> Add</button></a>
+	        </span>
     </div>
 
 	<div class="wrapper">
@@ -45,12 +45,15 @@
 					<td>{{renderBoolean($product ->is_configurable,'question')}}</td>
 					<td>{{renderBoolean($product ->status)}}</td>
 					<td>
-						<button class="btn btn-responsive btn-success iframe"  data-src="/admin/product/edit/{{$product ->product_id}}" href="javascript:;" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+						<a href="/admin/product/edit/{{$product ->product_id}}">
+							<button class="btn btn-success btn-responsive"> 
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+							</button>
+						</a>
                         <button class="btn btn-responsive btn-danger" id="deleteItem" entity="product"
                                 item_id={{$product ->product_id}}><i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
-                        <div class="col-md-4">
-                        </div>
+                        
 					</td>
 				</tr>
 			@endforeach

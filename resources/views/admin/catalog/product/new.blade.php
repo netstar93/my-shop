@@ -11,7 +11,7 @@
 @endphp
 
 @section('title', 'New Product')
-@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.modal_layout' ))
+@extends((( $edit_mode== true) ? 'admin.layout' : 'admin.layout' ))
 @section('content')
 
 <div class="right-side product-add-form">
@@ -30,7 +30,9 @@
             @if($edit_mode)
                 {{--<span class="action-btn"><button class="btn btn-info" id="duplicate" >Duplicate</button></span>--}}
             @endif
-	    	<span class="action-btn"><button class="btn btn-primary" id="cancel" >Cancel</button></span>
+	    	<span class="action-btn">
+                <a href="{{ URL::previous() }}"><button class="btn btn-primary">Cancel</button></a>
+            </span>
     	</span>
 	</div>
     <div class="wrapper">

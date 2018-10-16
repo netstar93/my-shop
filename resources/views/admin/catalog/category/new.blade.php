@@ -8,9 +8,9 @@
     $data = ['data' => $data];
 @endphp
 @section('title', 'New Category')
-@extends((( $edit_mode== true) ? 'admin.modal_layout' : 'admin.modal_layout' ))
+@extends((( $edit_mode== true) ? 'admin.layout' : 'admin.layout' ))
 @section('content')
-<div class="right-side category-add-form">
+<div class="right-side admin-form">
     <div class="page-header">
         @if($edit_mode)
             <h3>Editing {{ucfirst($formData ->name)}}</h3>
@@ -19,13 +19,14 @@
         @endif
     </div>
     <div class="actions">
-        <span class="breadcrump col-lg-8" style="display: inline-block;float:left">Admin/Catalog/Category</span>
-        <span class="action-buttons col-lg-4">
+        <span class="action-buttons btn-group-lg">
 	    	<span class="action-btn"><button class="btn btn-success" id="save" type="submit">Save</button></span>
-            <!-- <span class="action-btn"><button class="btn btn-error" id="savecontinue" >Save And Continue</button></span> -->
-	    	<span class="action-btn"><button class="btn btn-primary" id="cancel" >Cancel</button></span>
+	    	<span class="action-btn">
+                <a href="{{ URL::previous() }}"><button class="btn btn-primary">Cancel</button></a>
+            </span>
     	</span>
     </div>
+    <hr>
     <div class="wrapper">
         <div class="product-form-tabs">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -37,7 +38,7 @@
                 {{--</li>--}}
             </ul>
         </div>
-        <div class="category-form-content">
+        <div class="content">
             <form class="form" role="form" action="/admin/category/save" autocomplete="on" id="category-form"
                   novalidate="" method="POST" enctype="multipart/form-data">
                 <div class="tab-content">

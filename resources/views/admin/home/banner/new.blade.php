@@ -1,19 +1,21 @@
 @section('title', 'New Banner')
-@extends('admin.modal_layout')
+@extends('admin.layout')
 @section('content')
 
-<div class="right-side product-add-form">
+<div class="right-side admin-form">
     <div class="page-header">        
        <h3>New Banner</h3>        
     </div>
-    <div class="actions">
-    	<span class="breadcrump col-lg-8" style="display: inline-block;float:left">Admin/Banners/New</span>
+    <div class="actions">    	
     	<span class="action-buttons col-lg-4">
 	    	<span class="action-btn"><button class="btn btn-success" id="save" >Save</button></span>
-	    	<span class="action-btn"><button class="btn btn-primary" id="cancel" >Cancel</button></span>
+	    	<span class="action-btn">
+                <a href="{{ URL::previous() }}"><button class="btn btn-primary">Cancel</button></a>
+            </span>
     	</span>
 	</div>
-    <div class="wrapper">
+    <hr>
+    <div class="content">
 	    @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -25,7 +27,7 @@
         </div>
         @endif
 		
-        <div class="product-form-content">	
+        <div class="data">	
             @if(isset($banner))
                 {{--{{ Form::model($banner, array('url' => '/admin/banner/update' , 'id' => 'banner-form','method' => 'put','files' =>true , 'class'=> 'form'), $banner->id) }}--}}
 
@@ -36,12 +38,12 @@
             @endif    
 
 				<div class="tab-content">
-                    <div class="form-group form-inline">
+                <div class="form-group form-inline">
                     {{ Form ::label('Enable') }}
                     {{ Form ::radio('status',1 , array('class' => '', 'required' => true)) }} Yes
                     {{ Form ::radio('status',0) }} No
                     <div class="invalid-feedback">Oops, you missed this one.</div>
-                </div>
+                 </div>
 
                 <div class="form-group form-inline">
                     {{ Form ::label('Name') }}
@@ -51,9 +53,8 @@
 
                 <div class="form-group form-inline">                        
                    {{ Form ::label('Upload Image') }}
-                    {{ Form ::file('image' , null ) }}
-                </div>
-                    {{ Form ::submit('Save', array('id' => 'saveForm','style' =>'dissplay:none')) }}
+                    {{ Form ::file('image' , null ,array('required' => true)) }}
+                </div>                    
                     {!!Form::close()!!}
     	<div>
 	</div>

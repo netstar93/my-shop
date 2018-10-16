@@ -13,10 +13,9 @@
                     <option value="delete">Disable</option>
                 </select>
             </span>
-        {{--<span class="action-new float-right col-lg-4"> <a href="/admin/category/new"><button class="btn btn-success">Add Category</button></a></span>--}}
-        <button class="btn btn-success float-right col-lg-2" data-fancybox data-type="iframe"
-                data-src="/admin/category/new" href="javascript:;">Add Category
-        </button>
+        	<span class="add-new">
+	       		<a href="/admin/category/new"><button class="btn btn-success btn-responsive"><i class="fa fa-plus" aria-hidden="true"></i> Add</button></a>
+	        </span>
     </div>
 	<div class="wrapper">
 		<table class="table table-bordered">
@@ -31,8 +30,14 @@
 					<td>{{$category ->visibility}}</td>
 					<td>{{renderBoolean($category ->status)}}</td>					
 					<td>
-						<button class="btn btn-success" data-fancybox data-type="iframe" data-src="/admin/category/edit/{{$category ->cat_id}}" href="javascript:;" >Edit </button>
-						<button class="btn btn-error" id="deleteItem" entity="category" item_id ={{$category ->cat_id}}>Delete</button>
+						<a href="/admin/category/edit/{{$category ->cat_id}}">
+							<button class="btn btn-success btn-responsive"> 
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+							</button>
+						</a>
+						<button class="btn btn-responsive btn-danger" id="deleteItem" entity="category"
+                                item_id={{$category ->cat_id}}><i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
 					</td>
 				</tr>
 			@endforeach

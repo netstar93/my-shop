@@ -6,7 +6,8 @@
 a{
 	color:#fff;
 }
-ul li{
+
+ul li, tr td {
    text-transform: capitalize;
 }
 

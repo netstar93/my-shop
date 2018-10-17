@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Sales;
 
-
 use App\Http\Controllers\Controller;
 use App\Model\ProductImage;
 use Illuminate\Http\Request;
@@ -28,7 +27,15 @@ class OrderController extends Controller
 		return view('admin.sales.order.grid')->with([
 			'collection' =>$collection]
 		);
-
 	}
+
+    public function view(Request $request)
+    {
+        $order = Order:: find($request->id);
+        return view('admin.sales.order.view')->with([
+                'order' => $order
+            ]
+        );
+    }
 
 }

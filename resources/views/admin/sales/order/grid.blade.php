@@ -29,18 +29,22 @@
 				<tr>
 					<td><input type="checkbox" name="productEdit"></td>
 					<td>{{$order ->id}}</td>
-                    <td></td>
+                    <td>
+                        <ul>@foreach($order  ->product_name as $name)
+                                <li>{{$name }} </li>
+                            @endforeach
+                        </ul>
+                    </td>
                     <td>{{$order ->customer_name}}</td>					
                     <td>Rs.{{$order ->total_amount}}</td>
-                                   
-					<td>{{renderBoolean($order ->status)}}</td>					
+                    <td>{{$order ->status}}</td>
 					<td>
 						<a href="/admin/order/view/{{$order ->id}}">
                             <button class="btn btn-success btn-responsive"> 
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </button>
                         </a>
-                        <button class="btn btn-responsive btn-danger" id="deleteItem" entity="attribute"
+                        <button class="btn btn-responsive btn-danger disabled" id="deleteItem" entity="attribute"
                                 item_id={{$order ->id}}><i class="fa fa-trash" aria-hidden="true"></i>
                         </button>					
 					</td>

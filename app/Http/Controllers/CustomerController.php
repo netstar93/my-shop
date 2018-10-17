@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Customers;
+use App\Model\Customer;
 use App\Model\Customer_Address;
 use App\Model\Quote;
 use League\Flysystem\Exception;
@@ -53,7 +53,7 @@ class CustomerController extends Controller
         $email_id =  $request->email;
         $pass =  $request->password;
         $ajax =  $request->ajax;
-        $customer = Customers::where('email_address','=',$email_id) ->get()->first()->toArray();
+        $customer = Customer::where('email_address', '=', $email_id)->get()->first()->toArray();
         $customer['logged_in'] =  true;
 
         if( \Illuminate\Support\Facades\Hash::check($pass, $customer['password']) != false) {

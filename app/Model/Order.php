@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Model\Customer;
+use App\Model\Product;
 use App\Model\Customer_address;
 
 class Order extends Model
@@ -24,6 +25,11 @@ class Order extends Model
         }
         $this ->customerModel = new Customer();
 	}
+
+    public function items()
+    {
+        return $this->hasMany('App\Model\Order_items');
+    }
 
     /*ALL QUOTE FUNCTIONS*/
 
@@ -69,24 +75,38 @@ class Order extends Model
         $orders = $this ->getOrderCollection() ->toArray();
         $new_orders = array();
         $new_orders = array_map(array($this, 'renderOrderData'), $orders);
+//        _log($new_orders);
         return $new_orders;
-        // _log($new_orders);
     }
 
     public function renderOrderData($order) {
-        $tmp = array();
+        $tmp = $pro_name = array();
         $tmp = (object)$order;
         $customer =  $this ->getCustomer($order['customer_id']);
-
         if(isset($customer)){
             $tmp->customer_name = $customer ->name;
             $tmp->address = $this ->getShippingAddress($order['address_id']);
         }
-        return $tmp;        
+        $productModel = new Product();
+        foreach ($this->getAllItems($order['id']) as $item) {
+            $product = $productModel->load($item->item_id);
+            if (isset($product)) {
+                $pro_name[] = $product->first()->name;
+            } else {
+                $pro_name[] = 'NA';
+            }
+        }
+        $tmp->product_name = $pro_name;//implode(',' ,   $pro_name);
+        return $tmp;
     }
 
     public function getCustomer($customer_id){
         return $this ->customerModel->load($customer_id);
+    }
+
+    public function getAllItems($order_id)
+    {
+        return Order:: find($order_id)->items;
     }
 
     public function getShippingAddress($address_id){

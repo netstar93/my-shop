@@ -55,7 +55,7 @@ class ProductController extends Controller
                     $quote_id = $newQuote ->id;
                 }else{
                     $newQuote  = new \App\Model\Quote;
-                    $newQuote ->total_amount  = 0;//$cart['grand_total'];
+                    $newQuote->total_amount = $cart['grand_total'];
                     $newQuote ->cust_id  = $customer['id'];
                     $newQuote ->save();
                     $quote_id = $newQuote ->id;

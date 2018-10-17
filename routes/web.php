@@ -76,3 +76,8 @@ Route::get('admin/banner/new', 'bannerController@new');
 Route::get('admin/banner/delete', 'bannerController@delete');
 Route::resource('admin/banner', 'bannerController');
 
+//ADMIN SALES
+Route::get('admin/order', 'Sales\OrderController@index');
+Route::get('admin/order/index', 'Sales\OrderController@index');
+Route::get('admin/order/view/{id?}', 'Sales\OrderController@view');
+

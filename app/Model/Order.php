@@ -4,6 +4,8 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Model\Customer;
+use App\Model\Customer_address;
 
 class Order extends Model
 {
@@ -11,6 +13,7 @@ class Order extends Model
     protected $customer_id ;
     const CREATED_AT = 'creation_date';
     const UPDATED_AT = 'last_update';
+    protected $customerModel;
 
 	public function __construct(){
         $customer = session('customer');
@@ -19,7 +22,10 @@ class Order extends Model
         if($customer) {
             $this->customer_id = $customer['id'];
         }
+        $this ->customerModel = new Customer();
 	}
+
+    /*ALL QUOTE FUNCTIONS*/
 
 	public function getCollection(){
         $collection =  App\Model\Quote::get();
@@ -53,4 +59,37 @@ class Order extends Model
         return $data;
     }
 
+/*ALL ORDER FUNCTIONS*/
+
+    public function getOrderCollection($seller_id= null){
+        return self::get(); 
+    }
+
+    public function getOrderCollectionData(){
+        $orders = $this ->getOrderCollection() ->toArray();
+        $new_orders = array();
+        $new_orders = array_map(array($this, 'renderOrderData'), $orders);
+        return $new_orders;
+        // _log($new_orders);
+    }
+
+    public function renderOrderData($order) {
+        $tmp = array();
+        $tmp = (object)$order;
+        $customer =  $this ->getCustomer($order['customer_id']);
+
+        if(isset($customer)){
+            $tmp->customer_name = $customer ->name;
+            $tmp->address = $this ->getShippingAddress($order['address_id']);
+        }
+        return $tmp;        
+    }
+
+    public function getCustomer($customer_id){
+        return $this ->customerModel->load($customer_id);
+    }
+
+    public function getShippingAddress($address_id){
+        return $this ->customerModel ->getShippingAddressData($address_id) ->address;
+    }
 }

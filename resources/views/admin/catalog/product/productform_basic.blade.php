@@ -31,6 +31,7 @@
 @endif
 
 <div class="form-group form-inline">
+    {{ Form ::label('Enable') }}
     {{ Form::radio('status', '1',  $status ==1 ? true:'' , array('class' => 'form-control' ,' required' => 'true')) }}
     Yes
     {{ Form::radio('status', '0', $status ==0 ? true:'' ,array('class' => 'form-control' ,' required' => 'true')) }}

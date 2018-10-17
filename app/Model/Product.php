@@ -104,7 +104,7 @@ class Product extends Model
         $id_data_diff = [];
         $id = $data['id'];
         $child_item = array();
-      ///  _log($data);
+        //_log($data);
         $id_main  = DB::table('catalog_product_main') ->where('id', $id)  ->limit(1);
           $id_main   ->update([
             'name'=> $data['name'],
@@ -112,7 +112,7 @@ class Product extends Model
             'short_desc'=> $data['short_description'],
             'attribute_set_id'=> $data['attributeset'],
             'category_id'=> $data['category'],
-            'is_configurable' => $data['is_configurable'],
+            'is_configurable' => $id_main ->get()->first()->is_configurable,
             'child_ids'=> "na",
             'attribute_values' => $data['custom_attr'],
             'seller_id'=> $data['seller_id'],
@@ -135,7 +135,7 @@ class Product extends Model
 
     public function saveChildProduct($data = array(),$image_name ,$parent_product_id = null) {           
             $saved_product_array = array();
-        if(empty($data['child_item'][0]['price']) ) {
+        if(empty($data['child_item'][0]["'price'"]) ) {
             return false;
         }
         $new_price =  0;

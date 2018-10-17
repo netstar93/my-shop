@@ -22,21 +22,26 @@
     </div>
 
 	<div class="wrapper">
-		<div style="overflow-y: scroll;max-height: 500px; width: 100%;">
+		<div style="overflow: scroll;max-height: 600px; width: 100%;">
 		<table class="table table-bordered">
-			<tr><th>#</th><th>ID</th><th>Name</th><th>Base Price</th> <th>Attribute Set</th><th>Category</th><th>Is Configurable</th><th>Status</th><th>Action</th></tr>
+			<tr><th>#</th><th>ID</th><th>Image</th> <th>Name</th><th>Base Price</th> <th>Attribute Set</th><th>Category</th><th>Is Configurable</th><th>Status</th><th>Action</th></tr>
 
 			@foreach($collection as $product )
 			 @php
-                    $special_attributes = "";
+                    $special_attributes = $image = "";
                     $diff_attr = json_decode($product->attribute_values,true);
                     if(is_array($diff_attr) && count($diff_attr)){
                        $special_attributes = implode(",",$diff_attr);
                     }
+
+                    if(isset($product ->image)){
+						$image = url('media/product/thumb')."/".$product ->image;
+                	}
 			 @endphp
-				<tr>
+			     <tr>
 					<td><input type="checkbox" name="productEdit"></td>
 					<td>{{$product ->product_id}}</td>
+					<td> <img src={{$image}} /> </td>
 					<td>{{$product ->name}}</td>
 					<td> Rs.{{$product ->base_price}}</td>
 					<td>{{$product ->attribute_set_id}}</td>

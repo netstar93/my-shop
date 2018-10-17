@@ -11,7 +11,8 @@ use File;
 
 class Image
 {
-    const PRODUCT_IMAGE_BASE_PATH = 'C:\xampp182\htdocs\my_shop\public\media\product';
+    //const PRODUCT_IMAGE_BASE_PATH = 'C:\xampp182\htdocs\my_shop\public\media\product';
+    const PRODUCT_IMAGE_BASE_PATH = 'C:\xampp\htdocs\admin\public\media\product';
     const PRODUCT_LARGE_PATH = self::PRODUCT_IMAGE_BASE_PATH . "\large";
     const PRODUCT_SMALL_PATH = self::PRODUCT_IMAGE_BASE_PATH . "\small";
     const PRODUCT_THUMB_PATH = self::PRODUCT_IMAGE_BASE_PATH . "\\thumb";
@@ -19,12 +20,13 @@ class Image
     const SMALL_WIDTH = 400;
     const THUMB_WIDTH = 100;
 
-    public function __construct()
+    public function _construct()
     {
+       
     }
 
     public static function saveGalleryImages($input)
-    {
+    {        
         if (!isset($input['base_image'])) {
             return false;
         }

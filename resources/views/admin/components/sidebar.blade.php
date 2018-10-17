@@ -25,14 +25,14 @@
             <div class="card">
                 <div class="card-header">
                     <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-                        <i class="material-icons text-primary leftsize">home</i> Order
+                        <i class="material-icons text-primary leftsize">home</i> Sales
                     </a>
                 </div>
                 <div id="collapseTwo" class="collapse" data-parent="#accordion">
                     <div class="card-body">
                         <ul class="zerostyle">
-                            <li><a href="/admin/product/index">Manage Products</a> </li>
-                            <li><a href="admin/product/index">Manage Category</a> </li>
+                            <li><a href="/admin/order/index">Manage Orders</a> </li>
+                            <li><a href="admin/product/index">Manage Invoices</a> </li>
                         </ul>
                     </div>
                 </div>

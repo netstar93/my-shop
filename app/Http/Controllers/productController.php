@@ -83,9 +83,10 @@ class productController extends Controller
         } else{
             $data['custom_attr'] = '';
         }
-        if(isset($data['child_item']) && !empty($data['child_item'][0]['price'] )) {
+        if(isset($data['child_item']) && !empty($data['child_item'][0]["'price'"] )) {
             $data['is_configurable']  = 1;
         }
+
         if (isset($request->id)) {
             $id_data = $this->model->updateProduct($data);
             return redirect('admin/product/index')->with('success', 'Product Succcessfully Updated');
@@ -94,9 +95,6 @@ class productController extends Controller
             $filename = array();
             $diff_att = '';
 
-// _log($data);
-            //IMAGE SAVE LOGIC USING IMAGE HELPER CLASS
-//            Image::saveGalleryImages($request); die;
             try{
                 $id_main = DB::table('catalog_product_main')->insertGetId([
                     'name' => $data['name'],

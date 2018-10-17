@@ -104,25 +104,25 @@ class Product extends Model
         $id_data_diff = [];
         $id = $data['id'];
         $child_item = array();
-        $filename = '';
-//        _log($data);
-        $id_main  = DB::table('catalog_product_main') ->where('id', $id)  ->limit(1)
-            ->update([
+      ///  _log($data);
+        $id_main  = DB::table('catalog_product_main') ->where('id', $id)  ->limit(1);
+          $id_main   ->update([
             'name'=> $data['name'],
             'desc'=> $data['description'],
             'short_desc'=> $data['short_description'],
             'attribute_set_id'=> $data['attributeset'],
-            'category_id'=> $data['category'], 
+            'category_id'=> $data['category'],
+            'is_configurable' => $data['is_configurable'],
             'child_ids'=> "na",
             'attribute_values' => $data['custom_attr'],
             'seller_id'=> $data['seller_id'],
             'status'=> $data['status']
         ]);
-
         $gallery = Image::saveGalleryImages($data);
-        $filename = isset($gallery[0]) ? $gallery[0] : null;
-        $id_data = DB::table('catalog_product_data')->where('product_id', $data['product_id'])->limit(1)
-            ->update([
+        $id_data = DB::table('catalog_product_data')->where('product_id', $data['product_id'])->limit(1);
+        $existed_image = $id_data ->get()->first()->image;
+        $filename = isset($gallery[0]) ? $gallery[0] : $existed_image;
+        $id_data   ->update([
                 'brand' => '1clickpick',
                 'base_price' => $data['base_price'],
                 'image' => $filename,

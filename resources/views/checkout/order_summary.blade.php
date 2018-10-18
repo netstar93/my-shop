@@ -6,8 +6,11 @@ $productModel = new Product;
     <div class="checkout-items">
         <table class="cart-item table">
             @foreach($items as $item)
-                @php
+
+                @php                 
                    $item = $productModel -> load($item ->product_id) ->first();
+
+                    if(is_object($item)) {
                    $img = $item ->image;
                    $name = ucfirst($item ->name);
                    $price = $item ->base_price;
@@ -45,7 +48,7 @@ $productModel = new Product;
                         <td><span class="subtotal">Rs.{{$price}} </span></td>
                     </tr>
                 </div>
-
+            @php } @endphp
             @endforeach
         </table>
         <button class="btn btn-primary" id="summary-next">Next</button>

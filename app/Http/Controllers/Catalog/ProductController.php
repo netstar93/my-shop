@@ -55,12 +55,12 @@ class ProductController extends Controller
                     $quote_id = $newQuote ->id;
                 }else{
                     $newQuote  = new \App\Model\Quote;
-                    $newQuote->total_amount = $cart['grand_total'];
+                    $newQuote->total_amount = $grand_total;
                     $newQuote ->cust_id  = $customer['id'];
                     $newQuote ->save();
                     $quote_id = $newQuote ->id;
                 }
-               $cart_items[$data->product_id] = $data;
+                $cart_items[$data->product_id] = $data;
                     //AVOID DUPLICACY
                     $item_exist= $cart->where('product_id', $data->product_id)->get()->first();
                     if (!isset($item_exist->id)) {
@@ -85,8 +85,6 @@ class ProductController extends Controller
             }
             $cart_items[$data->product_id] = $data;
         }
-
-//        _log($cart_items);
         foreach ($cart_items as $item) {
             $grand_total += ($item->base_price + 30);
         }

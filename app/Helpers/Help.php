@@ -19,3 +19,8 @@ function renderBoolean($val,$type = null) {
 			return $val == 1 ? 'Enable' : 'Disable';
 	}
 }
+
+function renderPrice($val,$round = false) {
+	if($round) return "Rs.".round($val); 
+	else return "Rs.".$val;
+}

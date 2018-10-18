@@ -106,7 +106,7 @@ $(document).ready( function() {
 	var child_product_tab_entity = $('#child_product_tab');
 	
 	//HARD CODED ATTRIBUTE SET NAME
-	attributeset_text == 'Clothes' ? child_product_tab_entity. show() : child_product_tab_entity. hide();
+	attributeset_text == 'Clothes' || attributeset_text == 'Shoes' ? child_product_tab_entity. show() : child_product_tab_entity. hide();
 
 
 	var request = $.ajax({

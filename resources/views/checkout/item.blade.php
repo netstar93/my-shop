@@ -1,21 +1,17 @@
 @php
-    $img ='';      //_log($item );
+    $img =$color = $size = '';  
     $item = $productModel -> load($item ->product_id) ->first();
 
     if(isset($item ->image))
     $img = $item ->image;
 
     $image_path  = url("media/product/thumb/$img");
-    $attr_values =  json_decode($item ->attribute_values, true);
-    $diff_attr =  json_decode($item ->diff_attr_values , true);
-    if(isset($diff_attr["'color'"])):
-        $color = $diff_attr["'color'"];
-    endif;
-    if(isset($diff_attr["'size'"])):
-        $size = $diff_attr["'size'"];
-    endif;
+    if(!empty($item ->attribute_values)) {
+      $attr_values =  json_decode($item ->attribute_values, true);
+    }
 
 @endphp
+@if(is_object($item))
 <div class="cart-item row">
   <tr>
   <td>  <img src={{$image_path}}  width="100px" /></td>
@@ -38,3 +34,4 @@
       <td><span class="subtotal">Rs.{{$item ->base_price}} </span></td>
   </tr>
 </div>
+@endif

@@ -36,9 +36,11 @@ class attributesetController extends Controller
    }
 
     public function save(Request $request){
-        $data = $request->all();
-        // _log( $data); die;
-        $attributes = implode(",", $request->get('attribute_ids'));
+        $data = $request->all();    
+        $attributes = '';  
+        if($request->get('attribute_ids')){  
+          $attributes = implode(",", $request->get('attribute_ids'));
+        }
         if (isset($data['id'])) {
             $data['attribute_ids'] = $attributes;
             Attributeset::find($data['id'])->update($data);

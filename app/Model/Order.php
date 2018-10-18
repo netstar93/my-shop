@@ -15,6 +15,7 @@ class Order extends Model
     const CREATED_AT = 'creation_date';
     const UPDATED_AT = 'last_update';
     protected $customerModel;
+    protected $productModel;
 
 	public function __construct(){
         $customer = session('customer');
@@ -24,11 +25,12 @@ class Order extends Model
             $this->customer_id = $customer['id'];
         }
         $this ->customerModel = new Customer();
+        $this ->productModel = new Product();
 	}
 
     public function items()
     {
-        return $this->hasMany('App\Model\Order_items');
+        return $this->hasMany('App\Model\Order_item');
     }
 
     /*ALL QUOTE FUNCTIONS*/
@@ -57,6 +59,13 @@ class Order extends Model
         return $data;
     }
 
+    public function getOrder($id = null){
+        $order = self :: find($id);
+        $order ->grand_total = $this ->calculateGrandTotal($order);
+        return $order;
+    }
+
+
     public function getQuoteItemCollection($id = null){
         if(!$id) return false;
         $data = $this ->getQuoteData()->filter(function ($value, $key) use ($id) {
@@ -75,8 +84,16 @@ class Order extends Model
         $orders = $this ->getOrderCollection() ->toArray();
         $new_orders = array();
         $new_orders = array_map(array($this, 'renderOrderData'), $orders);
-//        _log($new_orders);
         return $new_orders;
+    }
+
+    public function getAllItems($order_id,$withData = false)
+    {
+        $items = Order:: find($order_id)->items;
+        if($withData){
+            return array_map(array($this,'renderItemData') , $items ->toArray());
+        }
+        return $items;
     }
 
     public function renderOrderData($order) {
@@ -89,27 +106,45 @@ class Order extends Model
         }
         $productModel = new Product();
         foreach ($this->getAllItems($order['id']) as $item) {
-            $product = $productModel->load($item->item_id);
-            if (isset($product)) {
+            $product = $this ->productModel->load($item->item_id);
+            if ($product->first()) {
                 $pro_name[] = $product->first()->name;
             } else {
                 $pro_name[] = 'NA';
             }
         }
-        $tmp->product_name = $pro_name;//implode(',' ,   $pro_name);
+        $tmp->product_name = $pro_name;
         return $tmp;
+    }
+
+    public function renderItemData($item_arr){
+        $item = array();
+        $item = (object)$item_arr;       
+        $product = $this ->productModel->load($item ->item_id);
+        // _log($product);
+        if($product) {
+            $item ->name = $product ->first()->name;
+            $item ->image = $product ->first()->image;
+        }
+        return $item;
     }
 
     public function getCustomer($customer_id){
         return $this ->customerModel->load($customer_id);
     }
 
-    public function getAllItems($order_id)
-    {
-        return Order:: find($order_id)->items;
-    }
-
     public function getShippingAddress($address_id){
         return $this ->customerModel ->getShippingAddressData($address_id) ->address;
+    }
+
+    public function getExtraCharges($order) {      
+        return $order->shipping_amount;
+    }
+
+    public function calculateGrandTotal($order) {
+        $total = 0;
+        $extra_charges = (int)$this ->getExtraCharges($order);
+        $total += (int)$order->total_amount + $extra_charges;
+        return $total;
     }
 }

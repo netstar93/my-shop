@@ -15,13 +15,16 @@ $color_options = $attributeModel ->getAttributeOptions('color');
     <script src="{{ asset('/js/productpage.js') }}"></script>
     <div class="product_view_main">
         @php
+                $attr_info = array();
                 $status =  $data->status;
                 $image =  $data->image;
                 $product_name =  $data->name;
                 $price =  $data->base_price;
                 $desc =  $data->desc;
                 $short_desc =  $data->short_desc;
-                $attr_info =  json_decode($data->attribute_values, true);
+                if(!empty($data->attribute_values)){
+                   $attr_info =  json_decode($data->attribute_values, true);
+                }
                 if(isset($attr_info["'price'"])) { unset($attr_info["'price'"]);  }
                 $diff_attr_info =  json_decode($data->diff_attr_values, true);
                 $image_path  = "media/product/small/$image";

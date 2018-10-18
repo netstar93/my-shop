@@ -142,9 +142,9 @@ class productController extends Controller
             $main_id = $model->get() ->first() ->main_id;
             $model->delete();
 
-            //REMOVE DATA
-            $data_model = DB::table('catalog_product_data') ->where('main_id',$main_id);
-            if($data_model ->get()->count() ==  0){
+            //REMOVE MAIN
+            $data_model = DB::table('catalog_product_main') ->where('id',$main_id);
+            if($data_model ->get()->count() >  0){
                 $main_model = DB::table('catalog_product_main') ->where('id',$main_id);
                 $main_model ->delete();
             }

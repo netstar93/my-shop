@@ -31,9 +31,14 @@ class OrderController extends Controller
 
     public function view(Request $request)
     {
-        $order = Order:: find($request->id);
+        $order = $this ->model ->getOrder($request->id);
+        $customer = \App\Model\Customer:: find($order->customer_id);
+        $itemData = $this ->model ->getAllItems($request->id , true);
+       // _log($itemData);
         return view('admin.sales.order.view')->with([
-                'order' => $order
+                'order' => $order,
+                'customer' => $customer,
+                'items' => $itemData
             ]
         );
     }

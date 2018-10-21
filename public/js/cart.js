@@ -18,4 +18,19 @@ $('.cart-item-remove').click(function(e) {
         }
     });
 });
+
+    $('.right-filter input[type="checkbox"] ').click(function (e) {
+        var filter_val = 1;//$(this).attr('value');
+        $.ajax({
+            url: '/cart/remove/',
+            type: 'POST',
+            data: {'product_id': filter_val},
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.success) {
+                    location.reload();
+                }
+            }
+        });
+    });
 });

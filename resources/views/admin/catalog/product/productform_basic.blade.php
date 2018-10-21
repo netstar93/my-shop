@@ -1,5 +1,5 @@
 @php
-    $name = $id = $desc = $short_desc= $sku = $attributeset = $unclick =  null;
+    $name = $id = $desc = $short_desc= $sku = $attributeset = $featured_product = $unclick =  null;
     $status = true;
     $attributeset_data_coll = array('' => 'Select Attribute Set');
     $category_ids = array();
@@ -13,6 +13,7 @@
         $status = $data ->status;
         $base_price = $data ->base_price;
         $attributeset = $data ->attribute_set_id;
+        $featured_product = $data ->featured_product;
         $category_ids = json_decode($data ->category_id, true);
         $diff_attr_values = $data ->diff_attr_values;
         $unclick = "pointer-events:none";
@@ -88,4 +89,12 @@
     <label for="name" class="col-lg-4">Sku</label>
     <input type="text" class="form-control" name="sku" value = "{{$sku}}"required>
     <div class="invalid-feedback">Oops, you missed this one.</div>
+</div>
+
+<div class="form-group form-inline">
+    {{ Form ::label('Featured Product') }}
+    {{ Form::radio('featured_product', '1',  $featured_product ==1 ? true:'' , array('class' => 'form-control' )) }}
+    Yes
+    {{ Form::radio('featured_product', '0', $featured_product ==0 ? true:'' ,array('class' => 'form-control' )) }}
+    No
 </div>

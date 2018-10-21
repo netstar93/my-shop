@@ -3,10 +3,19 @@ $(document).ready(function () {
         type: 'iframe',
         autoscale: false
     });
+
+    $('#loader').hide();
+    $('#loader').ajaxStart(function () {
+        $(this).show();
+    });
+    $("#loader").ajaxStop(function () {
+        $(this).hide();
+    });
+
     $(window).keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault();
-            return false;
+            //     return false;
         }
     });
     $(document).on('change', '.btn-file :file', function () {

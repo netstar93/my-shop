@@ -1,14 +1,11 @@
 /**
  * Created by Nitish on 08 Sep.
  */
-
 var selected_color = false;
-
 $(document).ready(function() {
-
-$('.selection li').click(function(e){
-    selected_color = true;
-});
+    $('.selection li').click(function (e) {
+        selected_color = true;
+    });
 
     var product_id = parseInt($('#productId' +
         '').val());

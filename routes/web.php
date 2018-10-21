@@ -80,4 +80,6 @@ Route::resource('admin/banner', 'bannerController');
 Route::get('admin/order', 'Sales\OrderController@index');
 Route::get('admin/order/index', 'Sales\OrderController@index');
 Route::get('admin/order/view/{id?}', 'Sales\OrderController@view');
+Route::post('admin/order/add_comment', 'Sales\OrderController@addComment');
+Route::post('admin/order/update/{status?}', 'Sales\OrderController@update');
 

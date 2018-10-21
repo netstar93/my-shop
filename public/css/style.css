@@ -4,8 +4,9 @@ body{
     margin: 0px;
     /*padding:5px;*/
     min-height: 100%;
-    background: lightgrey;
+    /*background: lightgrey;*/
     font-family: Roboto, Arial, sans-serif;
+    padding: 1px;
 }
 body::after {
     content: '';
@@ -15,6 +16,12 @@ body::after {
 .main_content ,#container{
     min-height: 700px;
 }
+
+a:focus, a:hover {
+    color: unset;
+    text-decoration: none;
+}
+
 hr{
     margin-top: 3px;
     margin-bottom: 3px;
@@ -137,8 +144,9 @@ form.side-form .address-left,form.side-form .address-right{
 }
 .main-header nav li{
     list-style: none;
-    float:right;
+    float: right;
     margin: 5px;
+    padding: 5px;
 }
 a{
     color:white;
@@ -160,6 +168,26 @@ ul.account-menu li{
     float:left;
     padding-left: 5px;
 }
+
+.top-menu {
+    float: right;
+    /*margin-right: 5%;*/
+}
+
+.top-links li i {
+    padding-right: 5px;
+    font-size: 30px;
+}
+
+.search-box {
+    width: 40%;
+    display: inline-block;
+}
+
+.search-box .input-group {
+    width: 100%
+}
+
 /*****************CUSTOMER *************/
 .customer_register_form{
     margin: 0 auto;
@@ -248,4 +276,171 @@ footer{
     /*width:50px;*/
     height:auto;
     padding:20px 0px;
+}
+
+/********** HOME PAGE**********/
+.home-gallery li {
+    display: inline-block;
+    max-height: 30%;
+    padding: 5px;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+.home-gallery {
+    padding: 10px;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+.home-gallery-label {
+    font-size: 20px;
+    font-weight: 500;
+    padding-bottom: 5px;
+}
+
+.home-gallery li div.item-content {
+    list-style: none;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.item-content .title {
+    text-align: center;
+    font-size: 16px;
+    text-transform: capitalize;
+    color: green;
+    padding-top: 5px;
+}
+
+.item-content .final-price {
+    text-align: center;
+    font-size: 18px;
+}
+
+.item-content img {
+    width: 160px;
+    max-width: 160px;
+}
+
+.home-gallery ul {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/******** CATEGORY LIST ******/
+.category-list-item {
+    background-color: #fff;
+    margin-bottom: 8px;
+    padding: 0px;
+}
+
+.category-list-item .img-box {
+    text-align: center;
+}
+
+.category-view-main {
+    background-color: #fff;
+    margin: 8px;
+}
+
+.category-view-main .title {
+    font-size: 18px;
+    padding: 5px;
+    padding-left: 10px;
+    border-bottom: 1px solid darkgray;
+    margin-bottom: 2px;
+}
+
+.category-view-main .product-grid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.product-grid {
+    box-shadow: 0px 1px 10px 2px #2AB285;
+    min-height: 100%;
+    padding: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.right-filter {
+    margin-right: 25px;
+}
+
+.right-filter .panel-body {
+    padding: 0px;
+}
+
+.right-filter .panel {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.right-filter .panel li {
+    margin: 1.5%;
+}
+
+.right-filter .panel li span {
+    text-transform: capitalize;
+    margin-left: 20px;
+}
+
+.right-filter .panel ul {
+    list-style: none;
+}
+
+.right-filter .panel li .field {
+    min-width: 58px;
+    display: inline-block;
+}
+
+.right-filter .panel li .colorBox {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-right: 16px solid #2AB285;
+    border-bottom: 16px solid red;
+    width: 150px;
+    height: 150px;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 2s linear infinite;
+    top: 20%;
+    left: 35%;
+    position: absolute;
+}
+
+.loader-wrapper {
+    background-color: lightgrey;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 999;
+    opacity: 0.6;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

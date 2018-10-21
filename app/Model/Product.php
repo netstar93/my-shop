@@ -21,9 +21,8 @@ class Product extends Model
 
     public function getCollection()
     {
-        $collection = DB::table('catalog_product_main')
-            ->join('catalog_product_data', 'catalog_product_main.id', '=', 'catalog_product_data.main_id');
-//                                       ->select('catalog_product_data.product_id');
+        $collection = DB::table('catalog_product_main as main')
+            ->join('catalog_product_data as data', 'main.id', '=', 'data.main_id');
         return $collection;
     }
 
@@ -116,7 +115,8 @@ class Product extends Model
             'child_ids'=> "na",
             'attribute_values' => $data['custom_attr'],
             'seller_id'=> $data['seller_id'],
-            'status'=> $data['status']
+              'status' => $data['status'],
+              'featured_product' => $data['featured_product']
         ]);
         $gallery = Image::saveGalleryImages($data);
         $id_data = DB::table('catalog_product_data')->where('product_id', $data['product_id'])->limit(1);

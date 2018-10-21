@@ -1,6 +1,6 @@
 <div class="col-lg-5 col-xs-5 card cta cta--featured d-inline-block">
   <div class="car-block">
-    <h3 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Order</h3>
+      <h5 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Order</h5>
   </div>
    <span class="header-line gradient-color-1"></span>
   <div class="card-block">
@@ -17,7 +17,7 @@
 </div>
 <div class="col-lg-5 col-xs-5 card cta cta--featured d-inline-block">
   <div class="card-block">
-    <h3 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Customer</h3>
+      <h5 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Customer</h5>
   </div>
   <span class="header-line gradient-color-1"></span>
   <div class="card-block">
@@ -35,14 +35,20 @@
 
 <div class="col-lg-12 col-xs-10 card cta cta--featured">
   <div class="car-block">
-    <h3 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Order Items</h3>
+      <h5 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Order Items</h5>
   </div>
    <span class="header-line gradient-color-1"></span>
   <div class="card-block">
    
    <table class="table">
      <tbody>
-        <tr><th>Item ID</th><th>Image</th><th>Product Name</th><th>Price</th><th>Shipping Method</th></tr>
+     <tr>
+         <th>Item ID</th>
+         <th>Image</th>
+         <th>Product Name</th>
+         <th>Shipping Method</th>
+         <th>Price</th>
+     </tr>
      @foreach($items as $item)
      <tr>
         <td>{{$item->id}}</td>
@@ -58,9 +64,9 @@
   </table>
   </div>
 </div>
-<div class="col-lg-12 col-xs-10 card cta cta--featured mt-5">
+<div class="col-lg-12 col-xs-10 card cta cta--featured mt-1">
     <div class="car-block">
-      <h3 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Totals</h3>
+        <h5 class="card-title no-margin-top"><span class="fa fa-map pad-right text-primary"></span>Totals</h5>
     </div>
      <span class="header-line gradient-color-1"></span>
     <div class="card-block">

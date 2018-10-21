@@ -13,12 +13,12 @@ $name =  $customer['name'];
 <header>
     <div class="main-header container-fluid">
         <div class="row">
-        <span class="logo col-sm-4">
+        <span class="logo col-sm-3">
             <a href="/">
-                <img src="/images/logo.jpg" style="width:70px" />
+                <img src="{{url('images/magelog2.png')}}" style="width:180px" height=" 60px"/>
             </a>
         </span>
-            <span class="search-box col-sm-4 navbar-form">
+            <span class="search-box col-sm-5 navbar-form">
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search">
                 <div class="input-group-btn">
@@ -28,10 +28,12 @@ $name =  $customer['name'];
                 </div>
               </div>
         </span>
-            <span class="top-menu col-sm-4">
+            <span class="top-menu col-sm-3">
             <nav class="top-links ">
-               <li> <a href="/cart"><i class="fa fa-shopping-cart fa-2x"></i><span class="cart badge">{{$item_count }}</span></a></li>
+                <li> <a href="/cart"><i class="fa fa-shopping-cart fa-2x"></i><span
+                                class="cart badge">{{$item_count }}</span></a></li>
                 @if(isset($is_logged_in))
+                    <li> <i class="fa fa-heart fa-2x" style="color: #fff"></i> </li>
                     <li>
                     <div class="dropdown">
                           <span class="dropdown-toggle" data-toggle="dropdown">
@@ -46,8 +48,8 @@ $name =  $customer['name'];
                         </div>
                     </li>
                 @else
-                    <li><i class="fa fa-power-off"></i><a href="/customer/login">Login</a></li>
-                    <li><i class="fa fa-power-off"></i><a href="/customer/create">Sign Up</a></li>
+                    <li><i class="fa fa-user"></i><a href="/customer/login">Login</a></li>
+                    <li><i class="fa fa-user-plus"></i><a href="/customer/create">Sign Up</a></li>
                 @endif
             </nav>
         </span>
@@ -61,3 +63,7 @@ $name =  $customer['name'];
 @if(session('error'))
     <div class="page-message alert alert-warning">{{session('error')}}</div>
 @endif
+
+<div id="loader" class="loader-wrapper">
+    <div class="loader"></div>
+</div>

@@ -33,6 +33,20 @@ class Order extends Model
         return $this->hasMany('App\Model\Order_item');
     }
 
+    public function Payment()
+    {
+        return $this->hasOne('App\Model\Order_payment');
+    }
+
+    public function Comments()
+    {
+        return $this->hasMany('App\Model\Order_comment');
+    }
+
+    public function Status()
+    {
+        return $this->hasOne('App\Model\Order_status');
+    }
     /*ALL QUOTE FUNCTIONS*/
 
 	public function getCollection(){
@@ -62,6 +76,7 @@ class Order extends Model
     public function getOrder($id = null){
         $order = self :: find($id);
         $order ->grand_total = $this ->calculateGrandTotal($order);
+        $order->address = $this->getShippingAddress($order->address_id);
         return $order;
     }
 
@@ -134,7 +149,7 @@ class Order extends Model
     }
 
     public function getShippingAddress($address_id){
-        return $this ->customerModel ->getShippingAddressData($address_id) ->address;
+        return $this->customerModel->getShippingAddressData($address_id);
     }
 
     public function getExtraCharges($order) {      
@@ -146,5 +161,15 @@ class Order extends Model
         $extra_charges = (int)$this ->getExtraCharges($order);
         $total += (int)$order->total_amount + $extra_charges;
         return $total;
+    }
+
+    public function addComment($order_id, $message)
+    {
+        $comment = \App\Model\Order_comment:: create([
+            'order_id' => $order_id,
+            'comment' => $message
+        ]);
+        if ($comment->id > 0) return true;
+        return false;
     }
 }

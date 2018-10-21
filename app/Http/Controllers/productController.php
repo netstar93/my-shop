@@ -106,7 +106,8 @@ class productController extends Controller
                     'child_ids' => "na",
                     'attribute_values' => $data['custom_attr'],
                     'seller_id' => $data['seller_id'],
-                    'status' => $data['status']
+                    'status' => $data['status'],
+                    'featured_product' => $data['featured_product']
                 ]);
 
                 if ($id_main > 0) {

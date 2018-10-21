@@ -173,17 +173,99 @@ $(document).ready( function() {
         product_label++;
     });
 
-var default_type = $('#attr_type').val();
-if(typeof default_type != 'undefind'){
-	var selectEntity = $('.selectContent');
-	default_type == 'select' ? selectEntity.show() : selectEntity.hide();
-}
+    var default_type = $('#attr_type').val();
+    if (typeof default_type != 'undefind') {
+        var selectEntity = $('.selectContent');
+        default_type == 'select' ? selectEntity.show() : selectEntity.hide();
+    }
 
-$('#attr_type').change(function(e){
-	var type = $(this).val();
-	var selectEntity = $('.selectContent');
-	type == 'select' ? selectEntity.show() : selectEntity.hide();
+    $('#attr_type').change(function (e) {
+        var type = $(this).val();
+        var selectEntity = $('.selectContent');
+        type == 'select' ? selectEntity.show() : selectEntity.hide();
+    });
 
-})
+    $('#addComment').click(function (e) {
+        var formData = {'comment': $('#comment').val(), 'notify': $('#notify').val()};
+        $.ajax({
+            url: "/admin/order/add_comment",
+            type: 'post',
+            data: formData,
+            dataType: "json",
+            success: function (data) {
+                if (!data.error) {
+                    showMessage('Comment added');
+                    window.location.reload();
+                }
+                else
+                    showMessage('Something wrong happend !!', 'error');
+            }
+        })
+    })
 
+    $('.processStatus button').click(function (e) {
+        var status = $(this).attr('status');
+        var title = $(this).text();
+        swal({
+            title: "Are you sure?",
+            text: "You cannot undo this action !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55  ",
+            confirmButtonText: "Yes, Do Now!",
+            closeOnConfirm: false
+        }, function () {
+            var formData = {'status': status, 'title': title};
+            $.ajax({
+                url: "/admin/order/update",
+                type: 'post',
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (!data.error) {
+                        swal('Done', 'Order successfully updated to Status ' + title, 'success');
+                    }
+                    else
+                        swal('Sorry !!', 'Not Done', 'error');
+                }
+            })
+        });
+    })
+
+    $('#cancelOrdeXXr').on('click', function () {
+        swal({
+            title: "Are you sure?",
+            text: "You cannot undo this action !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55  ",
+            confirmButtonText: "Yes, Cancel Now!",
+            closeOnConfirm: false
+        }, function () {
+            var formData = {'status': $('#comment').val()};
+            $.ajax({
+                url: "/admin/order/update",
+                type: 'post',
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (!data.error) {
+                        swal('Cancelled', 'Order cancelled now', 'success');
+                    }
+                    else
+                        swal('Not Cancelled', 'Sorry cannot cancel', 'error');
+                }
+            })
+        });
+    });
+
+    $('body').on('click', '.sa-button-container .confirm', function () {
+        // window.location.reload();
+    })
+
+    function showMessage(msg, type = 'success') {
+        var html = '<div class=\"page-message alert alert-success alert-dismissable text-center\">' +
+            '<i class=\"fa fa-check-square-o\" style=\"font-size: 25px;\"></i>' + msg + '</div>';
+        $('.messages').append(html);
+    }
 	});

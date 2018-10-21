@@ -82,7 +82,9 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                 <table class="table attribute-table">
                 @foreach( $attr_info as $attr_id => $attr_value)
                 @php
-                    $attribute = Attribute::where('id',$attr_id)->get()->first();
+                    $attribute = Attribute::where('id',$attr_id)->get();
+                    if($attribute->first()) {
+                    $attribute = $attribute->first();
                     $type = $attribute ->type;
                     $name = $attribute ->name;
                     $options = json_decode($attribute ->options,true);
@@ -95,6 +97,7 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                     }
                 @endphp
                 <tr><td>{{$name}}  </td> <td>{{$option_value}}</td></tr>
+                        @php } @endphp
                 @endforeach
                 </table>
              </div>           

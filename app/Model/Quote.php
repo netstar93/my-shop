@@ -4,7 +4,6 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
-use App\Model\Quote;
 
 class Quote extends Model
 {

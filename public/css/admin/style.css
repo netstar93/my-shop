@@ -7,6 +7,9 @@ a{
 	color:#fff;
 }
 
+.table td, .table th {
+    padding: 0.40rem;
+}
 ul li, tr td {
    text-transform: capitalize;
 }
@@ -89,10 +92,10 @@ a:hover {
     color: white;
     background-color: lightseagreen;
     /*border: 1px red solid;*/
-    font-weight: 600;
-    padding: 4px;
-    text-transform: uppercase;
-
+    font-weight: 500;
+    padding: 3px;
+    text-transform: capitalize;
+    z-index: 999;
     -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
     box-shadow:         3px 3px 5px 6px #ccc;

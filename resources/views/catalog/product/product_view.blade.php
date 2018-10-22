@@ -4,49 +4,51 @@ $attributeModel = new Attribute();
 $attributeModel = new Attribute();
 $attribute_color = Attribute :: where('name', 'color') ->get()->first();
 $color_options = $attributeModel ->getAttributeOptions('color');
-
 @endphp
 <!-- provide the csrf token -->
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
 @extends('layout')
-@section('title', $data->name)
+@section('title', $product->name)
 @section('middle_content')
-    <link href="{{asset('css/product_view.css')}}" rel="stylesheet" type="text/css"/>
-    <script src="{{ asset('/js/productpage.js') }}"></script>
+<head>
+ <link href="{{asset('css/product_view.css')}}" rel="stylesheet" type="text/css"/>
+ <script src="{{ asset('/js/productpage.js') }}"></script>
+</head>
+
     <div class="product_view_main">
         @php
-                $attr_info = array();
-                $status =  $data->status;
-                $image =  $data->image;
-                $product_name =  $data->name;
-                $price =  $data->base_price;
-                $desc =  $data->desc;
-                $short_desc =  $data->short_desc;
-                if(!empty($data->attribute_values)){
-                   $attr_info =  json_decode($data->attribute_values, true);
+                $attr_info = array();               
+                $image =  $product->image;                
+                $price =  $product->base_price;
+                $desc =  $product->desc;
+                $short_desc =  $product->short_desc;
+                if(!empty($product->attribute_values)){
+                   $attr_info =  json_decode($product->attribute_values, true);
                 }
                 if(isset($attr_info["'price'"])) { unset($attr_info["'price'"]);  }
-                $diff_attr_info =  json_decode($data->diff_attr_values, true);
+                $diff_attr_info =  json_decode($product->diff_attr_values, true);
                 $image_path  = "media/product/small/$image";
-                $product_id =  $data->product_id;
-                $is_configurable =  $data->is_configurable;
+                $product_id =  $product->product_id;
+                $is_configurable =  $product->is_configurable;
         @endphp
         <input type="hidden" id="is_configurable" value={{$is_configurable}} />
-        <div class="top-wrapper">
+        <div class="top-wrapper col-lg-12" style="height:80% ; background-color: #fff">
             <div class="image-wrapper col-lg-4" style="display: inline-block;min-height: 50%">
                 <span class="left-image-bar"></span>
                 <input type="hidden" id="productId" value="<?php echo $product_id ?>"/>
-                <span class="image-box col-md-6 col-sm-6">
-                <img src="{{ asset($image_path) }}" class="product-image-view"/>
-            </span>
+                <span class="image-box col-md-6 col-sm-6" >                  
+                    <a href="{{ asset($image_path) }}" data-fancybox="images" data-width="1000">
+                      <img src="{{ asset($image_path) }}" class="product-image-view" />
+                    </a>
+                </span>
             </div>
             <div class="content-wrapper col-lg-8">
                 <div class="desc-box">
-                    <div class='name'>{{$product_name}}</div>
+                    <div class='name'>{{$product->name}}</div>
                     <div class='review'>100 review</div>
                     <div class='price'>
                         <div class='label'>Special Price</div>
-                        <div class='final-price'>Rs. {{$price}}</div>
+                        <div class='final-price'>{{renderPrice($price)}}</div>
                     </div>
                 </div>
                 <p class="short-desc">
@@ -60,14 +62,14 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                     <div class="selection" style="display: inline-block;">
                         <div class="color"> Color :
                             <ul style="list-style: none" id="color">
-                                @foreach($config_data as $data)
+                                @foreach($config_data as $product)
                                 @php
-                                    $tmp  = $data -> config_attributes;
+                                    $tmp  = $product -> config_attributes;
                                     $color_name = $color_options [$tmp[$attribute_color ->id]];
                                 @endphp
 
                                     <li style="background-color:{{ucfirst($color_name )}} ;min-width: 30px;min-height: 30px;  text-align: center;">
-                                        <a href="/catalog/product/view/{{$data ->product_id}}">
+                                        <a href="/catalog/product/view/{{$product ->product_id}}">
                                             {{ucfirst($color_name )}}
                                 </a>  
                                 </li>                                                    
@@ -87,6 +89,9 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                     $attribute = $attribute->first();
                     $type = $attribute ->type;
                     $name = $attribute ->name;
+
+        if($name == 'color' ||$name == 'size')  {
+
                     $options = json_decode($attribute ->options,true);
                     
                     if($type == 'select' && isset($options[$attr_value])) {
@@ -97,46 +102,94 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                     }
                 @endphp
                 <tr><td>{{$name}}  </td> <td>{{$option_value}}</td></tr>
-                        @php } @endphp
+         @php } } @endphp
                 @endforeach
                 </table>
              </div>           
-@endif
+            @endif
             <span class="actions">
             <span class="addtocart">
                 <button id="addtocart" class="btn btn-success">ADD TO CART</button>
             </span>
-            <span class="buynow">
-                <button id="buynow" class="btn btn-primary">BUY NOW</button>
+            
             </span>
-            </span>
+            </div>
+
+    <div class="card">
+      <div class="card-body">
+    
+        <div style="display: none;max-width:600px;" id="trueModal">
+          <h2>I'm a modal!</h2>
+          <p>You can close me only by pressing custom button below.</p>
+          <p>It would also be possible to prevent closing using `beforeClose` callback.</p>
+          <button data-fancybox-close class="btn btn-success">Close me</button>
+        </div>
+      </div>
+    </div>
+
+        </div>
+
+        <div class="bottom-wrapper details-tabs col-lg-12">
+            <div class="tabs">  
+
+                  <ul class="nav nav-pills">
+                    <li class="active"><a data-toggle="pill" href="#description">Description</a></li>
+                    <li><a data-toggle="pill" href="#return">Return Policy</a></li>                
+                  </ul>
+                  
+                  <div class="tab-content">
+                    <div id="description" class="tab-pane fade in active">
+                      @if(count($attr_info) && !$is_configurable)
+                        
+                            <table class="table attribute-table">
+                            @foreach( $attr_info as $attr_id => $attr_value)
+                            @php
+                                $attribute = Attribute::where('id',$attr_id)->get();
+                                if($attribute->first()) {
+                                $attribute = $attribute->first();
+                                $type = $attribute ->type;
+                                $name = $attribute ->name;
+                                $options = json_decode($attribute ->options,true);
+                                
+                                if($type == 'select' && isset($options[$attr_value])) {
+                                 $option_value = $options[$attr_value];
+                                }                    
+                                else{
+                                $option_value = $attr_value;
+                                }
+                            @endphp
+                            <tr><td>{{$name}}  </td> <td>{{$option_value}}</td></tr>
+                                    @php } @endphp
+                            @endforeach
+                            </table>
+                                  
+                        @endif
+                    </div>
+                    <div id="return" class="tab-pane fade">
+                      <h3>Return Policy</h3>
+                      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                    
+                  </div>
             </div>
         </div>
 
-        <div class="bottom-wrapper">
-            <div class="title">     </div>
-        </div>
 
-
-        <div class="modal" tabindex="-1" role="dialog" id="myModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="alert alert-danger" style="display:none"></div>
+        <div class="card hide" id="successModal" >
+            <div class="card-body">                                    
                     <div class="modal-header">
-                        <h4 class="modal-title">Product Page</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h4 class="modal-title">Product Page</h4>                        
                     </div>
                     <div class="modal-body">
-                        <div class="info well">{{$product_name}} Added successfully.</div>
+                        <p>{{$product->name}} successfully added to your cart.</ps>
                         <div class="actions">
+                            <button class="btn btn-success">
                             <a href="/cart">
-                                <button class="btn btn-success"> Go To Cart</button>
-                            </a>
+                                 Go To Cart
+                            </a></button>
+                            <button data-fancybox-close class="btn btn-success">Close</button>
                         </div>
-                    </div>
-                </div>
+                    </div>                
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ class Attribute extends Model
     public function getAttributeOptions($name = null)
     {
         $attr = Attribute:: where('name', $name)->get();
-        if (isset($attr)) {
+        if ($attr ->first()->type == 'select') {
             return json_decode($attr->first()->options, true);
         }
         return array();

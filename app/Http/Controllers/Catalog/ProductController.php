@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function view()
     {  
         return view('catalog/product/product_view', [
-                    'data' => $this->getData(),
+                    'product' => $this->getData(),
                     'config_data' => $this ->model ->getConfigurableData($this->id),    
                     'custom_attributes'=> $this ->model ->getCustomAttribute($this->id) ]);
     }

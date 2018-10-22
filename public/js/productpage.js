@@ -7,10 +7,21 @@ $(document).ready(function() {
         selected_color = true;
     });
 
+    $('[data-fancybox="images"]').fancybox({
+    afterLoad : function(instance, current) {
+        var pixelRatio = window.devicePixelRatio || 1;
+
+        if ( pixelRatio > 1.5 ) {
+            current.width  = current.width  / pixelRatio;
+            current.height = current.height / pixelRatio;
+        }
+    }
+});
+
     var product_id = parseInt($('#productId' +
         '').val());
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $('#addtocart').click(function(){
+    $('#addtocart').click(function(){        
         var is_configurable_product = $('#is_configurable').val();
         console.log(is_configurable_product + "   " +selected_color);
         if(is_configurable_product == 1) {
@@ -28,7 +39,16 @@ $(document).ready(function() {
             data: {_token: CSRF_TOKEN, product_id: product_id},
             dataType: 'JSON',
             success: function (data) {
-                $('#myModal').modal('show');
+                $('#successModal').removeClass('hide');
+                $.fancybox.open({
+                    src  : '#successModal',
+                    type : 'inline',
+                    opts : {
+                        afterShow : function( instance, current ) {
+                            console.info( 'done!' );
+                        }
+                    }
+                });
             }
         });
     });

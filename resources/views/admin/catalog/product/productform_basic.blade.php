@@ -13,7 +13,10 @@
         $status = $data ->status;
         $base_price = $data ->base_price;
         $attributeset = $data ->attribute_set_id;
-        $featured_product = $data ->featured_product;
+       
+        if(isset($data ->featured_product)) {
+            $featured_product = $data ->featured_product;
+        }
         $category_ids = json_decode($data ->category_id, true);
         $diff_attr_values = $data ->diff_attr_values;
         $unclick = "pointer-events:none";

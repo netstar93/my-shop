@@ -16,6 +16,7 @@
                value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
     </div>
 </div>
+@if(count($color_options))
 <div class="panel panel-success">
     <div class="panel-heading">Color</div>
     <div class="panel-body">
@@ -29,7 +30,8 @@
         </ul>
     </div>
 </div>
-
+@endif
+@if(count($size_options))
 <div class="panel panel-success">
     <div class="panel-heading">Size</div>
     <div class="panel-body">
@@ -42,9 +44,10 @@
         </ul>
     </div>
 </div>
-
+@endif
+@if(count($fabric_options))
 <div class="panel panel-success">
-    <div class="panel-heading">Size</div>
+    <div class="panel-heading">Fabrics</div>
     <div class="panel-body">
         <ul>
             @foreach($fabric_options as $id => $fabric)
@@ -55,3 +58,4 @@
         </ul>
     </div>
 </div>
+@endif

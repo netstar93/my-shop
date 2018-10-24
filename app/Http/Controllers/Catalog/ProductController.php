@@ -38,12 +38,14 @@ class ProductController extends Controller
     {
         $cart_items = array();
         $grand_total = 0;
+        $shipping_charge = Quote::shipping_charge;
         $error = false;
         $id = $request->product_id;
         $productModel = new Product();
         $quoteModel = new Quote();
 
         $data = $productModel->load($id)->first();
+        $data ->qty  = 1;
         //GET LOGGED IN CUSTOMER CART DATA
         if (session('customer')) {
                 $cart = $quoteModel->getCart();  //get items
@@ -69,7 +71,6 @@ class ProductController extends Controller
                             'quote_id' => $quote_id,
                             'product_id' => $data->product_id,
                             'amount' => $data->base_price,
-                            'options' => $data->diff_attr_values,
                             'status' => 'pending'
                         ]);
                         if (!$item_id) $error = true;
@@ -86,7 +87,7 @@ class ProductController extends Controller
             $cart_items[$data->product_id] = $data;
         }
         foreach ($cart_items as $item) {
-            $grand_total += ($item->base_price + 30);
+            $grand_total += $item->base_price + $shipping_charge;
         }
 
         session(['cart' => [

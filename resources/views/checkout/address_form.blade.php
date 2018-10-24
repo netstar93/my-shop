@@ -16,9 +16,9 @@
     use App\Helpers\Helper;
     $helper = new Helper;
     $addresses = $helper ->getAddresses();
-   // echo "<pre>"; print_r($addresses); die;
     @endphp
 
+    <div class="error-validation">Please fill form/select address.</div>
     @if(count($addresses)> 0)
     <div class="address-list">
       <form class="side-form form" name="shipping-address" id="shipping-address" method="post" role="form" aria-hidden="true">
@@ -33,28 +33,28 @@
         </ul>
         <div class="invalid-feedback hidden">Oops, you missed this one.</div>
     </form>
+     <button class="btn btn-primary next" id="shipping-next">Next</button>
     </div>
-
+     
     @else
 
-    <form class="side-form form" name="shipping-form" id="shipping-form" method="post" role="form" aria-hidden="true">
+    <form class="side-form form" name="shipping-form" id="shipping-form" method="post" action="" aria-hidden="true" novalidate>
         {{ csrf_field() }}
          <div class="address-left" style="float:left;margin:10px">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name">
-                 
+                <input type="text" class="form-control" id="name" name="name" required>                 
             </div>
             <div class="form-group">
                 <label for="state">State:</label>
-                <input type="text" class="form-control" id="state" name="state">
+                <input type="text" class="form-control" id="state" name="state" required>
             </div>
             <div class="form-group">
                 <label for="city">City:</label>
                 <input type="text" class="form-control" id="city" name="city">
             </div>            
             <div class="form-group">
-                <label for="email">PinCode:</label>
+                <label for="email">Pincode:</label>
                 <input type="text" class="form-control" id="pincode" name="pincode">
             </div>
             <div class="form-group">
@@ -63,6 +63,4 @@
         </div>        
     </form>
     @endif
-
-     <button class="btn btn-primary" id="shipping-next">Next</button>
 </div>

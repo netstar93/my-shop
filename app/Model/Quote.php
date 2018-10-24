@@ -7,7 +7,7 @@ use DB;
 
 class Quote extends Model
 {
-    const shipping_charge = 40;
+    const shipping_charge = 30;
 
     protected $table = "sales_quote";
     public $timestamps = false;
@@ -67,7 +67,8 @@ class Quote extends Model
         $cart  = session('cart');
         $quote_id = 0;
         $cart_items  = $cart['items'];
-        if (count($cart_items) > 0) {
+        if (isset($cart) && count($cart_items) > 0) {
+
             //SAVE QUOTE
             $newQuote = Quote::where('cust_id', $this->customer_id) ->first();        
             if(isset($newQuote ->id)) {
@@ -79,6 +80,7 @@ class Quote extends Model
                 $newQuote ->save();
                 $quote_id = $newQuote ->id;
             }
+
             //RENEW CUSTOMER SESSION WITH QUOTE ID
              $customer = session('customer');
             //SAVE QUOTE ITEMS
@@ -96,7 +98,7 @@ class Quote extends Model
 
     public function clearQuote() {
         //DELETE QUOTE ITEM
-	    $this ->removeAlItem();
+        $this ->removeAlItem();
       //DELETE QUOTE
       $this ->find($this ->getCustomerQuoteId()) ->delete();
         session()->forget('cart');
@@ -140,6 +142,39 @@ class Quote extends Model
         return $data;
     }
 
+    public  function getTotals() {
+        $cart_data = array();
+        $totals = array(); 
+        $subtotal = 0;
+        $shipping_amount = 30;
+
+        //GET LOGGED IN CUSTOMER CART DATA
+        if(session('customer')) {   // && session('cart')  
+            $customer = session('customer');
+            $cart_data = $this ->getCart() ->get()->toArray();
+        }
+
+        if (!session('customer') && session('cart')) {
+            $cart = session('cart');
+            $cart_data = $cart['items'];
+        }
+        foreach ($cart_data as $key => $item) { //_log($item);
+            if(isset($item ->amount)){
+                $subtotal += $item ->qty * $item->amount;
+            }
+
+            if(isset($item ->base_price)){
+                $subtotal += $item ->qty * $item->base_price;
+            }            
+        }
+        // _log($subtotal);
+        $totals['subtotal']= $subtotal;
+        $totals['shipping_amount']= $shipping_amount;
+        $totals['grand_total']= $subtotal + $shipping_amount;
+        $totals['item_count']= count($cart_data);
+        return $totals;
+    }
+
     public  function getQuoteItems()  {
         $cart_data = array();
         //GET LOGGED IN CUSTOMER CART DATA
@@ -163,7 +198,7 @@ class Quote extends Model
     }
 
     public function getCustomerQuoteId() { 
-        $quote = Quote::where('cust_id' , '=', $this->customer_id) ;
+        $quote = Quote::where('cust_id' , '=', $this->customer_id);
         if($quote ->count() > 0 ) {
           return  $quote->first()->id;
         }

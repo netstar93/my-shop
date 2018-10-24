@@ -33,7 +33,7 @@ class CustomerController extends Controller
             'password' => 'required'
         ]);
 
-        $Customers = new Customers;
+        $Customers = new Customer();
         $Customers->name = $request->name;
         $Customers->password =  bcrypt($request->password);
         $Customers->email_address = $request->email_address;
@@ -46,32 +46,46 @@ class CustomerController extends Controller
         return redirect()->back()->withSuccess('You are successfully registered!');
     }
     public function checklogin(Request $request){
-       $this->validate($request,[
-           'email' => 'required|max:30',
+       $error  = $this->validate($request,[
+           'email' => 'required|max:30|email',
            'password' => 'required'
        ]);
-        $email_id =  $request->email;
-        $pass =  $request->password;
-        $ajax =  $request->ajax;
-        $customer = Customer::where('email_address', '=', $email_id)->get()->first()->toArray();
-        $customer['logged_in'] =  true;
 
+        $ajax =  $request->ajax;
+        $customer = array();
+        $email_id =  $request->email;
+        $pass =  $request->password;       
+        $customer = Customer::where('email_address', '=', $email_id)->get();
+
+        if(!$customer ->first()) {
+            return $this ->errorResponse($ajax);    
+        } else{
+            $customer = $customer->first()->toArray();
+        }        
+        $customer['logged_in'] =  true;
+        // _log($customer);
         if( \Illuminate\Support\Facades\Hash::check($pass, $customer['password']) != false) {
             session(['customer' =>$customer]);
-
             //SAVE QUOTE
-            $this ->saveQuote();
-
-            if(!$ajax) {
-
-              return redirect('customer/dashboard')->with('success', 'You are logged In successfully !!!');
-            } else return response()->json(array('success' => true));
-        
+            $this ->saveQuote();            
+            return $this ->successResponse($ajax);            
         }else{
+            return $this ->errorResponse($ajax);  
+        }
+      
+    }
 
-            if(!$ajax) {
-            return redirect('customer/login')->with('error','Incorrect EmailID/password.');
-                       }else{ return response()->json(array('success' => false));}
+    public function errorResponse($ajax) {
+        if(!$ajax) {
+                return redirect('customer/login')->with('error','Incorrect EmailID/password.');
+                           }else{ return response()->json(array('success' => false));
+        }
+    }
+
+    public function successResponse($ajax) {
+        if(!$ajax) {
+                return redirect('customer/dashboard')->with('success','Logged In Successfully');
+                           }else{ return response()->json(array('success' => true));
         }
     }
 

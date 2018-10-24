@@ -1,4 +1,4 @@
-
+<div class="error-validation">Please select payment</div>
 <div class="payment-method">
     <p>  <input type="radio" value="cod" name="payment-method" id="cod"> Cash On Delivery
     </p>

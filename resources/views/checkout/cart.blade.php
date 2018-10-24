@@ -12,22 +12,25 @@
         $model = new Product;
         @endphp
         <div class="page-title">Shopping Cart</div>
-        <hr>
         @if(count($items)  > 0)
             <div class="cart-items">
                 <table class="cart-item table">
-                    @foreach($items as $item)
-                       @include('checkout/item',['data' =>$item, 'productModel' => $model])
+                    <tr><th>Image</th><th>Name</th><th>Qty</th><th>Date</th><th>Subtotal</th></tr>
+                    @foreach($items as $item_data)
+                       @include('checkout/item',['data' =>$item_data, 'productModel' => $model])
                     @endforeach
                 </table>
             </div>
             <div class="cart-sidebar">
                 <div class="title">ORDER SUMMARY</div>
-                <hr>
-                <div class="price"><span class="">Price (2 items) : </span> <span class="price">Rs. 200</span></div>
-                <div class="delivery"><span class="">Delivery Charges : </span> <span class="price">Rs. 200</span></div>
-                <div class="subtotal"><span class="">Subtotal : </span> <span class="price">Rs. 200</span></div>
-                <div class="grand-total">Grand Total : Rs.2000   </div>
+                                
+                <!-- <div class="price"><span class="">Price ({{$totals['item_count']}} items) : </span> <span class="price">Rs. 200</span></div> -->
+                
+                <div class="subtotal"><span class="">Subtotal : </span> <span class="price">{{renderPrice($totals['subtotal'])}}</span></div>
+
+                <div class="delivery"><span class="">Delivery Charges : </span> <span class="price">{{renderPrice($totals['shipping_amount'])}}</span></div>                
+                
+                <div class="grand-total">Grand Total : {{renderPrice($totals['grand_total'])}}   </div>
             </div>
 
             <div class="action-wrapper" align="center">

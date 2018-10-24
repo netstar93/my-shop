@@ -78,9 +78,10 @@ $(document).ready(function() {
         var shipping_id = $("input[name='address']:checked"). val();
 
         if(!shipping_id){
-         alert('Select shipping Address'); return false;
+          $('.customer_address_form .error-validation').show();
          }
         else{
+             $('.customer_address_form .error-validation').hide();
         $("#address_id").val(shipping_id);
         $('section.shipping label').trigger('click');
         $('section.summary label').trigger('click'); 
@@ -97,41 +98,68 @@ $(document).ready(function() {
     });
  
     $('#address-submit').click(function(e) {
-        e.preventDefault();
+        // e.preventDefault();
+        var form = $(this);
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
-        var formData = $('#shipping-form').serialize();
-        $.ajax({
-            url: '/customer/address/save',
-            type: 'POST',
-            data: formData,
-            dataType: 'JSON',
-            success: function (data) {
-                if(data.success){
-                   $("#address_id").val(data.id);
-                    $('section.shipping label').trigger('click');
-                    $('section.summary label').trigger('click');
-                }
-            }
-        });
+        var formData = $(this).serialize();
+        var emptyFields = $('input,textarea,select').filter(function() {
+    return $(this).val() === "";
+}).length;
+
+alert(emptyFields);
+
+       return false;
+        // $.ajax({
+        //     url: '/customer/address/save',
+        //     type: 'POST',
+        //     data: formData,
+        //     dataType: 'JSON',
+        //     success: function (data) {
+        //         if(data.success){                   
+        //            $("#address_id").val(data.id);
+        //            $('section.shipping label').trigger('click');
+        //            $('section.summary label').trigger('click');
+        //         }
+        //     }
+        // });
     });
 
     $('#checkout_login_submit').click(function(e) {
         e.preventDefault();
+        var form = $('#checkout_login_form');
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
         var formData = $('#checkout_login_form').serialize();
-        if(!formData) alert('Fill Login Form '); return false;
-        $.ajax({
-            /* the route pointing to the post function */
+
+        if ($('input[name="email"]').val() == '' || $('input[name="password"]').val() == '') {          
+          $('.error-validation').show(); return false;
+        }else{ $('.error-validation').hide();}
+        
+        $('#loader').show();
+        
+        $.ajax({           
             url: '/customer/checklogin',
-            type: 'POST',
-            /* send the csrf-token and the input to the controller */
+            type: 'POST',            
             data: formData,
-            dataType: 'JSON',
+            dataType: 'JSON',            
             success: function (data) {
-                if(data.success){
+                $('#loader').hide();
+                if(data.success){                    
                     $('section.account label').trigger('click');
                     $('section.account label').css('pointer-events', 'none')
                     $('section.shipping label').trigger('click');
+                    $('form#checkout_login_form').hide();
+                }else{                    
+                    $('.error-validation').text('Invalid Credentials !!'); 
+                    $('.error-validation').show();
+                }
+            },
+            error: function(request, status, error) {
+                if(request.status == 422) {
+                   var error_msg  = $.parseJSON(request.responseText);
+                   $('#loader').hide();
+                   $('.error-validation').text(error_msg.email); 
+                   $('.error-validation').show();
                 }
             }
         });
@@ -146,11 +174,12 @@ $(document).ready(function() {
         var payment_type = $('#payment_type').val();
         var address_id = $('#address_id').val();
         if (payment_type && address_id) {
+            $('#payment-method .error-validation').hide();
             form .submit();          
         }else{          
           event.preventDefault();
           event.stopPropagation();
-          alert('Checkout Data Missing !!');
+         $('#payment-method .error-validation').show();
         }
         form.addClass('was-validated');
     });

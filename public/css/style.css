@@ -51,12 +51,15 @@ table.cart-item tr td{
     padding-right: 35px;
     border: 0px;
 }
+.no-cart-item{ font-size: 20px; }
 
 .cart-items{
     width: 66%;
     float: left;
     padding-left: 10px;
     position: relative;
+    min-height: 60%;
+    background-color: #fff;
 }
 .cart-sidebar {
     display: inline-block;
@@ -65,8 +68,8 @@ table.cart-item tr td{
     padding: 15px ;
 }
 .cart-sidebar .title {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 600;
 }
 .cart-sidebar div {
     padding-bottom: 10px;
@@ -84,6 +87,17 @@ table.cart-item tr td{
 
 .cart-item .subtotal{
     font-weight: 600;
+}
+.checkout_cart_index {
+    margin: 0px;
+    padding: 20px;
+    background: #fff;
+}
+.checkout_cart_index tr th {
+    border: 0px !important;
+}
+.checkout_cart_index tr td , .checkout_cart_index tr th {
+ width: 20% !important;
 }
 .checkout_cart_index .page-title{
     font-size: 20px;
@@ -111,23 +125,34 @@ table.cart-item tr td{
 
 /*******************CHECKOUT******/
 .checkout-steps{
-    display: inline;
-    max-width: 70%;
+    /*display: inline;*/
+    max-width: 60%;
+    width: 70%;
     float: left;
+    padding: 10px;
+    background-color: #fff;
 }
-.checkout-steps .step {
-    /*width: 100%;*/
+.checkout-steps section label.step {
+    min-width: 100%;
     background-color: #2ab27b;
     font-size: large;
-    padding: 8px;
+    padding: 5px;
     color: #fff;
 }
+
+.checkout-steps section label > .badge{
+    margin-right:5px;
+}
 .checkout-steps .section {
-    /*margin-bottom: 20px;*/
+    margin-bottom: 16px !important;
     pointer-events: none;
 }
 .checkout-steps .active {
     pointer-events: auto !important;
+}
+#checkout_login_form {
+    width: 50%;
+    padding: 15px;
 }
 
 section {
@@ -138,6 +163,23 @@ form.side-form .address-left,form.side-form .address-right{
     margin:10px;
     width: 50%;
 }
+.error-validation{
+    display: none;
+    color: red;
+    opacity: 0.6;
+    text-transform: capitalize;
+    border-style: ridge;
+}
+.address-list{
+    padding:10px;
+}
+.checkout-steps .payment-method{
+    padding: 10px;
+}
+.checkout-steps .payment-method p{
+    font-size: 15px
+}
+
 /*/////////////// HEADER ///////////////////////*/
 .main-header,.footer{
     width: 100%;
@@ -198,48 +240,6 @@ ul.account-menu li{
     margin: 0 auto;
     width:500px;
 }
-/*.nav.nav-tabs {
-    float: left;
-    display: block;
-    margin-right: 20px;
-    border-bottom:0;
-    border-right: 1px solid #ddd;
-    padding-right: 15px;
-}
-.nav-tabs .nav-link {
-    border: 1px solid transparent;
-    border-top-left-radius: .25rem;
-    border-top-right-radius: .25rem;
-    background: #ccc;
-}
-
-.nav-tabs .nav-link.active {
-    color: #fff;
-    background-color:#2AB285 !important;
-    border-color: transparent !important;
-}
-.nav-tabs .nav-link {
-    border: 1px solid transparent;
-    border-top-left-radius: 0rem!important;
-    border-top-right-radius: 0rem!important;
-}
-.tab-content>.active {
-    display: block;
-    background: azure;
-    min-height: 565px;
-}
-.nav.nav-tabs {
-    float: left;
-    display: block;
-    margin-right: 20px;
-    border-bottom: 0;
-    border-right: 1px solid transparent;
-    padding-right: 15px;
-}
-.nav-tabs>li {
-
-}
-*/
 
 .customer-tabs h3{
 margin-top:1px;
@@ -415,13 +415,13 @@ footer{
 }
 
 .loader {
-    border: 16px solid #f3f3f3;
+    border: 10px solid #Fff;
     border-radius: 50%;
-    border-top: 16px solid blue;
-    border-right: 16px solid #2AB285;
-    border-bottom: 16px solid red;
-    width: 150px;
-    height: 150px;
+    border-top: 10px solid blue;
+    border-right: 10px solid #2AB285;
+    border-bottom: 10px solid red;
+    width: 110px;
+    height: 110px;
     -webkit-animation: spin 1s linear infinite;
     animation: spin 2s linear infinite;
     top: 20%;

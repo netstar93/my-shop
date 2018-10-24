@@ -39,6 +39,7 @@ class OrderController extends Controller
                     'item_id' => $item ->product_id,
                     'amount' => $item ->amount,
                     'shipping_method' => $addr_id,
+                    'qty' => $item ->qty
                 ]);
                 $order_items[] = $item;
             }

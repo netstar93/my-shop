@@ -7,6 +7,7 @@ use App\Model\Customer;
 use App\Model\Customer_Address;
 use App\Model\Quote;
 use League\Flysystem\Exception;
+use App\Helpers\Helper;
 
 class CustomerController extends Controller
 {
@@ -112,6 +113,31 @@ class CustomerController extends Controller
     public function saveQuote(){
         $quoteModel = new Quote();
         $quoteModel ->saveQuote();
+    }
+
+    public function getAddressHtml(Request $request)
+    {
+        $html = '';
+        $helper = new Helper();
+        $addresses = $helper->getAddresses();
+
+        if (count($addresses) > 0)
+            $html .= '<div class="address-list">
+                  <form class="side-form form" name="shipping-address" id="shipping-address" method="post" role="form" aria-hidden="true">
+                        <ul class="address-list" style="list-style: none">';
+        foreach ($addresses as $address) {
+            $html .= '<li>
+                            <input type="radio" name="address" value=' . $address->id . ' required="true"> <b>' . $address->name . '</b>  
+                            <div class="addr-content">' . $address->state . '</div>
+                            </input>                
+                         </li>';
+        }
+        $html .= '</ul>
+                    <div class="invalid-feedback hidden">Oops, you missed this one.</div>
+                    </form>
+                     <button class="btn btn-primary next" id="shipping-next">Next</button>
+                    </div>';
+        return json_encode(array('address_html' => $html));
     }
 
 }

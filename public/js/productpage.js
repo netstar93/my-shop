@@ -6,7 +6,7 @@ $(document).ready(function() {
     $('.selection li').click(function (e) {
         selected_color = true;
     });
-
+    var tick = "<i class=\"fa fa-check-circle\" style=\"font-size:32px;float:right\"></i>";
     $('[data-fancybox="images"]').fancybox({
     afterLoad : function(instance, current) {
         var pixelRatio = window.devicePixelRatio || 1;
@@ -23,7 +23,6 @@ $(document).ready(function() {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $('#addtocart').click(function(){        
         var is_configurable_product = $('#is_configurable').val();
-        console.log(is_configurable_product + "   " +selected_color);
         if(is_configurable_product == 1) {
             if(selected_color == false){
               $('.no-selection-error').removeClass('hide');
@@ -73,15 +72,15 @@ $(document).ready(function() {
         });
     });
 
-
-    $('#shipping-next').click(function(e) {
+    $(document).on('click', '#shipping-next', function (e) {
+        // $('#shipping-next').click(function(e) {
         var shipping_id = $("input[name='address']:checked"). val();
-
         if(!shipping_id){
           $('.customer_address_form .error-validation').show();
          }
         else{
-             $('.customer_address_form .error-validation').hide();
+            $('section.shipping label').append(tick);
+            $('.customer_address_form .error-validation').hide();
         $("#address_id").val(shipping_id);
         $('section.shipping label').trigger('click');
         $('section.summary label').trigger('click'); 
@@ -91,6 +90,7 @@ $(document).ready(function() {
     });
 
     $('#summary-next').click(function(e) {
+        $('section.summary label').append(tick);
         $('section.summary label').trigger('click');
         $('section.payment label').trigger('click');    
          $('section.payment').addClass('active');  
@@ -98,40 +98,56 @@ $(document).ready(function() {
     });
  
     $('#address-submit').click(function(e) {
-        // e.preventDefault();
-        var form = $(this);
+        e.preventDefault();
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
-        var formData = $(this).serialize();
-        var emptyFields = $('input,textarea,select').filter(function() {
-    return $(this).val() === "";
-}).length;
-
-alert(emptyFields);
-
-       return false;
-        // $.ajax({
-        //     url: '/customer/address/save',
-        //     type: 'POST',
-        //     data: formData,
-        //     dataType: 'JSON',
-        //     success: function (data) {
-        //         if(data.success){                   
-        //            $("#address_id").val(data.id);
-        //            $('section.shipping label').trigger('click');
-        //            $('section.summary label').trigger('click');
-        //         }
-        //     }
-        // });
+        var formData = $('#shipping-form').serialize();
+        var emptyFields = $('#shipping-form input, #shipping-form textarea, #shipping-form select').filter(function () {
+            return $(this).val() === "";
+        }).length;
+        if (emptyFields > 0) {
+            $('.customer_address_form .error-validation').show();
+            $('#shipping-form .form-control').css('border-color', 'red');
+            return false;
+        } else {
+            $('.customer_address_form .error-validation').hide();
+        }
+        $.ajax({
+            url: '/customer/address/save',
+            type: 'POST',
+            data: formData,
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.success) {
+                    $("#address_id").val(data.id);
+                    appendAddress();
+                    $('section.shipping label.step').append(tick);
+                    $('section.shipping label').trigger('click');
+                    $('section.summary label').trigger('click');
+                }
+            }
+        });
     });
+
+    function appendAddress() {
+        $.ajax({
+            url: '/customer/address/getAddress_html',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.address_html) {
+                    $('.customer_address_form').append(data.address_html);
+                    $('#shipping-form').hide();
+                }
+            }
+        });
+    }
 
     $('#checkout_login_submit').click(function(e) {
         e.preventDefault();
         var form = $('#checkout_login_form');
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
-
         var formData = $('#checkout_login_form').serialize();
-
-        if ($('input[name="email"]').val() == '' || $('input[name="password"]').val() == '') {          
+        if ($('input[name="email"]').val() == '' || $('input[name="password"]').val() == '') {
           $('.error-validation').show(); return false;
         }else{ $('.error-validation').hide();}
         
@@ -144,8 +160,9 @@ alert(emptyFields);
             dataType: 'JSON',            
             success: function (data) {
                 $('#loader').hide();
-                if(data.success){                    
-                    $('section.account label').trigger('click');
+                if (data.success) {
+                    $('section.account label.step').append(tick);
+                    $('section.account label.step').trigger('click');
                     $('section.account label').css('pointer-events', 'none')
                     $('section.shipping label').trigger('click');
                     $('form#checkout_login_form').hide();

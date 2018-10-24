@@ -21,6 +21,7 @@ Route::get('/customer/logout', 'CustomerController@logout')->name('logoutCustome
 Route::post('/customer/save', 'CustomerController@store');
 Route::post('/customer/checklogin', 'CustomerController@checklogin');
 Route::post('/customer/address/save', 'CustomerController@addressSave');
+Route::get('/customer/address/getAddress_html', 'CustomerController@getAddressHtml');
 Route::get('/customer/dashboard', 'CustomerController@index')->middleware('validateCustomer');
 
 

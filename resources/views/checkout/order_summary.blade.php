@@ -41,7 +41,6 @@ $productModel = new Product;
                                         <span>Color: <b>{{ucfirst($color)}}</b></span>
                                     @endif
                                 </div>
-                                <span class="remove">X</span>
                             </div>
                         </td>
                         <td> Delivered By 10 th September 2018</td>

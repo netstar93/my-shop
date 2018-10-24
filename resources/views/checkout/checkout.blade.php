@@ -19,7 +19,8 @@
             <div class="checkout-steps" >
                 @if(!isset($customer))
                     <section class="section account active">
-                        <label class="step" data-toggle="collapse" data-target="#login"><span class="badge">1</span>Login</label>
+                        <label class="step" data-toggle="collapse" data-target="#login"><span class="badge">1</span>Login
+                        </label>
                         <form class="form" method="post" id="checkout_login_form" novalidate>
                         <div class="collapse in" id="login">
                             {{ csrf_field() }}

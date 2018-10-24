@@ -168,7 +168,6 @@ form.side-form .address-left,form.side-form .address-right{
     color: red;
     opacity: 0.6;
     text-transform: capitalize;
-    border-style: ridge;
 }
 .address-list{
     padding:10px;

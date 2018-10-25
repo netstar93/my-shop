@@ -30,6 +30,7 @@ Route::get('/cart/checkout', 'Checkout\CartController@checkout');
 Route::post('/cart/checkout', 'Checkout\CartController@checkout');
 Route::post('/cart/order/save', 'Checkout\OrderController@save');
 Route::post('/cart/remove/{product_id?}', 'Checkout\CartController@delete');
+Route::get('/cart/order/success', 'Checkout\CartController@success');
 
 Route::get('catalog/category/view/{id}', 'Catalog\CategoryController@view');
 Route::post('catalog/product/addtocart', 'Catalog\ProductController@addtocart');

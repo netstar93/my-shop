@@ -59,24 +59,24 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                 <div class="no-selection-error alert alert-danger hide">
                     <strong>Please select color.</strong>
                 </div>
-                    <div class="selection" style="display: inline-block;">
-                        <div class="color"> Color :
-                            <ul style="list-style: none" id="color">
-                                @foreach($config_data as $product)
-                                @php
-                                    $tmp  = $product -> config_attributes;
-                                    $color_name = $color_options [$tmp[$attribute_color ->id]];
-                                @endphp
+                <div class="selection">
+                    <div class="color"> Color :
+                        <select style="list-style: none" id="color">
+                            @foreach($config_data as $product)
+                            @php
+                                $tmp  = $product -> config_attributes;
+                                $color_name = $color_options [$tmp[$attribute_color ->id]];
+                            @endphp
 
-                                    <li style="background-color:{{ucfirst($color_name )}} ;min-width: 30px;min-height: 30px;  text-align: center;">
-                                        <a href="/catalog/product/view/{{$product ->product_id}}">
-                                            {{ucfirst($color_name )}}
+                            <option style="background-color:{{ucfirst($color_name )}} ;min-width: 30px;min-height: 30px;  text-align: center;">
+                                    <a href="/catalog/product/view/{{$product ->product_id}}">
+                                        {{ucfirst($color_name )}}
                                 </a>  
-                                </li>                                                    
-                                @endforeach
-                            </ul>
-                        </div>                        
-                    </div>
+                            </option>                                                    
+                            @endforeach
+                        </select>
+                    </div>                        
+                </div>
                 @endif
                         
             @if(count($attr_info) && !$is_configurable)
@@ -128,7 +128,7 @@ $color_options = $attributeModel ->getAttributeOptions('color');
     </div>
 
         </div>
-
+@if(count($attr_info))
         <div class="bottom-wrapper details-tabs col-lg-12">
             <div class="tabs">  
 
@@ -162,19 +162,19 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                                     @php } @endphp
                             @endforeach
                             </table>
-                                  
+                        @else
+                        <div class="no-record h4">Not Applicable</div>          
                         @endif
                     </div>
                     <div id="return" class="tab-pane fade">
                       <h3>Return Policy</h3>
-                      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                      <p>30 days free return</p>
                     </div>
                     
                   </div>
             </div>
         </div>
-
-
+@endif
         <div class="card hide" id="successModal" >
             <div class="card-body">                                    
                     <div class="modal-header">
@@ -183,10 +183,10 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                     <div class="modal-body">
                         <p>{{$product->name}} successfully added to your cart.</ps>
                         <div class="actions">
-                            <button class="btn btn-success">
                             <a href="/cart">
+                            <button class="btn btn-success">                            
                                  Go To Cart
-                            </a></button>
+                            </button></a>
                             <button data-fancybox-close class="btn btn-success">Close</button>
                         </div>
                     </div>                

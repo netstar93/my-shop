@@ -69,7 +69,7 @@ class Quote extends Model
         $cart_items  = $cart['items'];
         if (isset($cart) && count($cart_items) > 0) {
 
-            //SAVE QUOTE
+            //CHECK QUOTE & create if not exist
             $newQuote = Quote::where('cust_id', $this->customer_id) ->first();        
             if(isset($newQuote ->id)) {
                 $quote_id = $newQuote ->id;
@@ -80,11 +80,21 @@ class Quote extends Model
                 $newQuote ->save();
                 $quote_id = $newQuote ->id;
             }
+            
+            $quote_product_ids = array();
+            $quote_items = $this ->getQuoteItemCollection($quote_id) ->toArray();
+            foreach ($quote_items as $key => $item) {
+                $quote_product_ids[] = $item ->product_id;
+            }
+
+            //$quote_product_ids = array_map(array($this, 'makeArray'), $quote_items);
 
             //RENEW CUSTOMER SESSION WITH QUOTE ID
              $customer = session('customer');
             //SAVE QUOTE ITEMS
             foreach ($cart_items as $item) {
+                if(in_array($item->product_id, $quote_product_ids)) { continue; }
+
                 $item_id = DB::table('sales_quote_item')->insertGetId([
                     'quote_id' => $quote_id,
                     'product_id' => $item->product_id,
@@ -96,12 +106,17 @@ class Quote extends Model
         }
     }
 
+    public function makeArray($data) {
+         return $data ->product_id;  
+    }
+
     public function clearQuote() {
-        //DELETE QUOTE ITEM
-        $this ->removeAlItem();
+      //DELETE QUOTE ITEM
+      $this ->removeAlItem();
       //DELETE QUOTE
-      $this ->find($this ->getCustomerQuoteId()) ->delete();
-        session()->forget('cart');
+      $is_deleted = $this ->find($this ->getCustomerQuoteId()) ->delete();
+      session()->forget('cart');
+      return $is_deleted;
     }
 
    public function removeAlItem() {

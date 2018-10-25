@@ -6,7 +6,10 @@ $(document).ready(function() {
     $('.selection li').click(function (e) {
         selected_color = true;
     });
+
+    
     var tick = "<i class=\"fa fa-check-circle\" style=\"font-size:32px;float:right\"></i>";
+    
     $('[data-fancybox="images"]').fancybox({
     afterLoad : function(instance, current) {
         var pixelRatio = window.devicePixelRatio || 1;
@@ -122,6 +125,7 @@ $(document).ready(function() {
                     appendAddress();
                     $('section.shipping label.step').append(tick);
                     $('section.shipping label').trigger('click');
+                    $('section.summary').addClass('active');
                     $('section.summary label').trigger('click');
                 }
             }
@@ -166,6 +170,7 @@ $(document).ready(function() {
                     $('section.account label').css('pointer-events', 'none')
                     $('section.shipping label').trigger('click');
                     $('form#checkout_login_form').hide();
+                    appendAddress();
                 }else{                    
                     $('.error-validation').text('Invalid Credentials !!'); 
                     $('.error-validation').show();

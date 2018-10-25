@@ -8,6 +8,7 @@ use App\Model\Customer_Address;
 use App\Model\Quote;
 use League\Flysystem\Exception;
 use App\Helpers\Helper;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -64,7 +65,6 @@ class CustomerController extends Controller
             $customer = $customer->first()->toArray();
         }        
         $customer['logged_in'] =  true;
-        // _log($customer);
         if( \Illuminate\Support\Facades\Hash::check($pass, $customer['password']) != false) {
             session(['customer' =>$customer]);
             //SAVE QUOTE
@@ -97,13 +97,13 @@ class CustomerController extends Controller
         $email_id = '';
         $ajax = true;
         try {
-            $customer = Customer_Address::create($request->all())->save();
+            $customer1 = Customer_Address::create($request->all())->save();        
         }
         catch(Exception $e){
             $error = $e->getMessage();
         }
-        if($customer){
-            return response()->json(array('success' => true, 'id' => $customer['id']));
+        if($customer){ 
+            return response()->json(array('success' => true, 'id' => DB::getPdo()->lastInsertId()));
         }
         else{
             return response()->json(array('success' => false,'message' => $error));
@@ -121,10 +121,11 @@ class CustomerController extends Controller
         $helper = new Helper();
         $addresses = $helper->getAddresses();
 
-        if (count($addresses) > 0)
+        if (count($addresses) > 0) {
             $html .= '<div class="address-list">
                   <form class="side-form form" name="shipping-address" id="shipping-address" method="post" role="form" aria-hidden="true">
                         <ul class="address-list" style="list-style: none">';
+        
         foreach ($addresses as $address) {
             $html .= '<li>
                             <input type="radio" name="address" value=' . $address->id . ' required="true"> <b>' . $address->name . '</b>  
@@ -137,7 +138,11 @@ class CustomerController extends Controller
                     </form>
                      <button class="btn btn-primary next" id="shipping-next">Next</button>
                     </div>';
-        return json_encode(array('address_html' => $html));
+
+       }
+        if($html != ''){
+            return json_encode(array('address_html' => $html));
+        }
     }
 
 }

@@ -34,15 +34,15 @@ $name =  $customer['name'];
                                 class="cart badge">{{$item_count }}</span></a></li>
                 @if(isset($is_logged_in))
                     <li> <i class="fa fa-heart fa-2x" style="color: #fff"></i> </li>
-                    <li>
+                    <li class="customerMenu">
                     <div class="dropdown">
                           <span class="dropdown-toggle" data-toggle="dropdown">
-                             <i class="fa fa-user fa-2x"></i>  Hi ! <span class="">{{$name}}</span>
+                             <i class="fa fa-user fa-2x"></i><span class="customer-name"> {{$name}}</span>
                           <span class="caret"></span></span>
                           <ul class="dropdown-menu account-menu">
-                            <li><i class="fa fa-power-off"></i><a href="/customer">My Account</a></li>
-                            <li> <i class="fa fa-power-off"></i><a href="/customer#orders">Orders</a></li>
-                            <li> <i class="fa fa-power-off"></i><a href="/cart">My Cart</a></li>
+                            <li><i class="fa fa-dashboard"></i><a href="/customer">My Account</a></li>
+                            <li><i class="fa fa-reorder"></i><a href="/customer#orders">Orders</a></li>
+                            <li><i class="fa fa-cart-plus"></i><a href="/cart">My Cart</a></li>
                             <li><i class="fa fa-power-off"></i><a href="/customer/logout">Logout</a></li>
                           </ul>
                         </div>
@@ -67,3 +67,12 @@ $name =  $customer['name'];
 <div id="loader" class="loader-wrapper">
     <div class="loader"></div>
 </div>
+
+<script>
+$('body').click(function(){
+    $('.account-menu').hide();
+})
+$('.customerMenu').hover(function(){
+    $('.account-menu').show();
+})
+ </script>

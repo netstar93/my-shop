@@ -201,7 +201,8 @@ a{
     float: left;
 }
 .account-menu{
-    background-color: lightseagreen;
+    /*background-color: lightseagreen;*/
+    border: 1px solid #fff;
 }
 ul.account-menu li a{
     display: inline-block;
@@ -217,9 +218,12 @@ ul.account-menu li{
     /*margin-right: 5%;*/
 }
 
-.top-links li i {
+.top-links ul.account-menu li i {
     padding-right: 5px;
-    font-size: 30px;
+    font-size: 28px;
+    vertical-align: middle;
+    color: #2AB285;
+    opacity: 0.8;
 }
 .top-links a{
     color:#fff;
@@ -232,6 +236,10 @@ ul.account-menu li{
 
 .search-box .input-group {
     width: 100%
+}
+
+.customer-name{
+    text-transform: capitalize;
 }
 
 /*****************CUSTOMER *************/
@@ -437,6 +445,11 @@ footer{
     opacity: 0.6;
 }
 
+.selection select{
+    width: 120px;
+    margin: 15px;
+}
+
 @-webkit-keyframes spin {
     0% {
         -webkit-transform: rotate(0deg);
@@ -453,4 +466,20 @@ footer{
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+/* ORDER SUCCESS PAGE*/
+.order-success-page{
+    margin-top: 20px;
+    background-color: #fff;
+    min-height: 50%;
+    padding: 24px;
+}
+.order-success-page h2{
+    font-weight: 600;
+    color: green;
+}
+.order-success-page h2.error{
+    color:Red;
 }

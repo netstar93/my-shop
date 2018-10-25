@@ -3,15 +3,21 @@
 @extends('layout')
 @section('title', 'Order Success')
 @section('middle_content')
+
     <link href="{{asset('css/product_view.css')}}" rel="stylesheet" type="text/css"/>
-    <div class="checkout_cart_success container-fluid">
-        {{--<div class="page-title">Shopping Cart</div>--}}
+    <div class="order-success-page container text-center">
+        <!-- <div class="page-title">Order Successful </div> -->
         @if(isset($order_id))
-            <h3>Your order is succcessfully placed !!!</h3>
-                    <h4>ORDER ID :: {{$order_id}}</h4>
-           @else
-            <h3>{{$error}}</h3>
-            @endif
+            <i class="fa fa-check-circle" style="font-size:50px;color:green"></i>
+            <h2>Your order is successfully placed.</h2>
+            <h3>Your Order ID is #<b>{{$order_id}}</b></h3>
+        @else
+         <i class="fa fa-frown-o" style="font-size:60px;color:red"></i>
+         <h3 class="error">Something Went Wrong</h3>
+        @endif
+
+       <a href="/"> <button class="btn-success btn-lg"><i class="fa fa-home" aria-hidden="true"></i></button></a>
     </div>
 
 @endsection
+

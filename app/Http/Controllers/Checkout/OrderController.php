@@ -15,7 +15,7 @@ class OrderController extends Controller
 {
     const shipping_charge = 40;
 
-    public function save(Request $request) {
+    public function save(Request $request) {        
         $quoteModel = new Quote();
         $addr_id = $request ->address_id;
         $payment_method = $request ->payment_type;
@@ -46,10 +46,11 @@ class OrderController extends Controller
             $is_paid =  $this ->processPayment($quote,$order_id,$payment_method);
             if($is_paid){
                 $quoteModel->clearQuote();
-                return view('checkout.success')->with('order_id',$order_id );
+                session()->put('last_order_id',11);
+                return redirect('/cart/order/success');
             }
             else{
-                return view('checkout.success')->with('error',"something went wrong" );
+                return redirect('/cart/order/success')->with(['error',"something went wrong"]);
             }
         }
     }

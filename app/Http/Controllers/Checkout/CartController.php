@@ -37,6 +37,11 @@ class CartController extends Controller
         }
     }
 
+    public function success(){    
+        $order_id = session()->get('last_order_id');
+        return view('checkout.success') ->with(['order_id' => $order_id]);
+    }
+
     public function getProductAttributes($id){
         $data = Product ::find($id)->where('id','=',$id)
             ->join('catalog_product_data', 'catalog_product_main.id', '=', 'catalog_product_data.product_id')

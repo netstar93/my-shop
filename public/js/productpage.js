@@ -7,7 +7,6 @@ $(document).ready(function() {
         selected_color = true;
     });
 
-    
     var tick = "<i class=\"fa fa-check-circle\" style=\"font-size:32px;float:right\"></i>";
     
     $('[data-fancybox="images"]').fancybox({
@@ -99,7 +98,17 @@ $(document).ready(function() {
          $('section.payment').addClass('active');  
         $('.orderBtn').removeClass('hidden');
     });
+
+    $("#address-form-submit").click(function(event) {    
+        var form = $("#addressForm");
+        if (form[0].checkValidity() === false) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.addClass('was-validated');
+    });
  
+
     $('#address-submit').click(function(e) {
         e.preventDefault();
         var csrf_token = $('meta[name="csrf-token"]').attr('content');

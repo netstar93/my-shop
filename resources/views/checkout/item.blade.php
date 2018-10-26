@@ -15,7 +15,7 @@
 @if(is_object($item))
 <div class="cart-item row">
   <tr>
-  <td>  <img src={{$image_path}}  width="100px" /></td>
+  <td class="product-image">  <img src={{$image_path}}  width="100px" /></td>
   <td>
       <div class="item-info" width="60%">
           <div class="name">{{$item ->name}} </div>
@@ -34,15 +34,15 @@
   <td>
 
     <span class="input-group-btn">        
-        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">  <span class="glyphicon glyphicon-plus"></span>
+        <button type="button" class="quantity-right-plus btn-xs btn-success btn-number" data-type="plus" data-field="">  <span class="glyphicon glyphicon-plus"></span>
                 </button>
 
     </span>
 
-    <input style="max-width: 50px" type="text" id="quantity" name="quantity" class="form-control input-number" value="10" min="1" max="100">
+    <input style="max-width: 50px" type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
 
     <span class="input-group-btn">
-        <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
+        <button type="button" class="quantity-left-minus btn-xs btn-danger btn-number"  data-type="minus" data-field="">
           <span class="glyphicon glyphicon-minus"></span>
         </button>
 

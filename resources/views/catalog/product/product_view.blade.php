@@ -59,24 +59,24 @@ $color_options = $attributeModel ->getAttributeOptions('color');
                 <div class="no-selection-error alert alert-danger hide">
                     <strong>Please select color.</strong>
                 </div>
-                <div class="selection">
-                    <div class="color"> Color :
-                        <select style="list-style: none" id="color">
-                            @foreach($config_data as $product)
-                            @php
-                                $tmp  = $product -> config_attributes;
-                                $color_name = $color_options [$tmp[$attribute_color ->id]];
-                            @endphp
+                    <div class="selection" style="display: inline-block;">
+                        <div class="color"> Color :
+                            <ul style="list-style: none" id="color">
+                                @foreach($config_data as $product)
+                                @php
+                                    $tmp  = $product -> config_attributes;
+                                    $color_name = $color_options [$tmp[$attribute_color ->id]];
+                                @endphp
 
-                            <option style="background-color:{{ucfirst($color_name )}} ;min-width: 30px;min-height: 30px;  text-align: center;">
-                                    <a href="/catalog/product/view/{{$product ->product_id}}">
-                                        {{ucfirst($color_name )}}
+                                    <li style="background-color:{{ucfirst($color_name )}} ;min-width: 30px;min-height: 30px;  text-align: center; margin: 2px;padding: 6px;">
+                                        <a href="/catalog/product/view/{{$product ->product_id}}">
+                                            {{ucfirst($color_name )}}
                                 </a>  
-                            </option>                                                    
-                            @endforeach
-                        </select>
-                    </div>                        
-                </div>
+                                </li>                                                    
+                                @endforeach
+                            </ul>
+                        </div>                        
+                    </div>
                 @endif
                         
             @if(count($attr_info) && !$is_configurable)

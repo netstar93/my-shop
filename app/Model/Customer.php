@@ -14,6 +14,10 @@ class Customer extends Model
 		return $this ->hasMany('App\Model\Customer_address');
 	}
 
+    public function Orders(){
+        return $this ->hasMany('App\Model\Order');
+    }
+
     public function getCollection()
     {
         $collection = self::get();
@@ -33,5 +37,19 @@ class Customer extends Model
 
     public function getShippingAddressData($address_id){
         return Customer_address :: find($address_id);
+    }
+
+    public function getOrders($customer_id = null) {
+       return $this ->getCustomer($customer_id) ->Orders;       
+    }
+
+    public function getCustomer($id = null) {
+        if(session() ->get('customer')) {
+            $cus = session() ->get('customer');
+            return Customer :: find($cus['id']);
+        }
+        else{
+            return Customer :: find($id);
+        }         
     }
 }

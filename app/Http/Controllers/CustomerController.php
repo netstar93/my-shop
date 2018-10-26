@@ -12,8 +12,17 @@ use DB;
 
 class CustomerController extends Controller
 {
+    // public function _construct(){}
     public function index(){
-        return view('customer/dashboard');
+        $helper = new Helper();
+        $customerModel= new Customer();
+        $addresses = $helper->getAddresses();
+        $orders = $customerModel ->getOrders();
+        //_log($orders);
+        return view('customer/dashboard')->with([
+                            'addresses' => $addresses,
+                            'orders' => $orders
+                        ]);
     }
 
 	public function create(){
@@ -90,12 +99,40 @@ class CustomerController extends Controller
         }
     }
 
+    public function saveAddressPage(Request $request){ 
+        $customer  = $request->session()->get('customer');
+        $data = $request->merge(['customer_id' => $customer['id'] ]);
+
+        try {
+            if(isset($request ->id)){
+               $customer = Customer_Address::find($request ->id)->update($request->all());
+            }else{
+                $customer = Customer_Address::create($request->all())->save();        
+            }
+        }
+        catch(Exception $e){
+            $error = $e->getMessage();
+        }
+        if($customer){ 
+            return redirect('/customer/dashboard') ->withSuccess('Address Saved');
+        }else{
+            return redirect('/customer/dashboard') ->withError('Address Not Saved');
+        }
+    }
+
+    public function getAddress(Request $request){
+       // if(isset($request ->id)) {
+            $data =  Customer_Address::where('id',$request ->id) ->get() ->first();
+            return view('customer.address_form') ->with(['address' => $data]);
+        //}
+    }
     public function addressSave(Request $request){        
         $error = '';
+        $ajax = true;
         $customer  = $request->session()->get('customer');
         $data = $request->merge(['customer_id' => $customer['id'] ]);
         $email_id = '';
-        $ajax = true;
+        
         try {
             $customer1 = Customer_Address::create($request->all())->save();        
         }

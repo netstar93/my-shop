@@ -47,6 +47,11 @@ class Order extends Model
     {
         return $this->hasOne('App\Model\Order_status');
     }
+
+    public function Customer(){
+        return $this ->belongsTo('App\Model\Customer');
+    }
+
     /*ALL QUOTE FUNCTIONS*/
 
 	public function getCollection(){

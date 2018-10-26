@@ -34,8 +34,8 @@
             </div>
 
             <div class="action-wrapper" align="center">
-                <a href="{{ URL::previous() }}"><button class="btn-shopping">Continue Shopping</button> </a>
-                <a href="/cart/checkout"><button class="btn-shopping">Place Order</button> </a>
+                <a href="{{ URL::previous() }}"><button class="btn-lg btn-success">Continue Shopping</button> </a>
+                <a href="/cart/checkout"><button class="btn-lg btn-success">Place Order</button> </a>
             </div>
             @else
             <div class="no-cart-item">No Item Found.Please shop items.</div>

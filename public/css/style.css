@@ -36,13 +36,25 @@ hr{
     margin: 3px 0px;
     border-bottom: 1px solid lightgray;
 }
-.page-message{
-    font-size: 20px;
-    /*background-color: lightgreen;*/
-    margin: 0 auto;
-    text-align: center;
-    width: 51%;
-    padding:3px;
+.messages{
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+
+.page-message {
+    width: 25%;
+    position: fixed;
+    color: white;
+    background-color: lightseagreen;
+    /*border: 1px red solid;*/
+    font-weight: 500;
+    padding: 3px;
+    text-transform: capitalize;
+    z-index: 999;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         3px 3px 5px 6px #ccc;
 }
 /* ************** CART PAGE ***********/
 table.cart-item tr td{
@@ -50,6 +62,11 @@ table.cart-item tr td{
     vertical-align: top;
     padding-right: 35px;
     border: 0px;
+}
+
+table.cart-item td.product-image{
+    text-align: center;
+    vertical-align: middle;
 }
 .no-cart-item{ font-size: 20px; }
 
@@ -229,6 +246,10 @@ ul.account-menu li{
     color:#fff;
 }
 
+.top-links i{
+    margin-right: 5px;
+}
+ 
 .search-box {
     width: 40%;
     display: inline-block;
@@ -253,17 +274,28 @@ margin-top:1px;
     text-align: center;
 }
 .customer-tabs .tab-pane{
-    padding: 8px;
+    padding: 10px;
+    text-align: center
 }
 .customer-tabs-column{
-    background-color: #fff;
+    /*background-color: #fff;*/
     padding: 0px;
     height: 100%;
 }
-.account-info img{
+.account-info img {
     float: left;
     margin-right: 15px;
 }
+.address-table{
+     min-width: 300px;
+}
+.address-area {
+    display: inline-block;
+    min-width: 250px;
+    margin: 10px;
+    text-align: center;
+}
+
     /*/////////////// FOOTER ///////////////////////*/
 .product-info{
     text-align: center;
@@ -271,7 +303,35 @@ margin-top:1px;
 .product-info a {
     color: #2ab27b;
 }
+.customer_dashboard_index {
+    background-color: #fff !important;
+    margin-top: 20px;
+    padding :30px;
+}
+.customer_dashboard_index .tab-list li{
+display: block;
+text-align: center;
+color: #000;
+float:inherit !important;
+margin-top:5px;
+margin-bottom:5px;
+}
+.customer_dashboard_index .tab-list li a{
+    color:#000;
+}
 
+table.address-table{
+    border:1px solid black;
+}
+
+table.address-table:hover{
+  background-color: #F5F8FA;
+}
+
+table.address-table td{
+    padding:8px;
+    text-transform: capitalize;
+}
 
     /*/////////////// FOOTER ///////////////////////*/
 footer{
@@ -296,13 +356,17 @@ footer{
     max-height: 30%;
     padding: 5px;
     width:17%;
-    text-align: center;
+    text-align: center;    
     /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 }
 
 .home-gallery {
     padding: 10px;
+    
     /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+}
+.home-gallery ul{
+  background-color: #fff;
 }
 
 .home-gallery-label {

@@ -30,7 +30,7 @@ $name =  $customer['name'];
         </span>
             <span class="top-menu col-sm-3">
             <nav class="top-links ">
-                <li> <a href="/cart"><i class="fa fa-shopping-cart fa-2x"></i><span
+                <li class="cartMenus"> <a href="/cart"><i class="fa fa-shopping-cart fa-2x"></i><span
                                 class="cart badge">{{$item_count }}</span></a></li>
                 @if(isset($is_logged_in))
                     <li> <i class="fa fa-heart fa-2x" style="color: #fff"></i> </li>
@@ -57,12 +57,14 @@ $name =  $customer['name'];
     </div>
 </header>
 @include('home/megamenu')
+<div class = "messages">
 @if(session('success'))
-    <div class="page-message alert alert-success">{{session('success')}}</div>
+    <div class="page-message alert alert-success alert-dismissable text-center"><i class="fa fa-check-square-o" style="font-size: 25px;"></i> {{session('success')}}</div>
 @endif
 @if(session('error'))
-    <div class="page-message alert alert-warning">{{session('error')}}</div>
+    <div class="page-message alert alert-warning alert-dismissable text-center"><i class="fa fa-close" style="color:red;font-size: 25px;"></i>{{session('error')}}</div>
 @endif
+</div>
 
 <div id="loader" class="loader-wrapper">
     <div class="loader"></div>
@@ -75,4 +77,8 @@ $('body').click(function(){
 $('.customerMenu').hover(function(){
     $('.account-menu').show();
 })
+
+$(".customerMenu").mouseleave(function(){
+   $('.account-menu').hide();
+});
  </script>

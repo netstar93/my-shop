@@ -31,16 +31,24 @@ class Customer extends Model
     	$customer = self::find($id);
     	if($include_address)
     	$customer['addresses'] = $customer->Address;
-
-        return $customer;        
+        return $customer;
     }
 
     public function getShippingAddressData($address_id){
         return Customer_address :: find($address_id);
     }
 
+    public function getOrderWithItems()
+    {
+        $items = array();
+        foreach ($this->getOrders() as $key => $order) {
+            $items[] = $order->items()->get();
+        }
+        return $items;
+    }
+
     public function getOrders($customer_id = null) {
-       return $this ->getCustomer($customer_id) ->Orders;       
+        return $this->getCustomer($customer_id)->Orders;
     }
 
     public function getCustomer($id = null) {

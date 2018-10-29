@@ -16,12 +16,15 @@ class CustomerController extends Controller
     public function index(){
         $helper = new Helper();
         $customerModel= new Customer();
+        $orderModel = new \App\Model\Order;
         $addresses = $helper->getAddresses();
+        $orders_items = $customerModel->getOrderWithItems();
         $orders = $customerModel ->getOrders();
-        //_log($orders);
         return view('customer/dashboard')->with([
                             'addresses' => $addresses,
-                            'orders' => $orders
+            'orders' => $orders,
+            'order_items' => $orders_items,
+            'orderModel' => $orderModel
                         ]);
     }
 

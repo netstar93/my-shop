@@ -1,4 +1,8 @@
 <!-- provide the csrf token -->
+
+@php
+    //  $orderModel = new Order();
+@endphp
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
 @extends('layout')
 @section('title','Welcome Home')
@@ -41,7 +45,7 @@
                     </li>
                 </ul>
             </span>
-                    <div class="tab-content customer-tabs col-xs-8 col-lg-8">
+                    <div class="tab-content customer-tabs col-xs-10 col-lg-10">
                 <span class="tab-pane active" id="summary" role="tabpanel">
                     <h3>Account Summary</h3>
                         <span class="account-info">
@@ -55,22 +59,33 @@
                     </span>
                         <div class="tab-pane" id="orders" role="tabpanel">
                             <h3>My Orders</h3>
-                            @foreach($orders as $label =>$order) 
-                            @php
-                            _log($order ->get() ->toArray());
-                            @endphp
-                            
-                                <div class="address-area">
-                                    <table class='address-table'>
-                                         @foreach($order as $label => $value)
-
-                                            <tr><td>{{$label}}</td><td>{{$value}}</td></tr>
-
-                                         @endforeach
-                                                                                 
-                                </table>        
+                            @foreach($orders as $label =>$order)
+                                @php $items = $orderModel -> getAllItems($order ->id,true); @endphp
+                                <div class="order-info">
+                                    <span class="title">Order ID</span> <span class="info">{{$order ->id}}</span>
+                                    <span class="date-info">{{$order ->creation_date}}</span>
                                 </div>
-                                @endforeach  
+                                <table class='table order-table'>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Total Amount</th>
+                                        <th>Quantity</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    @foreach($items as $label =>$item )
+                                        @php //_log($item ->toArray()) @endphp
+                                        <tr>
+                                            <td style="min-width: 250px;">{{$item ->name}}</td>
+                                            <td><img src="{{url('media/product/thumb/') .'/'.$item ->image}}"
+                                                     style="max-width: 70px"/></td>
+                                            <td>{{renderPrice($item ->amount)}}</td>
+                                            <td>{{$item ->qty}}</td>
+                                            <td>{{$item ->status}}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            @endforeach
                         </div>
                         <div class="tab-pane" id="address" role="tabpanel">
                             <h3>Addresses</h3>                           

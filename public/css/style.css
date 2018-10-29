@@ -296,6 +296,12 @@ margin-top:1px;
     text-align: center;
 }
 
+.customer-tabs .order-info {
+    background-color: #2AB285;
+    color: #fff;
+    font-size: 18px;
+}
+
     /*/////////////// FOOTER ///////////////////////*/
 .product-info{
     text-align: center;

@@ -100,12 +100,12 @@ $(document).ready(function() {
     });
 
     $("#address-form-submit").click(function(event) {    
-        var form = $("#addressForm");
-        if (form[0].checkValidity() === false) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-        form.addClass('was-validated');
+    var form = $("#addressForm");
+    if (form[0].checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    form.addClass('was-validated');
     });
  
 
@@ -206,7 +206,8 @@ $(document).ready(function() {
         var address_id = $('#address_id').val();
         if (payment_type && address_id) {
             $('#payment-method .error-validation').hide();
-            form .submit();          
+            form .submit(); 
+            // processPayment(payment_type);         
         }else{          
           event.preventDefault();
           event.stopPropagation();
@@ -214,6 +215,20 @@ $(document).ready(function() {
         }
         form.addClass('was-validated');
     });
+
+    function processPayment(payment_type) {        
+        $.ajax({
+            url: '/cart/order/payment',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.success) {
+                    
+                }
+            }
+        });
+
+    }
 
     $('form').submit(function(event){
         var form = $("form");

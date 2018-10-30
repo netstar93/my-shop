@@ -1,8 +1,8 @@
 @extends('layout')
-@section('title', 'Category List Page')
+@section('title', ucwords($data ->name) )
 @section('middle_content')
     <head>
-        <script src="{{ asset('/js/cart.js') }}"></script>
+        <script src="{{ asset('/js/category.js') }}"></script>
     </head>
     <div id="category_view_main" class="category-view-main">
         <div class="container-fluid">
@@ -16,6 +16,8 @@
                 @if(isset($data))
                     <div class='title'> {{  ucwords($data ->name) }} </div>
                 @endif
+
+                <div class="category-list">
                 @foreach($items as $item)
                     @php
                         $image = url('/media/product/thumb/'.$item->image);
@@ -42,6 +44,7 @@
                         </div>
                     </div>
                 @endforeach
+             </div>
             </div>
         </div>
 

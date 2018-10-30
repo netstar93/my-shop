@@ -1,8 +1,8 @@
 @php
     use App\Model\Attribute;
     $attributeModel = new Attribute();
-    //$attribute_color = Attribute:: where('name', 'color')->get()->first();
-    //$attribute_size = Attribute:: where('name', 'size')->get()->first();
+    $attribute_color = Attribute:: where('name', 'color')->get()->first()->toArray();
+    $attribute_size = Attribute:: where('name', 'size')->get()->first()->toArray();
     $color_options = $attributeModel->getAttributeOptions('color');
     $size_options = $attributeModel->getAttributeOptions('size');
     $fabric_options = $attributeModel->getAttributeOptions('fabric');
@@ -22,7 +22,7 @@
     <div class="panel-body">
         <ul>
             @foreach($color_options as $id => $color_name)
-                <li><span>  {{Form :: checkbox('color' , $id)}} </span>
+                <li><span>  {{Form :: checkbox($attribute_color['id'] , $id)}} </span>
                     <span class="field">{{$color_name}}</span> <span class="colorBox"
                                                                      style="background-color: {{$color_name}}"></span>
                 </li>
@@ -37,7 +37,7 @@
     <div class="panel-body">
         <ul>
             @foreach($size_options as $id => $size_name)
-                <li><span>  {{Form :: checkbox('size' , $id)}} </span>
+                <li><span>  {{Form :: checkbox($attribute_size['id'] , $id)}} </span>
                     <span class="field">{{$size_name}}</span>
                 </li>
             @endforeach

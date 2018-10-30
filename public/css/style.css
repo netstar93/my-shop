@@ -519,6 +519,9 @@ footer{
     width: 120px;
     margin: 15px;
 }
+.category-list{
+    padding-top: 10px;
+}
 
 @-webkit-keyframes spin {
     0% {

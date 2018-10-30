@@ -1,5 +1,5 @@
 
-@if(isset($address))
+@if(isset($address))    
     <form class="form" name="addressForm" id="addressForm" method="post" action="/customer/address/saveinline" aria-hidden="true" >
         {{ csrf_field() }}
         <input type="hidden" class="form-control" id="id" value= "{{$address ->id }}" name="id" required >                 
@@ -15,7 +15,11 @@
             <div class="form-group">
                 <label for="city">City:</label>
                 <input type="text" class="form-control" id="city" value= "{{$address ->city}}" name="city">
-            </div>            
+            </div>   
+            <div class="form-group">
+                <label for="city">Address:</label>
+                <input type="text" class="form-control" id="address" value= "{{$address ->address}}" name="address">
+            </div>         
             <div class="form-group">
                 <label for="email">Pincode:</label>
                 <input type="text" class="form-control" id="pincode" value= "{{$address ->pincode}}" name="pincode">
@@ -42,7 +46,11 @@
             <div class="form-group">
                 <label for="city">City:</label>
                 <input type="text" class="form-control" id="city" name="city">
-            </div>            
+            </div>       
+            <div class="form-group">
+                <label for="city">Address:</label>
+                <input type="text" class="form-control" id="address" name="address">
+            </div>       
             <div class="form-group">
                 <label for="email">Pincode:</label>
                 <input type="text" class="form-control" id="pincode" name="pincode">

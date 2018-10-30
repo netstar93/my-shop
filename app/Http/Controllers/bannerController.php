@@ -123,8 +123,8 @@ class bannerController extends Controller
        if(isset($data['id'])){        
         $model = Banner::find($data['id']) ->delete();
         if($model)
-          return json_encode(array('error' => false));
+          return redirect() ->back() ->withSuccess('Successfully Deleted');
        }
-       return json_encode(array('error' => true));
+       return redirect() ->back() ->withError('Something Error');
    }
 }

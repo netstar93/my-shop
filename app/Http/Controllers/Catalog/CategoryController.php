@@ -11,11 +11,14 @@ class CategoryController extends Controller
 {
     protected $category ;
     protected $id ;
-    protected $productCollection ;
+    protected $productCollection;
+    protected $filter;
 
      public function __construct(Request $request) {
          $id = $request->id;
          $this ->id = $id;
+         $this ->filters = $request ->filters;
+         //_log($this ->filters);
          $this ->category = Category::find($id);
      }
 

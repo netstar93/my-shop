@@ -14,6 +14,7 @@ class ProductController extends Controller
     protected $id;
     protected $productCollection;
     protected $model;
+    protected $filter_params;
 
     public function __construct(Request $request)
     {
@@ -110,5 +111,54 @@ class ProductController extends Controller
         $data = $productModel->load($this->id)->first();
         session('current_product', $data);
         return $data;
+    }
+
+    public function filter(Request $request){
+        $html = '';
+        $this ->filter_params  = $request ->filters;//json_encode(array(35 =>0));
+
+        $categoryProducts = $this ->model ->getCategoryProductCollection(2)->toArray();        
+        $product_collection = array_filter($categoryProducts,array($this, '_filter_product'));
+        
+        foreach ($product_collection as $key => $product) {
+            $html .= $this ->getProductListHtml($product);            
+        }
+
+        return json_encode(array('html' => $html ,'success' => true));
+    }
+
+    public function _filter_product($product) {
+        $filters_arr = json_decode($this ->filter_params, true);
+        _log($this ->filter_params);
+        $product_attr_values = json_decode( $product ->attribute_values , true );
+        foreach ($filters_arr as $filter_id => $value) {
+            if(array_key_exists($filter_id , $product_attr_values)) {
+               foreach ($product_attr_values as $key => $attr) {
+                  if($attr == $value) return true;
+                  else  return false;
+               }            
+             }
+         }         
+    }
+
+    public function getProductListHtml($product) {        
+        return '<div class="col-xs-6 col-lg-3 category-list-item">
+                        <div class="img-box">
+                            <a href="/catalog/product/view/'.$product ->id.'" title='.$product ->name.'>
+                            <img class="group list-group-image" src="http://localhost:8000/media/product/thumb/'.$product ->image.'" width="150px" alt="">
+                            </a>
+                        </div>
+                        <div class="caption product-info">
+                            <h5 class="group inner product-name">
+                                <a href="/catalog/product/view/'.$product ->id.'">
+                                    '.$product ->name.'</a>
+                            </h5>
+                            <hr>
+                            <div class="price-section">
+                                <span class="lead final-price">'.renderPrice($product ->base_price).'</span>
+                                
+                            </div>
+                        </div>
+                    </div>';
     }
 }

@@ -13,6 +13,11 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('/test', 'IndexController@test');
+Route::post('/test/response', 'IndexController@response');
+
+Route::get('/services', function(){
+	return view('pages.services');
+});
 
 Route::get('/customer', 'CustomerController@index')->middleware('validateCustomer');
 Route::get('/customer/create', 'CustomerController@create')->name('createCustomer');
@@ -31,10 +36,13 @@ Route::get('cart', 'Checkout\CartController@index');
 Route::get('/cart/checkout', 'Checkout\CartController@checkout');
 Route::post('/cart/checkout', 'Checkout\CartController@checkout');
 Route::post('/cart/order/save', 'Checkout\OrderController@save');
+Route::post('/cart/order/payment', 'Checkout\OrderController@processPayment');
+Route::post('/cart/order/pay_response', 'Checkout\OrderController@pay_response');
 Route::post('/cart/remove/{product_id?}', 'Checkout\CartController@delete');
 Route::get('/cart/order/success', 'Checkout\CartController@success');
 
-Route::get('catalog/category/view/{id}', 'Catalog\CategoryController@view');
+Route::get('catalog/category/view/{id}/{filters?}', 'Catalog\CategoryController@view');
+Route::get('catalog/product/filter/{filters?}', 'Catalog\ProductController@filter');
 Route::post('catalog/product/addtocart', 'Catalog\ProductController@addtocart');
 Route::get('catalog/product/view/{id}', 'Catalog\ProductController@view') ->middleware('bootstrap');
 Auth::routes();

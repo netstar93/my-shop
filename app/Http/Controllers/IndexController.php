@@ -7,6 +7,10 @@ use  App\Model\Quote;
 use  App\Model\Product;
 use  App\Model\Banner;
 use Image;
+use Softon\Indipay\Facades\Indipay;  
+use Illuminate\Support\Facades\Log;
+
+
 class IndexController extends Controller
 {
     /**
@@ -38,13 +42,37 @@ class IndexController extends Controller
     }
 
     public function test(Request $request){
-        echo $basePath = public_path('test.jpg');
-        die;
+        $parameters = [
+            'firstname' => 'Nick',
+            'email'  =>'nidfid@gmail.com',
+            'phone' => '888888888888',
+            'productinfo' => 'P01,P02',
+      
+        'tid' => '1233999923322',
+        
+        'order_id' => '16553220',
+        
+        'amount' => '10.00',
+        
+      ];
+      
+      // gateway = CCAvenue / PayUMoney / EBS / Citrus / InstaMojo / ZapakPay / Mocker
+      
+      $order = Indipay::gateway('PayUMoney')->prepare($parameters);
+      return Indipay::process($order);
 
-        $savePath = public_path('gallery') . "\\" . "303270_0_1._edited.jpg";
-//         $path = 'C:\xampp182\htdocs\1clickpick\public\media\product\303270_0_1.jpg';
-//        $savePath = 'C:\xampp182\htdocs\1clickpick\public\media\product\303270_0_1._edited.jpg';
-        $img = Image::make($basePath)->resize(50, 100);
-        $img->save($savePath);
     }
+
+    public function response(Request $request)
+    
+    {
+        // For default Gateway
+        $response = Indipay::response($request);
+        
+        // For Otherthan Default Gateway
+        $response = Indipay::gateway('PayUMoney')->response($request);
+
+        _log($response);
+    
+    } 
 }

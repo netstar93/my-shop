@@ -12,7 +12,7 @@ class CartController extends Controller
 {
     public function index() {
         $model =  new Quote();
-        $cart_data  = $model ->getQuoteItems(); //_log($cart_data );
+        $cart_data  = $model ->getQuoteItems();
         $totals = $model ->getTotals();
         return view('checkout/cart', [
             'items' => $cart_data,

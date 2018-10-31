@@ -41,11 +41,10 @@
 			     <tr>
 					<td><input type="checkbox" name="productEdit"></td>
 					<td>{{$product ->product_id}}</td>
-					<td> <img src={{$image}} /> </td>
+					<td> <img src={{$image}} style=" max-width: 50px;"/> </td>
 					<td>{{$product ->name}}</td>
-					<td> Rs.{{$product ->base_price}}</td>
+					<td> {{renderPrice($product ->base_price)}}</td>
 					<td>{{$product ->attribute_set_id}}</td>
-					<!-- <td>{{$special_attributes}}</td> -->
 					<td>{{$product ->category_id}}</td>
 					<td>{{renderBoolean($product ->is_configurable,'question')}}</td>
 					<td>{{renderBoolean($product ->status)}}</td>

@@ -110,6 +110,10 @@ class Quote extends Model
          return $data ->product_id;  
     }
 
+    public function updateQuote($quote_id,$grand_total) {
+        $newQuote = DB::table('sales_quote')->where('id', $quote_id) ->update(array('total_amount' => $grand_total));
+    }
+
     public function clearQuote() {
       //DELETE QUOTE ITEM
       $this ->removeAlItem();
@@ -126,22 +130,26 @@ class Quote extends Model
     public function removeItem($product_id) {
         $grand_total = 0;
 	    if($this ->isLoggedIn()) {
-            return DB::table('sales_quote_item')->where('quote_id', $this->getCustomerQuoteId())->where('product_id', $product_id)->delete();
+             DB::table('sales_quote_item')->where('quote_id', $this->getCustomerQuoteId())->where('product_id', $product_id)->delete();
         }
-        $cart = session('cart');
-        $cart_items =  $cart['items'];
-        unset($cart_items[$product_id]);
+            $cart = session('cart');
+            $cart_items =  $cart['items'];
+            unset($cart_items[$product_id]);
+        
 
         foreach ($cart_items as $item) {
             $grand_total += ($item->base_price + 30);
         }
+
+        //UPDATE GRAND TOTAL
+        // $totals  = $this ->getTotals(); 
+        $this ->updateQuote($this->getCustomerQuoteId(),$grand_total);
 
         session(['cart' => [
             'items' => $cart_items,
             'grand_total' => $grand_total
             ]]);
         return true;
-//        $this ->updateTotals();
     }
 
     public function getCartData($customer_id = null) {

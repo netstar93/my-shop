@@ -14,6 +14,11 @@ class Order_payment extends Model
     {
     }
 
+    public function FullInfo()
+    {
+        return $this->hasOne('App\Model\Prepaid_payment');
+    }
+
     public function Order()
     {
         return $this->belongsTo('App\Model\Order');

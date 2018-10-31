@@ -9,7 +9,7 @@ use  App\Model\Banner;
 use Image;
 use Softon\Indipay\Facades\Indipay;  
 use Illuminate\Support\Facades\Log;
-
+use DB;
 
 class IndexController extends Controller
 {
@@ -42,6 +42,13 @@ class IndexController extends Controller
     }
 
     public function test(Request $request){
+
+        $table = DB :: table('order_payment') ->where('order_id' , 28);// ->first();
+        $fill = array('payment_status'  => 28);
+$table ->update($fill);
+//$table ->save(); 
+die;
+
         $parameters = [
             'firstname' => 'Nick',
             'email'  =>'nidfid@gmail.com',

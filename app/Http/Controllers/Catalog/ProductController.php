@@ -50,7 +50,6 @@ class ProductController extends Controller
         //GET LOGGED IN CUSTOMER CART DATA
         if (session('customer')) {
                 $cart = $quoteModel->getCart();  //get items
-                $loaded_quote = $quoteModel->getQuote();  //get quote
                 $customer = session('customer');
                 //SAVE QUOTE
                 $newQuote = DB::table('sales_quote')->where('cust_id', $customer['id']) ->first();
@@ -87,9 +86,15 @@ class ProductController extends Controller
             }
             $cart_items[$data->product_id] = $data;
         }
-        foreach ($cart_items as $item) {
-            $grand_total += $item->base_price + $shipping_charge;
-        }
+
+        //UPDATE GRAND TOTAL
+        $totals  = $quoteModel ->getTotals(); 
+        // _log($cart_items);
+        // foreach ($cart_items as $item) {           
+        //    $grand_total += $item->amount + $shipping_charge;
+        // }
+
+        $quoteModel ->updateQuote($quote_id,$totals['grand_total']);
 
         session(['cart' => [
             'items' => $cart_items,

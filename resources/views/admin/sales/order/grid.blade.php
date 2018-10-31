@@ -36,7 +36,7 @@
                         </ul>
                     </td>
                     <td>{{$order ->customer_name}}</td>					
-                    <td>Rs.{{$order ->total_amount}}</td>
+                    <td>{{renderPrice($order ->total_amount)}}</td>
                     <td>{{$order ->status}}</td>
 					<td>
 						<a href="/admin/order/view/{{$order ->id}}">

@@ -23,9 +23,9 @@
     <div class="address-list">
       <form class="side-form form" name="shipping-address" id="shipping-address" method="post" role="form" aria-hidden="true">
             <ul class="address-list" style="list-style: none">
-            @foreach($addresses  as $address)
+            @foreach($addresses  as $key =>$address)
              <li>
-                <input type="radio" name="address" value="{{$address ->id}}" required="true"> <b>{{$address ->name}}</b>  
+                <input type="radio" name="address" value="{{$address ->id}}" checked required="true"> <b>{{$address ->name}}</b>  
                 <div class="addr-content">{{$address ->state}}</div>
                 </input>                
              </li>

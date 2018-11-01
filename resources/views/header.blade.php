@@ -23,7 +23,7 @@ $name =  $customer['name'];
                 <input type="text" class="form-control" placeholder="Search">
                 <div class="input-group-btn">
                   <button class="btn btn-default" type="submit">
-                    <i class="fa fa-search"></i>
+                    <i class="fa fa-search "></i>
                   </button>
                 </div>
               </div>
@@ -42,14 +42,14 @@ $name =  $customer['name'];
                           <ul class="dropdown-menu account-menu">
                             <li><i class="fa fa-dashboard"></i><a href="/customer">My Account</a></li>
                             <li><i class="fa fa-reorder"></i><a href="/customer#orders">Orders</a></li>
-                            <li><i class="fa fa-cart-plus"></i><a href="/cart">My Cart</a></li>
+                            <li><i class="fa fa-cart-plus fa-2x"></i><a href="/cart">My Cart</a></li>
                             <li><i class="fa fa-power-off"></i><a href="/customer/logout">Logout</a></li>
                           </ul>
                         </div>
                     </li>
                 @else
-                    <li><i class="fa fa-user"></i><a href="/customer/login">Login</a></li>
-                    <li><i class="fa fa-user-plus"></i><a href="/customer/create">Sign Up</a></li>
+                    <li><i class="fa fa-user fa-2x"></i><a href="/customer/login">Login</a></li>
+                    <li><i class="fa fa-user-plus fa-2x"></i><a href="/customer/create">Sign Up</a></li>
                 @endif
             </nav>
         </span>

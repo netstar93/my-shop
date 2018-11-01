@@ -1,6 +1,9 @@
+body{
+   /*background-image: url('/media/home_images/background-blur-min.jpg');*/
+}
 .admin-main-wrapper, header, footer {
 	background-color: #515763;
-	font-size: 15px;
+	font-size: 14px;
   /*position: fixed;*/
 }
 a{
@@ -151,6 +154,9 @@ display: inline-block;
 
 
 /*ADMIN ALL FORMS EXCEPT PRODUCT FORM*/
+.admin-form{
+
+}
 .admin-form .content{
     margin-top: 15px;
     /*border-top: 2px green solid;*/
@@ -169,7 +175,8 @@ display: inline-block;
   margin-right: 15px;
 }
 .admin-form .form-control {
-  width:50% !important;
+  width:40% !important;
+    max-width:40% !important;
 }
 .admin-form  input[type=radio] ,.admin-form  input[type=checkbox]{
     width: 30px !important;

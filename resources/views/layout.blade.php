@@ -11,7 +11,7 @@
     <div class="main_content">
         @yield("middle_content")
     </div>
-    {{--@include('footer') --}}
+    @include('footer')
 </div>
 </body>
 </html>

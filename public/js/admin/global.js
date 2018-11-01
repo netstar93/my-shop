@@ -53,4 +53,11 @@ $(document).ready(function () {
         }, 5000
     );
 
+    $('.date').datepicker({  
+
+       format: 'mm-dd-yyyy',
+       autoclose: true
+
+     }); 
+
 });

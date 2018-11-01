@@ -2,7 +2,7 @@
 	<nav class="navbar navbar-default navbar-expand-lg">
 		<div class="container-fluid">
 			<div class="navbar-header">
-		      <a class="navbar-brand" href="#">WebSiteName</a>
+		      <a class="navbar-brand" href="/admin/dashboard">Demo Store</a>
 		    </div>
 		    <div class="navbar-right">
 		    	<ul class="nav navbar-nav">

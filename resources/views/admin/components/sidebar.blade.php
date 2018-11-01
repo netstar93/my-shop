@@ -69,6 +69,22 @@
         </div>
 
         <div class="card">
+            <div class="card-header">
+                <a class="collapsed card-link" data-toggle="collapse" href="#collapseSix">
+                    <i class="material-icons text-warning fsize" title="Advanced tables">group</i> Offers
+                </a>
+            </div>
+            <div id="collapseSix" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                    <ul class="zerostyle">
+                        <li><a href="/admin/catalog_rule">Catalog Offers</a> </li>
+                        <li><a href="/admin/cart_rule">Cart Discounts</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseFive">
                         <i class="material-icons text-success leftsize">shopping_basket</i> Home Manager
@@ -82,7 +98,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+         </div>         
 
         </div>
 </section>

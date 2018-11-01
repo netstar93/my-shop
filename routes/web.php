@@ -82,6 +82,7 @@ Route::post('admin/attribute/save', 'attributeController@save');
 Route::get('admin/attribute/edit/{id?}', 'attributeController@edit');
 Route::get('admin/attribute/delete/{id?}', 'attributeController@delete');
 Route::get('admin/attribute/list', 'attributeController@list');
+
 //ADMIN BANNER
 Route::post('admin/banner/save', 'bannerController@save');
 Route::get('admin/banner/new', 'bannerController@new');
@@ -94,4 +95,7 @@ Route::get('admin/order/index', 'Sales\OrderController@index');
 Route::get('admin/order/view/{id?}', 'Sales\OrderController@view');
 Route::post('admin/order/add_comment', 'Sales\OrderController@addComment');
 Route::post('admin/order/update/{status?}', 'Sales\OrderController@update');
+
+//ADMIN OFFERS
+Route::resource('admin/catalog_rule', 'Rules\CatalogruleController');
 

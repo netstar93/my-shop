@@ -18,7 +18,7 @@ $(document).ready(function() {
             current.height = current.height / pixelRatio;
         }
     }
-});
+    });
 
     var product_id = parseInt($('#productId' +
         '').val());

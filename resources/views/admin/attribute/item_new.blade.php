@@ -66,7 +66,7 @@ $is_disable = $edit_mode == true ? 'pointer-events:none' : '';
                 <div class="form-group form-inline">                        
                    <label for="name">Type</label>
 
-                {{ Form::select('size', ['text' => 'TextBox', 'boolean' => 'Yes/No' , 'checkbox' => 'checkbox' ,'select' => 'Dropdown'], $type, ['name' => 'type' , 'id' => 'attr_type' ,'required' =>'' , 'style' => $is_disable ] )  }}
+                {{ Form::select('size', ['text' => 'TextBox', 'boolean' => 'Yes/No' , 'checkbox' => 'checkbox' ,'select' => 'Dropdown','multiselect' => 'MultiSelect'], $type, ['name' => 'type' , 'id' => 'attr_type' ,'required' =>'' , 'style' => $is_disable ] ) }}
 
                     <div class="invalid-feedback">Oops, you missed this one.</div>
                 </div>
@@ -86,7 +86,7 @@ $is_disable = $edit_mode == true ? 'pointer-events:none' : '';
                             </span>
                           </div>
                         @endforeach
-
+                        
                         @else
                          <div class="value">
                             <span>Value 1</span>{{ Form::text('select_option[0]', null , array()) }} <span>

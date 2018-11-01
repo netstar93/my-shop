@@ -79,6 +79,10 @@ class ProductController extends Controller
                         $cart_items = $cart['items'];
                         $cart_items[$data->product_id] = $data;
                     }
+        //UPDATE GRAND TOTAL
+        $totals  = $quoteModel ->getTotals(); 
+        $quoteModel ->updateQuote($quote_id,$totals['grand_total']);
+
         } else {
                 $cart = session('cart');
             if(isset($cart)) {
@@ -87,15 +91,7 @@ class ProductController extends Controller
             $cart_items[$data->product_id] = $data;
         }
 
-        //UPDATE GRAND TOTAL
-        $totals  = $quoteModel ->getTotals(); 
-        // _log($cart_items);
-        // foreach ($cart_items as $item) {           
-        //    $grand_total += $item->amount + $shipping_charge;
-        // }
-
-        $quoteModel ->updateQuote($quote_id,$totals['grand_total']);
-
+        
         session(['cart' => [
             'items' => $cart_items,
             'grand_total' => $grand_total

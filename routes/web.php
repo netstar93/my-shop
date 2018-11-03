@@ -99,3 +99,4 @@ Route::post('admin/order/update/{status?}', 'Sales\OrderController@update');
 //ADMIN OFFERS
 Route::resource('admin/catalog_rule', 'Rules\CatalogruleController');
 
+Route::get('system/configuration', 'adminController@config');

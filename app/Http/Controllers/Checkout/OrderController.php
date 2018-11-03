@@ -10,7 +10,7 @@ use  App\Model\Order;
 use  App\Model\Quote;
 use  App\Model\Order_item;
 use  App\Model\Prepaid_payment;
-use Softon\Indipay\Facades\Indipay;
+use  Softon\Indipay\Facades\Indipay;
 use  DB;
 use Illuminate\Support\Facades\Log;
 

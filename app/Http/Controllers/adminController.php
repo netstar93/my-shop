@@ -10,7 +10,12 @@ class adminController extends Controller
     	return view('admin.dashboard');
     }
 
+    public function config()
+    {
+        return view('admin.config');
+    }
     public function login(){
     	return view('admin.login');
     }
+
 }
